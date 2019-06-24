@@ -1,5 +1,12 @@
 package walletrpc
 
+type GetAddressRequest struct {
+	// account_index - unsigned int; Return subaddresses for this account.
+	AccountIndex uint
+	// address_index - array of unsigned int; (Optional) List of subaddresses to return from an account.
+	AddressIndex []uint
+}
+
 // TransferRequest is the request body of the Transfer client rpc call.
 type TransferRequest struct {
 	// Destinations - array of destinations to receive XMR:
