@@ -113,6 +113,11 @@ type SweepAllResponse struct {
 	TxKeyList []string `json:"tx_key_list"`
 }
 
+type SubAddrIndex struct {
+	Major uint `json:"major"`
+	minor uint `json:"minor"`
+}
+
 // Payment ...
 type Payment struct {
 	PaymentID   string `json:"payment_id"`
@@ -120,6 +125,8 @@ type Payment struct {
 	Amount      uint64 `json:"amount"`
 	BlockHeight uint64 `json:"block_height"`
 	UnlockTime  uint64 `json:"unlock_time"`
+	SubAddrIndex SubAddrIndex `json:"subaddr_index"`
+	Address string `json:"address"`
 }
 
 // GetTransfersRequest = GetTransfers body
