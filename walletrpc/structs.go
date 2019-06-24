@@ -7,6 +7,23 @@ type GetAddressRequest struct {
 	AddressIndex []uint
 }
 
+type Addresses struct {
+	// address string; The 95-character hex (sub)address string.
+	Address string
+	// label string; Label of the (sub)address
+	Label string
+	// address_index unsigned int; index of the subaddress
+	AddressIndex uint
+	// used boolean; states if the (sub)address has already received funds
+	Used bool
+}
+
+type GetAddressResponse struct {
+	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
+	Address string
+	Addresses []Addresses
+}
+
 // TransferRequest is the request body of the Transfer client rpc call.
 type TransferRequest struct {
 	// Destinations - array of destinations to receive XMR:

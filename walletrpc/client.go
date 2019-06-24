@@ -14,7 +14,7 @@ type Client interface {
 	GetBalance() (balance, unlockedBalance uint64, err error)
 	// Return the wallet's address.
 	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
-	GetAddress(req GetAddressRequest) (address string, err error)
+	GetAddress(req GetAddressRequest) (resp GetAddressResponse, err error)
 	// GetHeight - Returns the wallet's current block height.
 	// height - unsigned int; The current monero-wallet-rpc's blockchain height.
 	// If the wallet has been offline for a long time, it may need to catch up with the daemon.
@@ -170,15 +170,13 @@ func (c *client) GetBalance() (balance, unlockedBalance uint64, err error) {
 	return jd.Balance, jd.UnlockedBalance, err
 }
 
-func (c *client) GetAddress(req GetAddressRequest) (address string, err error) {
-	jd := struct {
-		Address string `json:"address"`
-	}{}
-	err = c.do("getaddress", &req, &jd)
+func (c *client) GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error) {
+	resp = &GetAddressResponse{}
+	err = c.do("getaddress", &req, resp)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return jd.Address, nil
+	return resp, nil
 }
 
 func (c *client) GetHeight() (height uint64, err error) {
