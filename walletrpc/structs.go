@@ -193,7 +193,7 @@ type Transfer struct {
 	Confirmations                   uint64       `json:"confirmations"`
 	DoubleSpendSeen                 bool         `json:"double_spend_seen"`
 	Fee                             uint64       `json:"fee"`
-	height                          uint64       `json:"height"`
+	Height                          uint64       `json:"height"`
 	Note                            string       `json:"note"`
 	PaymentID                       string       `json:"payment_id"`
 	SubaddrIndex                    SubAddrIndex `json:"subaddr_index"`
