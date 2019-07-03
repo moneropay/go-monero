@@ -11,7 +11,7 @@ import (
 // Client is a monero-wallet-rpc client.
 type Client interface {
 	// Return the wallet's balance.
-	GetBalance() (balance, unlockedBalance uint64, err error)
+	GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error)
 	// Return the wallet's address.
 	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
 	GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error)
@@ -161,18 +161,18 @@ func (c *client) do(method string, in, out interface{}) error {
 	return json2.DecodeClientResponse(resp.Body, out)
 }
 
-func (c *client) GetBalance() (balance, unlockedBalance uint64, err error) {
-	jd := struct {
-		Balance         uint64 `json:"balance"`
-		UnlockedBalance uint64 `json:"unlocked_balance"`
-	}{}
-	err = c.do("getbalance", nil, &jd)
-	return jd.Balance, jd.UnlockedBalance, err
+func (c *client) GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error) {
+	resp = &GetBalanceResponse{}
+	err = c.do("get_balance", &req, resp)
+	if err != nil {
+		return resp, err
+	}
+	return resp, nil
 }
 
 func (c *client) GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error) {
 	resp = &GetAddressResponse{}
-	err = c.do("getaddress", &req, resp)
+	err = c.do("get_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +183,7 @@ func (c *client) GetHeight() (height uint64, err error) {
 	jd := struct {
 		Height uint64 `json:"height"`
 	}{}
-	err = c.do("getheight", nil, &jd)
+	err = c.do("get_height", nil, &jd)
 	if err != nil {
 		return 0, err
 	}

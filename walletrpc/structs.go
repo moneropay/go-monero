@@ -1,37 +1,65 @@
 package walletrpc
 
+type GetBalanceRequest struct {
+	// account_index - unsigned int; Return subaddresses for this account.
+	AccountIndex uint `json:"account_index"`
+	// address_indices - array of unsigned int; (Optional) List of subaddresses to return from an account.
+	AddressIndices []uint `json:"address_indices"`
+}
+
+type GetBalanceResponse struct {
+	Balance uint64 `json:"balance"`
+	UnlockedBalance uint64 `json:"unlocked_balance"`
+	MultisigImportNeeded bool `json:"multisig_import_needed"`
+	PerSubaddress []SubaddressInfo `json:"per_subaddress"`
+}
+
+type SubaddressInfo struct {
+	AddressIndex uint64 `json:"address_index"`
+	Address string `json:"address"`
+	Balance uint64 `json:"balance"`
+	UnlockedBalance uint64 `json:"unlocked_balance"`
+	Label string `json:"label"`
+	NumUnspentOutputs uint64 `json:"num_unspent_outputs"`
+}
+
 type GetAddressRequest struct {
 	// account_index - unsigned int; Return subaddresses for this account.
-	AccountIndex uint
+	AccountIndex uint `json:"account_index"`
 	// address_index - array of unsigned int; (Optional) List of subaddresses to return from an account.
-	AddressIndex []uint
+	AddressIndex []uint `json:"address_index"`
 }
 
 type Addresses struct {
 	// address string; The 95-character hex (sub)address string.
-	Address string
+	Address string `json:"address"`
 	// label string; Label of the (sub)address
-	Label string
+	Label string `json:"label"`
 	// address_index unsigned int; index of the subaddress
-	AddressIndex uint
+	AddressIndex uint `json:"address_index"`
 	// used boolean; states if the (sub)address has already received funds
-	Used bool
+	Used bool `json:"used"`
 }
 
 type GetAddressResponse struct {
 	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
-	Address string
-	Addresses []Addresses
+	Address   string `json:"address"`
+	Addresses []Addresses `json:"addresses"`
 }
 
 // TransferRequest is the request body of the Transfer client rpc call.
 type TransferRequest struct {
 	// Destinations - array of destinations to receive XMR:
 	Destinations []Destination `json:"destinations"`
+	// account_index - unsigned int; (Optional) Transfer from this account index. (Defaults to 0)
+	AccountIndex uint `json:"account_index"`
+	// subaddr_indices - array of unsigned int; (Optional) Transfer from this set of subaddresses. (Defaults to empty - all indices)
+	SubaddrIndices []uint `json:"subaddr_indices"`
 	// Fee - unsigned int; Ignored, will be automatically calculated.
 	Fee uint64 `json:"fee,omitempty"`
 	// Mixin - unsigned int; Number of outpouts from the blockchain to mix with (0 means no mixing).
 	Mixin uint64 `json:"mixin"`
+	RingSize uint `json:"ring_size"`
 	// unlock_time - unsigned int; Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 	// payment_id - string; (Optional) Random 32-byte/64-character hex string to identify a transaction.
@@ -45,6 +73,8 @@ type TransferRequest struct {
 	DoNotRelay bool `json:"do_not_relay,omitempty"`
 	// get_tx_hex - boolean; Return the transaction as hex string after sending
 	GetTxHex bool `json:"get_tx_hex,omitempty"`
+	// get_tx_metadata - boolean; Return the metadata needed to relay the transaction. (Defaults to false)
+	GetTxMetadata bool `json:"get_tx_metadata"`
 }
 
 // Destination to receive XMR
@@ -57,6 +87,8 @@ type Destination struct {
 
 // TransferResponse is the successful output of a Client.Transfer()
 type TransferResponse struct {
+	// amount - Amount transferred for the transaction.
+	Amonut uint64 `json:"amonut"`
 	// fee - Integer value of the fee charged for the txn.
 	Fee uint64 `json:"fee"`
 	// tx_hash - String for the publically searchable transaction hash
@@ -120,13 +152,13 @@ type SubAddrIndex struct {
 
 // Payment ...
 type Payment struct {
-	PaymentID   string `json:"payment_id"`
-	TxHash      string `json:"tx_hash"`
-	Amount      uint64 `json:"amount"`
-	BlockHeight uint64 `json:"block_height"`
-	UnlockTime  uint64 `json:"unlock_time"`
-	SubAddrIndex SubAddrIndex `json:"subaddr_index"`
-	Address string `json:"address"`
+	PaymentID    string       `json:"payment_id"`
+	TxHash       string       `json:"tx_hash"`
+	Amount       uint64       `json:"amount"`
+	BlockHeight  uint64       `json:"block_height"`
+	UnlockTime   uint64       `json:"unlock_time"`
+	SubaddrIndex SubAddrIndex `json:"subaddr_index"`
+	Address      string       `json:"address"`
 }
 
 // GetTransfersRequest = GetTransfers body
@@ -143,25 +175,47 @@ type GetTransfersRequest struct {
 
 // GetTransfersResponse = GetTransfers output
 type GetTransfersResponse struct {
-	In      []Transfer `json:"in"`
-	Out     []Transfer `json:"out"`
-	Pending []Transfer `json:"pending"`
-	Failed  []Transfer `json:"failed"`
-	Pool    []Transfer `json:"pool"`
+	In             []Transfer `json:"in"`
+	Out            []Transfer `json:"out"`
+	Pending        []Transfer `json:"pending"`
+	Failed         []Transfer `json:"failed"`
+	Pool           []Transfer `json:"pool"`
+	FilterByHeight bool       `json:filter_by_height`
+	MinHeight      uint       `json:"min_height"`
+	MaxHeight      uint       `json:"max_height"`
+	AccountIndex   uint       `json:"account_index"`
+	SubaddrIndices []uint     `json:"subaddr_indices"`
+}
+
+type Transfer struct {
+	Address                         string       `json:"address"`
+	Amount                          uint64       `json:"amount"`
+	Confirmations                   uint64       `json:"confirmations"`
+	DoubleSpendSeen                 bool         `json:"double_spend_seen"`
+	Fee                             uint64       `json:"fee"`
+	height                          uint64       `json:"height"`
+	Note                            string       `json:"note"`
+	PaymentID                       string       `json:"payment_id"`
+	SubaddrIndex                    SubAddrIndex `json:"subaddr_index"`
+	SuggestedConfirmationsThreshold uint         `json:"suggested_confirmations_threshold"`
+	Timestamp                       uint64       `json:"timestamp"`
+	Txid                            string       `json:"txid"`
+	Type                            string       `json:"type"`
+	UnlockTime                      uint64       `json:"unlock_time"`
 }
 
 // Transfer is the transfer data of
-type Transfer struct {
-	TxID         string        `json:"txid"`
-	PaymentID    string        `json:"payment_id"`
-	Height       uint64        `json:"height"`
-	Timestamp    uint64        `json:"timestamp"`
-	Amount       uint64        `json:"amount"`
-	Fee          uint64        `json:"fee"`
-	Note         string        `json:"note"`
-	Destinations []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
-	Type         string        `json:"type"`
-}
+//type Transfer struct {
+//	TxID         string        `json:"txid"`
+//	PaymentID    string        `json:"payment_id"`
+//	Height       uint64        `json:"height"`
+//	Timestamp    uint64        `json:"timestamp"`
+//	Amount       uint64        `json:"amount"`
+//	Fee          uint64        `json:"fee"`
+//	Note         string        `json:"note"`
+//	Destinations []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
+//	Type         string        `json:"type"`
+//}
 
 // IncTransfer is returned by IncomingTransfers
 type IncTransfer struct {
