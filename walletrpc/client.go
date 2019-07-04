@@ -43,7 +43,7 @@ type Client interface {
 	// Returns a list of transfers.
 	GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error)
 	// Show information about a transfer to/from this address.
-	GetTransferByTxID(txid string) (transfer *Transfer, err error)
+	GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetTransferByTxidResponse, err error)
 	// Return a list of incoming transfers to the wallet.
 	IncomingTransfers(transfertype GetTransferType) (transfers []IncTransfer, err error)
 	// Return the spend or view private key (or mnemonic seed).
@@ -272,21 +272,13 @@ func (c *client) GetTransfers(req GetTransfersRequest) (resp *GetTransfersRespon
 	return
 }
 
-func (c *client) GetTransferByTxID(txid string) (transfer *Transfer, err error) {
-	jin := struct {
-		TxID string `json:"txid"`
-	}{
-		txid,
-	}
-	jd := struct {
-		Transfer *Transfer `json:"transfer"`
-	}{}
-	err = c.do("get_transfer_by_txid", &jin, &jd)
+func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetTransferByTxidResponse, err error) {
+	resp := &GetTransferByTxidResponse{}
+	err = c.do("get_transfer_by_txid", &req, resp)
 	if err != nil {
 		return
 	}
-	transfer = jd.Transfer
-	return
+	return resp, nil
 }
 
 func (c *client) IncomingTransfers(transfertype GetTransferType) (transfers []IncTransfer, err error) {

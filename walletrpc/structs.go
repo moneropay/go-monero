@@ -204,18 +204,23 @@ type Transfer struct {
 	UnlockTime                      uint64       `json:"unlock_time"`
 }
 
+type GetTransferByTxidRequest struct {
+	Txid string `json:"txid"`
+	AccountIndex uint `json:"account_index"`
+}
+
 // Transfer is the transfer data of
-//type Transfer struct {
-//	TxID         string        `json:"txid"`
-//	PaymentID    string        `json:"payment_id"`
-//	Height       uint64        `json:"height"`
-//	Timestamp    uint64        `json:"timestamp"`
-//	Amount       uint64        `json:"amount"`
-//	Fee          uint64        `json:"fee"`
-//	Note         string        `json:"note"`
-//	Destinations []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
-//	Type         string        `json:"type"`
-//}
+type GetTransferByTxidResponse struct {
+	TxID         string        `json:"txid"`
+	PaymentID    string        `json:"payment_id"`
+	Height       uint64        `json:"height"`
+	Timestamp    uint64        `json:"timestamp"`
+	Amount       uint64        `json:"amount"`
+	Fee          uint64        `json:"fee"`
+	Note         string        `json:"note"`
+	Destinations []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
+	Type         string        `json:"type"`
+}
 
 // IncTransfer is returned by IncomingTransfers
 type IncTransfer struct {
