@@ -8,18 +8,18 @@ type GetBalanceRequest struct {
 }
 
 type GetBalanceResponse struct {
-	Balance uint64 `json:"balance"`
-	UnlockedBalance uint64 `json:"unlocked_balance"`
-	MultisigImportNeeded bool `json:"multisig_import_needed"`
-	PerSubaddress []SubaddressInfo `json:"per_subaddress"`
+	Balance              uint64           `json:"balance"`
+	UnlockedBalance      uint64           `json:"unlocked_balance"`
+	MultisigImportNeeded bool             `json:"multisig_import_needed"`
+	PerSubaddress        []SubaddressInfo `json:"per_subaddress"`
 }
 
 type SubaddressInfo struct {
-	AddressIndex uint64 `json:"address_index"`
-	Address string `json:"address"`
-	Balance uint64 `json:"balance"`
-	UnlockedBalance uint64 `json:"unlocked_balance"`
-	Label string `json:"label"`
+	AddressIndex      uint64 `json:"address_index"`
+	Address           string `json:"address"`
+	Balance           uint64 `json:"balance"`
+	UnlockedBalance   uint64 `json:"unlocked_balance"`
+	Label             string `json:"label"`
 	NumUnspentOutputs uint64 `json:"num_unspent_outputs"`
 }
 
@@ -43,7 +43,7 @@ type Addresses struct {
 
 type GetAddressResponse struct {
 	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
-	Address   string `json:"address"`
+	Address   string      `json:"address"`
 	Addresses []Addresses `json:"addresses"`
 }
 
@@ -58,8 +58,8 @@ type TransferRequest struct {
 	// Fee - unsigned int; Ignored, will be automatically calculated.
 	Fee uint64 `json:"fee,omitempty"`
 	// Mixin - unsigned int; Number of outpouts from the blockchain to mix with (0 means no mixing).
-	Mixin uint64 `json:"mixin"`
-	RingSize uint `json:"ring_size"`
+	Mixin    uint64 `json:"mixin"`
+	RingSize uint   `json:"ring_size"`
 	// unlock_time - unsigned int; Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 	// payment_id - string; (Optional) Random 32-byte/64-character hex string to identify a transaction.
@@ -205,21 +205,27 @@ type Transfer struct {
 }
 
 type GetTransferByTxidRequest struct {
-	Txid string `json:"txid"`
-	AccountIndex uint `json:"account_index"`
+	Txid         string `json:"txid"`
+	AccountIndex uint   `json:"account_index"`
 }
 
 // Transfer is the transfer data of
 type GetTransferByTxidResponse struct {
-	TxID         string        `json:"txid"`
-	PaymentID    string        `json:"payment_id"`
-	Height       uint64        `json:"height"`
-	Timestamp    uint64        `json:"timestamp"`
-	Amount       uint64        `json:"amount"`
-	Fee          uint64        `json:"fee"`
-	Note         string        `json:"note"`
-	Destinations []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
-	Type         string        `json:"type"`
+	Address                         string `json:"txid"`
+	Amount                          uint64 `json:"amount"`
+	Confirmations                   uint
+	Destinations                    []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
+	DoubleSpendSeen                 bool          `json:"double_spend_seen"`
+	Fee                             uint64        `json:"fee"`
+	Height                          uint64        `json:"height"`
+	Note                            string        `json:"note"`
+	PaymentID                       string        `json:"payment_id"`
+	SubaddrIndex                    SubAddrIndex
+	SuggestedConfirmationsThreshold uint   `json:"suggested_confirmations_threshold"`
+	Timestamp                       uint64 `json:"timestamp"`
+	Txid                            string `json:"txid"`
+	Type                            string `json:"type"`
+	UnlockTime                      uint64 `json:"unlock_time"`
 }
 
 // IncTransfer is returned by IncomingTransfers
