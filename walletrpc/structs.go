@@ -55,8 +55,9 @@ type TransferRequest struct {
 	AccountIndex uint `json:"account_index"`
 	// subaddr_indices - array of unsigned int; (Optional) Transfer from this set of subaddresses. (Defaults to empty - all indices)
 	SubaddrIndices []uint `json:"subaddr_indices"`
-	// Fee - unsigned int; Ignored, will be automatically calculated.
-	Fee uint64 `json:"fee,omitempty"`
+	// priority - unsigned int; Set a priority for the transaction.
+	// Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
+	Priority Priority `json:"priority"`
 	// Mixin - unsigned int; Number of outpouts from the blockchain to mix with (0 means no mixing).
 	Mixin    uint64 `json:"mixin"`
 	RingSize uint   `json:"ring_size"`
@@ -66,15 +67,14 @@ type TransferRequest struct {
 	PaymentID string `json:"payment_id,omitempty"`
 	// get_tx_key - boolean; (Optional) Return the transaction key after sending.
 	GetTxKey bool `json:"get_tx_key"`
-	// priority - unsigned int; Set a priority for the transaction.
-	// Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
-	Priority Priority `json:"priority"`
 	// do_not_relay - boolean; (Optional) If true, the newly created transaction will not be relayed to the monero network. (Defaults to false)
 	DoNotRelay bool `json:"do_not_relay,omitempty"`
 	// get_tx_hex - boolean; Return the transaction as hex string after sending
 	GetTxHex bool `json:"get_tx_hex,omitempty"`
 	// get_tx_metadata - boolean; Return the metadata needed to relay the transaction. (Defaults to false)
 	GetTxMetadata bool `json:"get_tx_metadata"`
+	// Fee - unsigned int; Ignored, will be automatically calculated.
+	// Fee uint64 `json:"fee,omitempty"`
 }
 
 // Destination to receive XMR
@@ -91,12 +91,18 @@ type TransferResponse struct {
 	Amonut uint64 `json:"amonut"`
 	// fee - Integer value of the fee charged for the txn.
 	Fee uint64 `json:"fee"`
+	//multisig_txset - Set of multisig transactions in the process of being signed (empty for non-multisig).
+	MultisigTxset string `json:"multisig_txset"`
+	// tx_blob - Transaction as hex string if get_tx_hex is true
+	TxBlob string `json:"tx_blob,omitempty"`
 	// tx_hash - String for the publically searchable transaction hash
 	TxHash string `json:"tx_hash"`
 	// tx_key - String for the transaction key if get_tx_key is true, otherwise, blank string.
 	TxKey string `json:"tx_key,omitempty"`
-	// tx_blob - Transaction as hex string if get_tx_hex is true
-	TxBlob string `json:"tx_blob,omitempty"`
+	// get_tx_metadata - boolean; Return the metadata needed to relay the transaction. (Defaults to false)
+	TxMetadata bool `json:"tx_metadata"`
+	// unsigned_txset - String. Set of unsigned tx for cold-signing purposes.
+	UnsignedTxset string `json:"unsigned_txset"`
 }
 
 // TransferSplitResponse is the successful output of a Client.TransferSplit()
@@ -175,16 +181,11 @@ type GetTransfersRequest struct {
 
 // GetTransfersResponse = GetTransfers output
 type GetTransfersResponse struct {
-	In             []Transfer `json:"in"`
-	Out            []Transfer `json:"out"`
-	Pending        []Transfer `json:"pending"`
-	Failed         []Transfer `json:"failed"`
-	Pool           []Transfer `json:"pool"`
-	FilterByHeight bool       `json:filter_by_height`
-	MinHeight      uint       `json:"min_height"`
-	MaxHeight      uint       `json:"max_height"`
-	AccountIndex   uint       `json:"account_index"`
-	SubaddrIndices []uint     `json:"subaddr_indices"`
+	In      []Transfer `json:"in"`
+	Out     []Transfer `json:"out"`
+	Pending []Transfer `json:"pending"`
+	Failed  []Transfer `json:"failed"`
+	Pool    []Transfer `json:"pool"`
 }
 
 type Transfer struct {
@@ -214,7 +215,7 @@ type GetTransferByTxidResponse struct {
 	Address                         string `json:"txid"`
 	Amount                          uint64 `json:"amount"`
 	Confirmations                   uint
-	Destinations                    []Destination `json:"destinations,omitempty"` // TODO: check if deprecated
+	Destinations                    []Destination `json:"destinations,omitempty"`
 	DoubleSpendSeen                 bool          `json:"double_spend_seen"`
 	Fee                             uint64        `json:"fee"`
 	Height                          uint64        `json:"height"`
@@ -228,16 +229,29 @@ type GetTransferByTxidResponse struct {
 	UnlockTime                      uint64 `json:"unlock_time"`
 }
 
+type GetIncomingTransferRequest struct {
+	TransferType   GetTransferType `json:"transfer_type"`
+	AccountIndex   uint            `json:"account_index"`
+	SubaddrIndices SubAddrIndex    `json:"subaddr_indices"`
+	Verbose        bool            `json:"verbose"`
+}
+
 // IncTransfer is returned by IncomingTransfers
 type IncTransfer struct {
 	Amount uint64 `json:"amount"`
-	Spent  bool   `json:"spent"`
 	// Mostly internal use, can be ignored by most users.
 	GlobalIndex uint64 `json:"global_index"`
+	KeyImage string `json:"key_image"`
+	Spent  bool   `json:"spent"`
+	SubaddrIndex uint `json:"subaddr_index"`
 	// Several incoming transfers may share the same hash
 	// if they were in the same transaction.
 	TxHash string `json:"tx_hash"`
 	TxSize uint64 `json:"tx_size"`
+}
+
+type GetIncomingTransferResponse struct {
+	Transfer []IncTransfer `json:"transfer"`
 }
 
 // URIDef is the skeleton of the MakeURI()

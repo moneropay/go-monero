@@ -11,16 +11,16 @@ import (
 // Client is a monero-wallet-rpc client.
 type Client interface {
 	// Return the wallet's balance.
-	GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error)
+	GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error) // updated
 	// Return the wallet's address.
 	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
-	GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error)
+	GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error) // updated
 	// GetHeight - Returns the wallet's current block height.
 	// height - unsigned int; The current monero-wallet-rpc's blockchain height.
 	// If the wallet has been offline for a long time, it may need to catch up with the daemon.
-	GetHeight() (height uint64, err error)
+	GetHeight() (height uint64, err error) // updated
 	// Transfer - Send monero to a number of recipients.
-	Transfer(req TransferRequest) (resp *TransferResponse, err error)
+	Transfer(req TransferRequest) (resp *TransferResponse, err error) // updated
 	// Same as transfer, but can split into more than one tx if necessary.
 	TransferSplit(req TransferRequest) (resp *TransferSplitResponse, err error)
 	// Send all dust outputs back to the wallet's, to make them easier to spend (and mix).
@@ -41,11 +41,11 @@ type Client interface {
 	//	min_block_height - unsigned int; The block height at which to start looking for payments.
 	GetBulkPayments(paymentids []string, minblockheight uint) (payments []Payment, err error)
 	// Returns a list of transfers.
-	GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error)
+	GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error) // updated
 	// Show information about a transfer to/from this address.
 	GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetTransferByTxidResponse, err error)
 	// Return a list of incoming transfers to the wallet.
-	IncomingTransfers(transfertype GetTransferType) (transfers []IncTransfer, err error)
+	IncomingTransfers(req GetIncomingTransferRequest) (resp *GetIncomingTransferResponse, err error) // updated
 	// Return the spend or view private key (or mnemonic seed).
 	QueryKey(keytype QueryKeyType) (key string, err error)
 	// Make an integrated address from the wallet address and a payment id.
@@ -267,7 +267,6 @@ func (c *client) GetBulkPayments(paymentids []string, minblockheight uint) (paym
 }
 
 func (c *client) GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error) {
-	resp = &GetTransfersResponse{}
 	err = c.do("get_transfers", &req, resp)
 	return
 }
@@ -281,21 +280,13 @@ func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetT
 	return resp, nil
 }
 
-func (c *client) IncomingTransfers(transfertype GetTransferType) (transfers []IncTransfer, err error) {
-	jin := struct {
-		TransferType GetTransferType `json:"transfer_type"`
-	}{
-		transfertype,
-	}
-	jd := struct {
-		Transfers []IncTransfer `json:"transfers"`
-	}{}
-	err = c.do("incoming_transfers", &jin, &jd)
+func (c *client) IncomingTransfers(req GetIncomingTransferRequest) (resp *GetIncomingTransferResponse, err error) {
+
+	err = c.do("incoming_transfers", &req, resp)
 	if err != nil {
-		return
+		return resp, err
 	}
-	transfers = jd.Transfers
-	return
+	return resp, nil
 }
 
 func (c *client) QueryKey(keytype QueryKeyType) (key string, err error) {
