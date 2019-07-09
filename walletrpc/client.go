@@ -39,7 +39,7 @@ type Client interface {
 	//
 	//	payment_ids - array of: string
 	//	min_block_height - unsigned int; The block height at which to start looking for payments.
-	GetBulkPayments(paymentids []string, minblockheight uint) (payments []Payment, err error)
+	GetBulkPayments(paymentids []string, minblockheight uint64) (payments []Payment, err error)
 	// Returns a list of transfers.
 	GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error) // updated
 	// Show information about a transfer to/from this address.
@@ -248,10 +248,10 @@ func (c *client) GetPayments(paymentid string) (payments []Payment, err error) {
 	return jd.Payments, nil
 }
 
-func (c *client) GetBulkPayments(paymentids []string, minblockheight uint) (payments []Payment, err error) {
+func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) (payments []Payment, err error) {
 	jin := struct {
 		PaymentIDs     []string `json:"payment_ids"`
-		MinBlockHeight uint     `json:"min_block_height"`
+		MinBlockHeight uint64     `json:"min_block_height"`
 	}{
 		paymentids,
 		minblockheight,
