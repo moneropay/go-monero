@@ -161,38 +161,38 @@ func (c *client) do(method string, in, out interface{}) error {
 	return json2.DecodeClientResponse(resp.Body, out)
 }
 
-func (c *client) GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error) {
-	resp = &GetBalanceResponse{}
-	err = c.do("get_balance", &req, resp)
-	if err != nil {
-		return resp, err
-	}
-	return resp, nil
-}
-
-func (c *client) GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error) {
-	resp = &GetAddressResponse{}
-	err = c.do("get_address", &req, resp)
+func (c *client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) {
+	resp := &GetBalanceResponse{}
+	err := c.do("get_balance", &req, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (c *client) GetHeight() (height uint64, err error) {
+func (c *client) GetAddress(req GetAddressRequest) (*GetAddressResponse, error) {
+	resp := &GetAddressResponse{}
+	err := c.do("get_address", &req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *client) GetHeight() (uint64, error) {
 	jd := struct {
 		Height uint64 `json:"height"`
 	}{}
-	err = c.do("get_height", nil, &jd)
+	err := c.do("get_height", nil, &jd)
 	if err != nil {
 		return 0, err
 	}
 	return jd.Height, nil
 }
 
-func (c *client) Transfer(req TransferRequest) (resp *TransferResponse, err error) {
-	resp = &TransferResponse{}
-	err = c.do("transfer", &req, resp)
+func (c *client) Transfer(req TransferRequest) (*TransferResponse, error) {
+	resp := &TransferResponse{}
+	err := c.do("transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (c *client) Store() error {
 	return c.do("store", nil, nil)
 }
 
-func (c *client) GetPayments(paymentid string) (payments []Payment, err error) {
+func (c *client) GetPayments(paymentid string) ([]Payment, error) {
 	jin := struct {
 		PaymentID string `json:"payment_id"`
 	}{
@@ -241,14 +241,14 @@ func (c *client) GetPayments(paymentid string) (payments []Payment, err error) {
 	jd := struct {
 		Payments []Payment `json:"payments"`
 	}{}
-	err = c.do("get_payments", &jin, &jd)
+	err := c.do("get_payments", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
 	return jd.Payments, nil
 }
 
-func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) (payments []Payment, err error) {
+func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]Payment, error) {
 	jin := struct {
 		PaymentIDs     []string `json:"payment_ids"`
 		MinBlockHeight uint64     `json:"min_block_height"`
@@ -259,32 +259,36 @@ func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) (pa
 	jd := struct {
 		Payments []Payment `json:"payments"`
 	}{}
-	err = c.do("get_bulk_payments", &jin, &jd)
+	err := c.do("get_bulk_payments", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
 	return jd.Payments, nil
 }
 
-func (c *client) GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error) {
-	err = c.do("get_transfers", &req, resp)
-	return
-}
-
-func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetTransferByTxidResponse, err error) {
-	resp := &GetTransferByTxidResponse{}
-	err = c.do("get_transfer_by_txid", &req, resp)
+func (c *client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, error) {
+	resp := &GetTransfersResponse{}
+	err := c.do("get_transfers", &req, resp)
 	if err != nil {
-		return
+		return nil, err
 	}
 	return resp, nil
 }
 
-func (c *client) IncomingTransfers(req GetIncomingTransferRequest) (resp *GetIncomingTransferResponse, err error) {
-
-	err = c.do("incoming_transfers", &req, resp)
+func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
+	resp := &GetTransferByTxidResponse{}
+	err := c.do("get_transfer_by_txid", &req, resp)
 	if err != nil {
-		return resp, err
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *client) IncomingTransfers(req GetIncomingTransferRequest) (*GetIncomingTransferResponse, error) {
+	resp := &GetIncomingTransferResponse{}
+	err := c.do("incoming_transfers", &req, resp)
+	if err != nil {
+		return nil, err
 	}
 	return resp, nil
 }
