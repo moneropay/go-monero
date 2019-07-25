@@ -207,26 +207,12 @@ type Transfer struct {
 
 type GetTransferByTxidRequest struct {
 	Txid         string `json:"txid"`
-	AccountIndex uint   `json:"account_index"`
+	AccountIndex uint   `json:"account_index,omitempty"`
 }
 
 // Transfer is the transfer data of
 type GetTransferByTxidResponse struct {
-	Address                         string `json:"txid"`
-	Amount                          uint64 `json:"amount"`
-	Confirmations                   uint
-	Destinations                    []Destination `json:"destinations,omitempty"`
-	DoubleSpendSeen                 bool          `json:"double_spend_seen"`
-	Fee                             uint64        `json:"fee"`
-	Height                          uint64        `json:"height"`
-	Note                            string        `json:"note"`
-	PaymentID                       string        `json:"payment_id"`
-	SubaddrIndex                    SubAddrIndex
-	SuggestedConfirmationsThreshold uint   `json:"suggested_confirmations_threshold"`
-	Timestamp                       uint64 `json:"timestamp"`
-	Txid                            string `json:"txid"`
-	Type                            string `json:"type"`
-	UnlockTime                      uint64 `json:"unlock_time"`
+	Transfer Transfer `json:"transfer"`
 }
 
 type GetIncomingTransferRequest struct {
