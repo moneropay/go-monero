@@ -3,6 +3,7 @@ package walletrpc
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gorilla/rpc/v2/json2"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -191,11 +192,11 @@ func newClient() {
 }
 
 func TestClient_GetBulkPayments(t *testing.T) {
-	http := httpdigest.New("username", "password")
+	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
 		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: http,
+		Transport: trans,
 	})
 
 	ids := []string{
@@ -211,4 +212,41 @@ func TestClient_GetBulkPayments(t *testing.T) {
 	t.Log(len(payment))
 	t.Logf("%v\n", payment)
 
+}
+
+func TestClient_Transfer(t *testing.T) {
+	trans := httpdigest.New("username", "password")
+
+	client := New(Config{
+		Address:   "http://127.0.0.1:18085/json_rpc",
+		Transport: trans,
+	})
+	req := TransferRequest{
+
+		Destinations: []Destination{
+			{
+				Amount:  100,
+				Address: "41hgaCaFC9MB1myjiEH6fZ4pkRm692gkNTqq85UPs9ZaDD65pDyYfq6UxvMvwCy46bPJRJu2hZ3NS6n6znSJoFEWN1pUcjG",
+			},
+		},
+		Mixin: 3,
+		// RingSize: default RingSize = mixin + 1
+		PaymentID:     "a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac",
+		Priority:      PriorityUnimportant,
+		GetTxHex:      true,
+		GetTxMetadata: false,
+	}
+
+	payload, err := json2.EncodeClientRequest("transfer", req)
+	if err != nil {
+		t.Logf("%v", payload)
+		t.Fatalf("%v", err)
+	}
+	t.Logf("%v", string(payload))
+
+	resp, err := client.Transfer(req)
+	if err != nil {
+		t.Log(err)
+	}
+	t.Logf("%v\n", resp)
 }

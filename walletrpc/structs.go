@@ -99,8 +99,8 @@ type TransferResponse struct {
 	TxHash string `json:"tx_hash"`
 	// tx_key - String for the transaction key if get_tx_key is true, otherwise, blank string.
 	TxKey string `json:"tx_key,omitempty"`
-	// get_tx_metadata - boolean; Return the metadata needed to relay the transaction. (Defaults to false)
-	TxMetadata bool `json:"tx_metadata"`
+	// get_tx_metadata - string; Return the metadata needed to relay the transaction. (Defaults to false)
+	TxMetadata string `json:"tx_metadata"`
 	// unsigned_txset - String. Set of unsigned tx for cold-signing purposes.
 	UnsignedTxset string `json:"unsigned_txset"`
 }
