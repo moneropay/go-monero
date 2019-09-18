@@ -11,7 +11,7 @@ import (
 // Client is a monero-wallet-rpc client.
 type Client interface {
 	//Return new address
-	CreateAddress(req CreateAddressRequest) (resp *CreateAccountResponse, err error)
+	CreateAddress(req CreateAddressRequest) (resp *CreateAddressResponse, err error)
 	//Return new account
 	CreateAccount() (resp *CreateAccountResponse, err error)
 	// Return the wallet's balance.
