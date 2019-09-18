@@ -164,7 +164,7 @@ func (c *client) do(method string, in, out interface{}) error {
 	return json2.DecodeClientResponse(resp.Body, out)
 }
 
-func (c *client) GetAccount() (*CreateAccountResponse, error) {
+func (c *client) CreateAccount() (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
 	err := c.do("create_account", nil, resp)
 	if err != nil {
