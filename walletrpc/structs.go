@@ -182,6 +182,8 @@ type GetTransfersRequest struct {
 	FilterByHeight bool   `json:"filter_by_height"`
 	MinHeight      uint64 `json:"min_height"`
 	MaxHeight      uint64 `json:"max_height"`
+	AccountIndex   uint64 `json:"account_index"`
+	SubAddrIndex  	[]uint64	`json:"subaddr_indices"`
 }
 
 // GetTransfersResponse = GetTransfers output
