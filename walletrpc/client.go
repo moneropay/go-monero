@@ -10,6 +10,8 @@ import (
 
 // Client is a monero-wallet-rpc client.
 type Client interface {
+	//Return new address
+	CreateAddress(req CreateAddressRequest) (resp *CreateAccountResponse, err error)
 	//Return new account
 	CreateAccount() (resp *CreateAccountResponse, err error)
 	// Return the wallet's balance.
@@ -164,6 +166,14 @@ func (c *client) do(method string, in, out interface{}) error {
 	return json2.DecodeClientResponse(resp.Body, out)
 }
 
+func (c *client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse, error) {
+	resp := &CreateAddressResponse{}
+	err := c.do("create_address", &req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
 func (c *client) CreateAccount() (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
 	err := c.do("create_account", nil, resp)

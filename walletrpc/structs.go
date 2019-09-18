@@ -14,6 +14,16 @@ type GetBalanceResponse struct {
 	PerSubaddress        []SubaddressInfo `json:"per_subaddress"`
 }
 
+type CreateAddressRequest struct {
+	AccountIndex		uint64				`json:"account_index"`
+	Label 				string 				`json:"label"`
+}
+
+type CreateAddressResponse struct {
+	Address 			string				`json:"address"`
+	AddressIndex		uint64				`json:"address_index"`
+}
+
 type CreateAccountResponse struct {
 	AccountIndex		uint64				`json:"account_index"`
 	Address				string				`json:"address"`
