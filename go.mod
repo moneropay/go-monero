@@ -1,4 +1,4 @@
-module github.com/gabstv/go-monero
+module github.com/LuaxY/go-monero
 
 go 1.13
 
