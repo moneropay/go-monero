@@ -72,12 +72,13 @@ func GetWalletError(err error) (isWalletError bool, werr *WalletError) {
 // Priority represents a transaction priority
 type Priority uint
 
-// Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
+// Accepted Values are: 0-4 for: default, unimportant, normal, elevated, priority.
 const (
 	PriorityDefault     Priority = 0
 	PriorityUnimportant Priority = 1
 	PriorityNormal      Priority = 2
 	PriorityElevated    Priority = 3
+	PriorityPriority    Priority = 4
 )
 
 // GetTransferType is a string that contains the possible types:
