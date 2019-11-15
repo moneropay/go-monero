@@ -31,6 +31,8 @@ type Client interface {
 	SweepDust() (txHashList []string, err error)
 	// Send all unlocked balance to an address.
 	SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error)
+	// Send all of a specific unlocked output to an address.
+	SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error)
 	// Save the blockchain.
 	Store() error
 	// Get a list of incoming payments using a given payment id.
@@ -248,6 +250,15 @@ func (c *client) SweepDust() (txHashList []string, err error) {
 func (c *client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error) {
 	resp = &SweepAllResponse{}
 	err = c.do("sweep_all", &req, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error) {
+	resp = &SweepSingleResponse{}
+	err = c.do("sweep_single", &req, resp)
 	if err != nil {
 		return nil, err
 	}

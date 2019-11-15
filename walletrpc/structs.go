@@ -15,18 +15,18 @@ type GetBalanceResponse struct {
 }
 
 type CreateAddressRequest struct {
-	AccountIndex		uint64				`json:"account_index"`
-	Label 				string 				`json:"label"`
+	AccountIndex uint64 `json:"account_index"`
+	Label        string `json:"label"`
 }
 
 type CreateAddressResponse struct {
-	Address 			string				`json:"address"`
-	AddressIndex		uint64				`json:"address_index"`
+	Address      string `json:"address"`
+	AddressIndex uint64 `json:"address_index"`
 }
 
 type CreateAccountResponse struct {
-	AccountIndex		uint64				`json:"account_index"`
-	Address				string				`json:"address"`
+	AccountIndex uint64 `json:"account_index"`
+	Address      string `json:"address"`
 }
 
 type SubaddressInfo struct {
@@ -156,7 +156,7 @@ type SweepAllRequest struct {
 	GetTxHex bool `json:"get_tx_hex,omitempty"`
 }
 
-// SweepAllResponse is a tipical response of a SweepAllRequest
+// SweepAllResponse is a typical response of a SweepAllRequest
 type SweepAllResponse struct {
 	// tx_hash_list - array of: string. The tx hashes of every transaction.
 	TxHashList []string `json:"tx_hash_list"`
@@ -166,9 +166,59 @@ type SweepAllResponse struct {
 	TxKeyList []string `json:"tx_key_list"`
 }
 
+// SweepSingleRequest is the struct to send single unlocked balance to an address.
+type SweepSingleRequest struct {
+	// address - string; Destination public address.
+	Address string `json:"address"`
+	// account_index - unsigned int; Sweep transactions from this account.
+	AccountIndex uint64 `json:"account_index"`
+	// priority - unsigned int; (Optional)
+	Priority Priority `json:"priority,omitempty"`
+	// mixin - unsigned int; Number of outpouts from the blockchain to mix with (0 means no mixing).
+	Mixin uint64 `json:"mixin,omitempty"`
+	// RingSize - unsigned int; Number of outputs to mix in the transaction (this output + N decoys from the blockchain).
+	RingSize uint64 `json:"ring_size,omitempty"`
+	// unlock_time - unsigned int; Number of blocks before the monero can be spent (0 to not add a lock).
+	UnlockTime uint64 `json:"unlock_time"`
+	// payment_id - string; (Optional) Random 32-byte/64-character hex string to identify a transaction.
+	PaymentID string `json:"payment_id,omitempty"`
+	// get_tx_keys - boolean; (Optional) Return the transaction keys after sending.
+	GetTxKeys bool `json:"get_tx_keys,omitempty"`
+	// get_tx_metadata - boolean; (Optional) return the transaction metadata as a string. (Defaults to false)
+	GetTxMetadata bool `json:"get_tx_metadata,omitempty"`
+	//  string; Key image of specific output to sweep.
+	KeyImage string `json:"key_image"`
+	// below_amount - unsigned int; (Optional)
+	BelowAmount uint64 `json:"below_amount"`
+	// do_not_relay - boolean; (Optional)
+	DoNotRelay bool `json:"do_not_relay,omitempty"`
+	// get_tx_hex - boolean; (Optional) return the transactions as hex encoded string.
+	GetTxHex bool `json:"get_tx_hex,omitempty"`
+}
+
+// SweepSingleResponse is a typical response of a SweepSingleRequest
+type SweepSingleResponse struct {
+	// tx_hash_list - string. The tx hashes of every transaction.
+	TxHash string `json:"tx_hash"`
+	// tx_key_list - string. The transaction keys for every transaction.
+	TxKey string `json:"tx_key"`
+	// amount - integer. The amount transferred for every transaction.
+	Amount uint64 `json:"amount"`
+	// fee - integer. The amount of fees paid for every transaction.
+	Fee uint64 `json:"fee"`
+	// tx_blob - string. The tx as hex string for every transaction.
+	TxBlob string `json:"tx_blob"`
+	// tx_metadata - string. List of transaction metadata needed to relay the transactions later.
+	TxMetadata string `json:"tx_metadata"`
+	// multisig_txset - string. The set of signing keys used in a multisig transaction (empty for non-multisig).
+	MultisigTxset string `json:"multisig_txset"`
+	// unsigned_txset - string. Set of unsigned tx for cold-signing purposes.
+	UnsignedTxset string `json:"unsigned_txset"`
+}
+
 type SubAddrIndex struct {
 	Major uint `json:"major"`
-	minor uint `json:"minor"`
+	Minor uint `json:"minor"`
 }
 
 // Payment ...
@@ -184,16 +234,16 @@ type Payment struct {
 
 // GetTransfersRequest = GetTransfers body
 type GetTransfersRequest struct {
-	In             bool   `json:"in"`
-	Out            bool   `json:"out"`
-	Pending        bool   `json:"pending"`
-	Failed         bool   `json:"failed"`
-	Pool           bool   `json:"pool"`
-	FilterByHeight bool   `json:"filter_by_height"`
-	MinHeight      uint64 `json:"min_height"`
-	MaxHeight      uint64 `json:"max_height"`
-	AccountIndex   uint64 `json:"account_index"`
-	SubAddrIndex  	[]uint64	`json:"subaddr_indices"`
+	In             bool     `json:"in"`
+	Out            bool     `json:"out"`
+	Pending        bool     `json:"pending"`
+	Failed         bool     `json:"failed"`
+	Pool           bool     `json:"pool"`
+	FilterByHeight bool     `json:"filter_by_height"`
+	MinHeight      uint64   `json:"min_height"`
+	MaxHeight      uint64   `json:"max_height"`
+	AccountIndex   uint64   `json:"account_index"`
+	SubAddrIndex   []uint64 `json:"subaddr_indices"`
 }
 
 // GetTransfersResponse = GetTransfers output
@@ -243,10 +293,10 @@ type GetIncomingTransferRequest struct {
 type IncTransfer struct {
 	Amount uint64 `json:"amount"`
 	// Mostly internal use, can be ignored by most users.
-	GlobalIndex uint64 `json:"global_index"`
-	KeyImage string `json:"key_image"`
-	Spent  bool   `json:"spent"`
-	SubaddrIndex uint `json:"subaddr_index"`
+	GlobalIndex  uint64 `json:"global_index"`
+	KeyImage     string `json:"key_image"`
+	Spent        bool   `json:"spent"`
+	SubaddrIndex uint   `json:"subaddr_index"`
 	// Several incoming transfers may share the same hash
 	// if they were in the same transaction.
 	TxHash string `json:"tx_hash"`
