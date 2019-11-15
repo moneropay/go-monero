@@ -189,7 +189,12 @@ func newClient() {
 
 	fmt.Println("Balance:", XMRToDecimal(balance.Balance))
 	fmt.Println("Unlocked balance:", XMRToDecimal(balance.UnlockedBalance))
+}
 
+func skipCI(t *testing.T) {
+	if os.Getenv("CI") != "" {
+		t.Skip("Skipping testing in CI environment")
+	}
 }
 
 func TestClient_GetBulkPayments(t *testing.T) {
@@ -254,6 +259,8 @@ func TestClient_Transfer(t *testing.T) {
 }
 
 func TestClient_GetTransferByTxID(t *testing.T) {
+	skipCI(t)
+
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
