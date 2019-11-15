@@ -12,6 +12,6 @@ func TestXMRToDecimal(t *testing.T) {
 }
 
 func TestXMRToFloat64(t *testing.T) {
-	assert.Equal(t, float64(0.02), XMRToFloat64(20000000000))
-	assert.Equal(t, float64(3.14), XMRToFloat64(314e10))
+	assert.Equal(t, 0.02, XMRToFloat64(20000000000))
+	assert.Equal(t, 3.14, XMRToFloat64(314e10))
 }

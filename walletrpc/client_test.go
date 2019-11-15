@@ -3,11 +3,12 @@ package walletrpc
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/rpc/v2/json2"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
+
+	"github.com/gorilla/rpc/v2/json2"
 
 	"github.com/gabstv/httpdigest"
 	//"github.com/stretchr/testify/assert"

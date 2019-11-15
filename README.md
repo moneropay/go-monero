@@ -167,12 +167,17 @@ The Go program is similar, but it uses an API-KEY:
 package main
 
 import (
-	"fmt"
-    "os"
-    "net/http"
-    "crypto/tls"
+"crypto/tls"
+"fmt"
+"net/http"
+"os"
 
-	"github.com/gabstv/go-monero/walletrpc"
+
+
+
+
+
+"github.com/gabstv/go-monero/walletrpc"
 )
 
 func main() {
