@@ -79,7 +79,7 @@ type TransferRequest struct {
 	// unlock_time - unsigned int; Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 	// payment_id - string; (Optional) Random 32-byte/64-character hex string to identify a transaction.
-	PaymentID string `json:"payment_id,omitempty"`
+	PaymentId string `json:"payment_id,omitempty"`
 	// get_tx_key - boolean; (Optional) Return the transaction key after sending.
 	GetTxKey bool `json:"get_tx_key"`
 	// do_not_relay - boolean; (Optional) If true, the newly created transaction will not be relayed to the monero network. (Defaults to false)
@@ -181,7 +181,7 @@ type SweepSingleRequest struct {
 	// unlock_time - unsigned int; Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 	// payment_id - string; (Optional) Random 32-byte/64-character hex string to identify a transaction.
-	PaymentID string `json:"payment_id,omitempty"`
+	PaymentId string `json:"payment_id,omitempty"`
 	// get_tx_keys - boolean; (Optional) Return the transaction keys after sending.
 	GetTxKeys bool `json:"get_tx_keys,omitempty"`
 	// get_tx_metadata - boolean; (Optional) return the transaction metadata as a string. (Defaults to false)
@@ -223,7 +223,7 @@ type SubAddrIndex struct {
 
 // Payment ...
 type Payment struct {
-	PaymentID    string       `json:"payment_id"`
+	PaymentId    string       `json:"payment_id"`
 	TxHash       string       `json:"tx_hash"`
 	Amount       uint64       `json:"amount"`
 	BlockHeight  uint64       `json:"block_height"`
@@ -263,17 +263,17 @@ type Transfer struct {
 	Fee                             uint64       `json:"fee"`
 	Height                          uint64       `json:"height"`
 	Note                            string       `json:"note"`
-	PaymentID                       string       `json:"payment_id"`
+	PaymentId                       string       `json:"payment_id"`
 	SubaddrIndex                    SubAddrIndex `json:"subaddr_index"`
 	SuggestedConfirmationsThreshold uint         `json:"suggested_confirmations_threshold"`
 	Timestamp                       uint64       `json:"timestamp"`
-	Txid                            string       `json:"txid"`
+	TxId                            string       `json:"txid"`
 	Type                            string       `json:"type"`
 	UnlockTime                      uint64       `json:"unlock_time"`
 }
 
 type GetTransferByTxidRequest struct {
-	Txid         string `json:"txid"`
+	TxId         string `json:"txid"`
 	AccountIndex uint   `json:"account_index,omitempty"`
 }
 
@@ -341,5 +341,5 @@ type AddressBookEntry struct {
 	Address     string `json:"address"`
 	Description string `json:"description,omitempty"`
 	Index       uint64 `json:"index,omitempty"`
-	PaymentID   string `json:"payment_id,omitempty"`
+	PaymentId   string `json:"payment_id,omitempty"`
 }

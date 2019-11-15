@@ -232,7 +232,7 @@ func TestClient_Transfer(t *testing.T) {
 		},
 		Mixin: 3,
 		// RingSize: default RingSize = mixin + 1
-		PaymentID:     "a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac",
+		PaymentId:     "a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac",
 		Priority:      PriorityUnimportant,
 		GetTxHex:      true,
 		GetTxMetadata: false,
@@ -252,7 +252,6 @@ func TestClient_Transfer(t *testing.T) {
 	t.Logf("%v\n", resp)
 }
 
-
 func TestClient_GetTransferByTxID(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
@@ -260,7 +259,7 @@ func TestClient_GetTransferByTxID(t *testing.T) {
 		Address:   "http://127.0.0.1:18085/json_rpc",
 		Transport: trans,
 	})
-	resp, err := client.GetTransferByTxID(GetTransferByTxidRequest{Txid: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d"})
+	resp, err := client.GetTransferByTxID(GetTransferByTxidRequest{TxId: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d"})
 	if err != nil {
 		t.Logf("%v", err)
 	}
