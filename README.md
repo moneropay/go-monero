@@ -2,12 +2,12 @@
 
 This package is a hub of monero related tools for Go. At this time, only the Wallet RPC Client is available.
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/gabstv/go-monero)](https://goreportcard.com/report/github.com/gabstv/go-monero)
-[![Build Status](https://travis-ci.org/gabstv/go-monero.svg?branch=master)](https://travis-ci.org/gabstv/go-monero)
+[![Go Report Card](https://goreportcard.com/badge/github.com/LuaxY/go-monero)](https://goreportcard.com/report/github.com/LuaxY/go-monero)
+[![Build Status](https://travis-ci.org/LuaxY/go-monero.svg?branch=master)](https://travis-ci.org/LuaxY/go-monero)
 
 ## Wallet RPC Client
 
-[![GoDoc](https://godoc.org/github.com/gabstv/go-monero/walletrpc?status.svg)](https://godoc.org/github.com/gabstv/go-monero/walletrpc)
+[![GoDoc](https://godoc.org/github.com/LuaxY/go-monero/walletrpc?status.svg)](https://godoc.org/github.com/LuaxY/go-monero/walletrpc)
 
 The ```go-monero/walletrpc``` package is a RPC client with all the methods of the v0.15.0.0 release.
 It does support digest authentication, [however I don't recommend using it alone (without https).](https://en.wikipedia.org/wiki/Digest_access_authentication#Disadvantages) If there is a need to split the RPC client and server into separate instances, you could put a proxy on the instance that contains the RPC server and check the authenticity of the requests using https + X-API-KEY headers between the proxy and this RPC client (there is an example about this implementation below)
@@ -15,7 +15,7 @@ It does support digest authentication, [however I don't recommend using it alone
 ### Installation
 
 ```sh
-go get -u github.com/gabstv/go-monero/walletrpc
+go get -u github.com/LuaxY/go-monero/walletrpc
 ```
 
 ### Usage
@@ -37,8 +37,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gabstv/go-monero/walletrpc"
-	"github.com/gabstv/go-monero/walletrpc/unit"
+	"github.com/LuaxY/go-monero/walletrpc"
+	"github.com/LuaxY/go-monero/walletrpc/unit"
 )
 
 func main() {
@@ -105,8 +105,8 @@ package main
 import (
 	"fmt"
 
-	"github.com/gabstv/go-monero/walletrpc"
-	"github.com/gabstv/httpdigest"
+	"github.com/LuaxY/go-monero/walletrpc"
+	"github.com/LuaxY/httpdigest"
 )
 
 func main() {
@@ -167,17 +167,12 @@ The Go program is similar, but it uses an API-KEY:
 package main
 
 import (
-"crypto/tls"
-"fmt"
-"net/http"
-"os"
-
-
-
-
-
-
-"github.com/gabstv/go-monero/walletrpc"
+    "crypto/tls"
+    "fmt"
+    "net/http"
+    "os"
+    
+    "github.com/LuaxY/go-monero/walletrpc"
 )
 
 func main() {
@@ -219,11 +214,13 @@ func main() {
 }
 ```
 
-# Contributing
+# Special Thanks
 
-* You can contribute with pull requests.
-* If could donate some XMR to the address below if you're feeling generous:
+This version of `go-monero` is based on the works of:
 
-```
-45eoXYNHC4LcL2Hh42T9FMPTmZHyDEwDbgfBEuNj3RZUek8A4og4KiCfVL6ZmvHBfCALnggWtHH7QHF8426yRayLQq7MLf5
-```
+- [gabstv](https://github.com/gabstv/go-monero)
+- [carryon](https://github.com/carryon/go-monero)
+- [TemaKozyrev](https://github.com/TemaKozyrev/go-monero)
+- [ibclabs](https://github.com/ibclabs/go-monero)
+- [Fraudmarc](https://github.com/Fraudmarc/go-monero)
+- [leonklingele](https://github.com/leonklingele/go-moner)
