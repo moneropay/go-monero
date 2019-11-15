@@ -100,7 +100,7 @@ type Destination struct {
 	Address string `json:"address"`
 }
 
-// TransferResponse is the successful output of a Client.Transfer()
+// TransferResponse is the successful output of a Transfer()
 type TransferResponse struct {
 	// amount - Amount transferred for the transaction.
 	Amonut uint64 `json:"amonut"`
@@ -120,7 +120,7 @@ type TransferResponse struct {
 	UnsignedTxset string `json:"unsigned_txset"`
 }
 
-// TransferSplitResponse is the successful output of a Client.TransferSplit()
+// TransferSplitResponse is the successful output of a TransferSplit()
 type TransferSplitResponse struct {
 	// fee_list - array of: integer. The amount of fees paid for every transaction.
 	FeeList []uint64 `json:"fee_list"`

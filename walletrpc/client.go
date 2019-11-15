@@ -8,117 +8,9 @@ import (
 	"github.com/gorilla/rpc/v2/json2"
 )
 
-// Client is a monero-wallet-rpc client.
-type Client interface {
-	//Return new address
-	CreateAddress(req CreateAddressRequest) (resp *CreateAddressResponse, err error)
-	//Return new account
-	CreateAccount() (resp *CreateAccountResponse, err error)
-	// Return the wallet's balance.
-	GetBalance(req GetBalanceRequest) (resp *GetBalanceResponse, err error) // updated
-	// Return the wallet's address.
-	// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
-	GetAddress(req GetAddressRequest) (resp *GetAddressResponse, err error) // updated
-	// GetHeight - Returns the wallet's current block height.
-	// height - unsigned int; The current monero-wallet-rpc's blockchain height.
-	// If the wallet has been offline for a long time, it may need to catch up with the daemon.
-	GetHeight() (height uint64, err error) // updated
-	// Transfer - Send monero to a number of recipients.
-	Transfer(req TransferRequest) (resp *TransferResponse, err error) // updated
-	// Same as transfer, but can split into more than one tx if necessary.
-	TransferSplit(req TransferRequest) (resp *TransferSplitResponse, err error)
-	// Send all dust outputs back to the wallet's, to make them easier to spend (and mix).
-	SweepDust() (txHashList []string, err error)
-	// Send all unlocked balance to an address.
-	SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error)
-	// Send all of a specific unlocked output to an address.
-	SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error)
-	// Save the blockchain.
-	Store() error
-	// Get a list of incoming payments using a given payment id.
-	GetPayments(paymentid string) (payments []Payment, err error)
-	// Get a list of incoming payments using a given payment id, or a list of
-	// payments ids, from a given height. This method is the preferred method
-	// over get_payments because it has the same functionality but is more extendable.
-	// Either is fine for looking up transactions by a single payment ID.
-	// Inputs:
-	//
-	//	payment_ids - array of: string
-	//	min_block_height - unsigned int; The block height at which to start looking for payments.
-	GetBulkPayments(paymentids []string, minblockheight uint64) (payments []Payment, err error)
-	// Returns a list of transfers.
-	GetTransfers(req GetTransfersRequest) (resp *GetTransfersResponse, err error) // updated
-	// Show information about a transfer to/from this address.
-	GetTransferByTxID(req GetTransferByTxidRequest) (transfer *GetTransferByTxidResponse, err error)
-	// Return a list of incoming transfers to the wallet.
-	IncomingTransfers(req GetIncomingTransferRequest) (resp *GetIncomingTransferResponse, err error) // updated
-	// Return the spend or view private key (or mnemonic seed).
-	QueryKey(keytype QueryKeyType) (key string, err error)
-	// Make an integrated address from the wallet address and a payment id.
-	// payment_id - string; hex encoded; can be empty, in which case a random payment id is generated
-	MakeIntegratedAddress(paymentid string) (integratedaddr string, err error)
-	// Retrieve the standard address and payment id corresponding to an integrated address.
-	SplitIntegratedAddress(integratedaddr string) (paymentid, address string, err error)
-	// Stops the wallet, storing the current state.
-	StopWallet() error
-	// Create a payment URI using the official URI spec.
-	MakeURI(req URIDef) (uri string, err error)
-	// Parse a payment URI to get payment information.
-	ParseURI(uri string) (parsed *URIDef, err error)
-	// Rescan blockchain from scratch.
-	RescanBlockchain() error
-	// Set arbitrary string notes for transactions.
-	SetTxNotes(txids, notes []string) error
-	// Get string notes for transactions.
-	GetTxNotes(txids []string) (notes []string, err error)
-	// Set an attribute value
-	SetAttribute(key string, value string) error
-	// Get an attribute value
-	GetAttribute(key string) (value string, err error)
-	// Sign a string.
-	Sign(data string) (signature string, err error)
-	// Verify a signature on a string.
-	Verify(data, address, signature string) (good bool, err error)
-	// Export a signed set of key images.
-	ExportKeyImages() (signedkeyimages []SignedKeyImage, err error)
-	// Import signed key images list and verify their spent status.
-	ImportKeyImages(signedkeyimages []SignedKeyImage) (resp *ImportKeyImageResponse, err error)
-	// Retrieves entries from the address book.
-	// indexes - array of unsigned int; indices of the requested address book entries
-	GetAddressBook(indexes []uint64) (entries []AddressBookEntry, err error)
-	// Add an entry to the address book.
-	AddAddressBook(entry AddressBookEntry) (index uint64, err error)
-	// Delete an entry from the address book.
-	DeleteAddressBook(index uint64) error
-	// Rescan the blockchain for spent outputs.
-	RescanSpent() error
-	// Start mining in the Monero daemon.
-	// Inputs:
-	//
-	//	threads_count - unsigned int; Number of threads created for mining
-	//	do_background_mining - boolean;
-	//	ignore_battery - boolean;
-	StartMining(threads uint, background, ignorebattery bool) error
-	// Stop mining in the Monero daemon.
-	StopMining() error
-	// Get a list of available languages for your wallet's seed.
-	GetLanguages() (languages []string, err error)
-	// Create a new wallet. You need to have set the argument "–wallet-dir" when
-	// launching monero-wallet-rpc to make this work.
-	// Inputs:
-	//
-	//   filename - string;
-	//    password - string;
-	//    language - string; Language for your wallets' seed.
-	CreateWallet(filename, password, language string) error
-	// Open a wallet. You need to have set the argument "–wallet-dir" when
-	// launching monero-wallet-rpc to make this work.
-	OpenWallet(filename, password string) error
-}
-
 // New returns a new monero-wallet-rpc client.
-func New(cfg Config) Client {
-	cl := &client{
+func New(cfg Config) *Client {
+	cl := &Client{
 		addr:    cfg.Address,
 		headers: cfg.CustomHeaders,
 	}
@@ -132,13 +24,13 @@ func New(cfg Config) Client {
 	return cl
 }
 
-type client struct {
+type Client struct {
 	httpcl  *http.Client
 	addr    string
 	headers map[string]string
 }
 
-func (c *client) do(method string, in, out interface{}) error {
+func (c *Client) do(method string, in, out interface{}) error {
 	payload, err := json2.EncodeClientRequest(method, in)
 	if err != nil {
 		return err
@@ -172,7 +64,8 @@ func (c *client) do(method string, in, out interface{}) error {
 	return json2.DecodeClientResponse(resp.Body, out)
 }
 
-func (c *client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse, error) {
+// CreateAddress returns new address
+func (c *Client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse, error) {
 	resp := &CreateAddressResponse{}
 	err := c.do("create_address", &req, resp)
 	if err != nil {
@@ -180,7 +73,9 @@ func (c *client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse
 	}
 	return resp, nil
 }
-func (c *client) CreateAccount() (*CreateAccountResponse, error) {
+
+// CreateAccount returns new account
+func (c *Client) CreateAccount() (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
 	err := c.do("create_account", nil, resp)
 	if err != nil {
@@ -189,7 +84,8 @@ func (c *client) CreateAccount() (*CreateAccountResponse, error) {
 	return resp, nil
 }
 
-func (c *client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) {
+// GetBalance returns the wallet's balance.
+func (c *Client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) {
 	resp := &GetBalanceResponse{}
 	err := c.do("get_balance", &req, resp)
 	if err != nil {
@@ -198,7 +94,9 @@ func (c *client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) 
 	return resp, nil
 }
 
-func (c *client) GetAddress(req GetAddressRequest) (*GetAddressResponse, error) {
+// GetAddress returns the wallet's address.
+// address - string; The 95-character hex address string of the monero-wallet-rpc in session.
+func (c *Client) GetAddress(req GetAddressRequest) (*GetAddressResponse, error) {
 	resp := &GetAddressResponse{}
 	err := c.do("get_address", &req, resp)
 	if err != nil {
@@ -207,7 +105,10 @@ func (c *client) GetAddress(req GetAddressRequest) (*GetAddressResponse, error) 
 	return resp, nil
 }
 
-func (c *client) GetHeight() (uint64, error) {
+// GetHeight returns the wallet's current block height.
+// height - unsigned int; The current monero-wallet-rpc's blockchain height.
+// If the wallet has been offline for a long time, it may need to catch up with the daemon.
+func (c *Client) GetHeight() (uint64, error) {
 	jd := struct {
 		Height uint64 `json:"height"`
 	}{}
@@ -218,7 +119,8 @@ func (c *client) GetHeight() (uint64, error) {
 	return jd.Height, nil
 }
 
-func (c *client) Transfer(req TransferRequest) (*TransferResponse, error) {
+// Transfer sends monero to a number of recipients.
+func (c *Client) Transfer(req TransferRequest) (*TransferResponse, error) {
 	resp := &TransferResponse{}
 	err := c.do("transfer", &req, resp)
 	if err != nil {
@@ -227,7 +129,8 @@ func (c *client) Transfer(req TransferRequest) (*TransferResponse, error) {
 	return resp, nil
 }
 
-func (c *client) TransferSplit(req TransferRequest) (resp *TransferSplitResponse, err error) {
+// TransferSplit is same as transfer, but can split into more than one tx if necessary.
+func (c *Client) TransferSplit(req TransferRequest) (resp *TransferSplitResponse, err error) {
 	resp = &TransferSplitResponse{}
 	err = c.do("transfer_split", &req, resp)
 	if err != nil {
@@ -236,7 +139,8 @@ func (c *client) TransferSplit(req TransferRequest) (resp *TransferSplitResponse
 	return resp, nil
 }
 
-func (c *client) SweepDust() (txHashList []string, err error) {
+// SweepDust sends all dust outputs back to the wallet's, to make them easier to spend (and mix).
+func (c *Client) SweepDust() (txHashList []string, err error) {
 	jd := struct {
 		TxHashList []string `json:"tx_hash_list"`
 	}{}
@@ -247,7 +151,8 @@ func (c *client) SweepDust() (txHashList []string, err error) {
 	return jd.TxHashList, nil
 }
 
-func (c *client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error) {
+// SweepAll sends all unlocked balance to an address.
+func (c *Client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error) {
 	resp = &SweepAllResponse{}
 	err = c.do("sweep_all", &req, resp)
 	if err != nil {
@@ -256,7 +161,8 @@ func (c *client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err erro
 	return resp, nil
 }
 
-func (c *client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error) {
+// SweepSingle sends all of a specific unlocked output to an address.
+func (c *Client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error) {
 	resp = &SweepSingleResponse{}
 	err = c.do("sweep_single", &req, resp)
 	if err != nil {
@@ -265,11 +171,13 @@ func (c *client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse,
 	return resp, nil
 }
 
-func (c *client) Store() error {
+// Store saves the blockchain.
+func (c *Client) Store() error {
 	return c.do("store", nil, nil)
 }
 
-func (c *client) GetPayments(paymentid string) ([]Payment, error) {
+// GetPayments returns a list of incoming payments using a given payment id.
+func (c *Client) GetPayments(paymentid string) ([]Payment, error) {
 	jin := struct {
 		PaymentID string `json:"payment_id"`
 	}{
@@ -285,7 +193,13 @@ func (c *client) GetPayments(paymentid string) ([]Payment, error) {
 	return jd.Payments, nil
 }
 
-func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]Payment, error) {
+// GetBulkPayments returns a list of incoming payments using a given payment id, or a list of
+// payments ids, from a given height. This method is the preferred method
+// over get_payments because it has the same functionality but is more extendable.
+// Either is fine for looking up transactions by a single payment ID.
+//	payment_ids - array of: string
+//	min_block_height - unsigned int; The block height at which to start looking for payments.
+func (c *Client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]Payment, error) {
 	jin := struct {
 		PaymentIDs     []string `json:"payment_ids"`
 		MinBlockHeight uint64   `json:"min_block_height"`
@@ -303,7 +217,8 @@ func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]
 	return jd.Payments, nil
 }
 
-func (c *client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, error) {
+// GetTransfers returns a list of transfers.
+func (c *Client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, error) {
 	resp := &GetTransfersResponse{}
 	err := c.do("get_transfers", &req, resp)
 	if err != nil {
@@ -312,7 +227,8 @@ func (c *client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, e
 	return resp, nil
 }
 
-func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
+// GetTransferByTxID shows information about a transfer to/from this address.
+func (c *Client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
 	resp := &GetTransferByTxidResponse{}
 	err := c.do("get_transfer_by_txid", &req, resp)
 	if err != nil {
@@ -321,7 +237,8 @@ func (c *client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferBy
 	return resp, nil
 }
 
-func (c *client) IncomingTransfers(req GetIncomingTransferRequest) (*GetIncomingTransferResponse, error) {
+// IncomingTransfers returns a list of incoming transfers to the wallet.
+func (c *Client) IncomingTransfers(req GetIncomingTransferRequest) (*GetIncomingTransferResponse, error) {
 	resp := &GetIncomingTransferResponse{}
 	err := c.do("incoming_transfers", &req, resp)
 	if err != nil {
@@ -330,7 +247,8 @@ func (c *client) IncomingTransfers(req GetIncomingTransferRequest) (*GetIncoming
 	return resp, nil
 }
 
-func (c *client) QueryKey(keytype QueryKeyType) (key string, err error) {
+// QueryKey returns the spend or view private key (or mnemonic seed).
+func (c *Client) QueryKey(keytype QueryKeyType) (key string, err error) {
 	jin := struct {
 		KeyType QueryKeyType `json:"key_type"`
 	}{
@@ -347,7 +265,9 @@ func (c *client) QueryKey(keytype QueryKeyType) (key string, err error) {
 	return
 }
 
-func (c *client) MakeIntegratedAddress(paymentid string) (integratedaddr string, err error) {
+// MakeIntegratedAddress makes an integrated address from the wallet address and a payment id.
+// payment_id - string; hex encoded; can be empty, in which case a random payment id is generated
+func (c *Client) MakeIntegratedAddress(paymentid string) (integratedaddr string, err error) {
 	jin := struct {
 		PaymentID string `json:"payment_id"`
 	}{
@@ -364,7 +284,8 @@ func (c *client) MakeIntegratedAddress(paymentid string) (integratedaddr string,
 	return
 }
 
-func (c *client) SplitIntegratedAddress(integratedaddr string) (paymentid, address string, err error) {
+// SplitIntegratedAddress retrieves the standard address and payment id corresponding to an integrated address.
+func (c *Client) SplitIntegratedAddress(integratedaddr string) (paymentid, address string, err error) {
 	jin := struct {
 		IntegratedAddress string `json:"integrated_address"`
 	}{
@@ -383,11 +304,13 @@ func (c *client) SplitIntegratedAddress(integratedaddr string) (paymentid, addre
 	return
 }
 
-func (c *client) StopWallet() error {
+// StopWallet stops the wallet, storing the current state.
+func (c *Client) StopWallet() error {
 	return c.do("stop_wallet", nil, nil)
 }
 
-func (c *client) MakeURI(req URIDef) (uri string, err error) {
+// MakeURI creates a payment URI using the official URI spec.
+func (c *Client) MakeURI(req URIDef) (uri string, err error) {
 	jd := struct {
 		URI string `json:"uri"`
 	}{}
@@ -399,7 +322,8 @@ func (c *client) MakeURI(req URIDef) (uri string, err error) {
 	return
 }
 
-func (c *client) ParseURI(uri string) (parsed *URIDef, err error) {
+// ParseURI parses a payment URI to get payment information.
+func (c *Client) ParseURI(uri string) (parsed *URIDef, err error) {
 	jin := struct {
 		URI string `json:"uri"`
 	}{
@@ -413,11 +337,13 @@ func (c *client) ParseURI(uri string) (parsed *URIDef, err error) {
 	return
 }
 
-func (c *client) RescanBlockchain() error {
+// RescanBlockchain rescans blockchain from scratch.
+func (c *Client) RescanBlockchain() error {
 	return c.do("rescan_blockchain", nil, nil)
 }
 
-func (c *client) SetTxNotes(txids, notes []string) error {
+// SetTxNotes sets arbitrary string notes for transactions.
+func (c *Client) SetTxNotes(txids, notes []string) error {
 	jin := struct {
 		TxIDs []string `json:"txids"`
 		Notes []string `json:"notes"`
@@ -428,7 +354,8 @@ func (c *client) SetTxNotes(txids, notes []string) error {
 	return c.do("set_tx_notes", &jin, nil)
 }
 
-func (c *client) GetTxNotes(txids []string) (notes []string, err error) {
+// GetTxNotes gets string notes for transactions.
+func (c *Client) GetTxNotes(txids []string) (notes []string, err error) {
 	jin := struct {
 		TxIDs []string `json:"txids"`
 	}{
@@ -445,7 +372,8 @@ func (c *client) GetTxNotes(txids []string) (notes []string, err error) {
 	return
 }
 
-func (c *client) SetAttribute(key string, value string) error {
+// SetAttribute sets an attribute value
+func (c *Client) SetAttribute(key string, value string) error {
 	jin := struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`
@@ -456,7 +384,8 @@ func (c *client) SetAttribute(key string, value string) error {
 	return c.do("set_attribute", &jin, nil)
 }
 
-func (c *client) GetAttribute(key string) (value string, err error) {
+// GetAttribute gets an attribute value
+func (c *Client) GetAttribute(key string) (value string, err error) {
 	jin := struct {
 		Key string `json:"key"`
 	}{
@@ -473,7 +402,8 @@ func (c *client) GetAttribute(key string) (value string, err error) {
 	return
 }
 
-func (c *client) Sign(data string) (signature string, err error) {
+// Sign signs a string.
+func (c *Client) Sign(data string) (signature string, err error) {
 	jin := struct {
 		Data string `json:"data"`
 	}{
@@ -490,7 +420,8 @@ func (c *client) Sign(data string) (signature string, err error) {
 	return
 }
 
-func (c *client) Verify(data, address, signature string) (good bool, err error) {
+// Verify verifies a signature on a string.
+func (c *Client) Verify(data, address, signature string) (good bool, err error) {
 	jin := struct {
 		Data      string `json:"data"`
 		Address   string `json:"address"`
@@ -511,7 +442,8 @@ func (c *client) Verify(data, address, signature string) (good bool, err error) 
 	return
 }
 
-func (c *client) ExportKeyImages() (signedkeyimages []SignedKeyImage, err error) {
+// ExportKeyImages exports a signed set of key images.
+func (c *Client) ExportKeyImages() (signedkeyimages []SignedKeyImage, err error) {
 	jd := struct {
 		SignedKeyImages []SignedKeyImage `json:"signed_key_images"`
 	}{}
@@ -520,7 +452,8 @@ func (c *client) ExportKeyImages() (signedkeyimages []SignedKeyImage, err error)
 	return
 }
 
-func (c *client) ImportKeyImages(signedkeyimages []SignedKeyImage) (resp *ImportKeyImageResponse, err error) {
+// ImportKeyImages imports signed key images list and verify their spent status.
+func (c *Client) ImportKeyImages(signedkeyimages []SignedKeyImage) (resp *ImportKeyImageResponse, err error) {
 	jin := struct {
 		SignedKeyImages []SignedKeyImage `json:"signed_key_images"`
 	}{
@@ -534,7 +467,9 @@ func (c *client) ImportKeyImages(signedkeyimages []SignedKeyImage) (resp *Import
 	return
 }
 
-func (c *client) GetAddressBook(indexes []uint64) (entries []AddressBookEntry, err error) {
+// GetAddressBook retrieves entries from the address book.
+// indexes - array of unsigned int; indices of the requested address book entries
+func (c *Client) GetAddressBook(indexes []uint64) (entries []AddressBookEntry, err error) {
 	jin := struct {
 		Indexes []uint64 `json:"entries"`
 	}{
@@ -551,7 +486,8 @@ func (c *client) GetAddressBook(indexes []uint64) (entries []AddressBookEntry, e
 	return
 }
 
-func (c *client) AddAddressBook(entry AddressBookEntry) (index uint64, err error) {
+// AddAddressBook adds an entry to the address book.
+func (c *Client) AddAddressBook(entry AddressBookEntry) (index uint64, err error) {
 	entry.Index = 0
 	jd := struct {
 		Index uint64 `json:"index"`
@@ -564,7 +500,8 @@ func (c *client) AddAddressBook(entry AddressBookEntry) (index uint64, err error
 	return
 }
 
-func (c *client) DeleteAddressBook(index uint64) error {
+// DeleteAddressBook deletes an entry from the address book.
+func (c *Client) DeleteAddressBook(index uint64) error {
 	jin := struct {
 		Index uint64 `json:"index"`
 	}{
@@ -573,11 +510,16 @@ func (c *client) DeleteAddressBook(index uint64) error {
 	return c.do("delete_address_book", &jin, nil)
 }
 
-func (c *client) RescanSpent() error {
+// RescanSpent rescans the blockchain for spent outputs.
+func (c *Client) RescanSpent() error {
 	return c.do("rescan_spent", nil, nil)
 }
 
-func (c *client) StartMining(threads uint, background, ignorebattery bool) error {
+// StartMining starts mining in the Monero daemon.
+//	threads_count - unsigned int; Number of threads created for mining
+//	do_background_mining - boolean;
+//	ignore_battery - boolean;
+func (c *Client) StartMining(threads uint, background, ignorebattery bool) error {
 	jin := struct {
 		Threads       uint `json:"threads_count"`
 		Background    bool `json:"do_background_mining"`
@@ -590,11 +532,13 @@ func (c *client) StartMining(threads uint, background, ignorebattery bool) error
 	return c.do("start_mining", &jin, nil)
 }
 
-func (c *client) StopMining() error {
+// StopMining stops mining in the Monero daemon.
+func (c *Client) StopMining() error {
 	return c.do("stop_mining", nil, nil)
 }
 
-func (c *client) GetLanguages() (languages []string, err error) {
+// GetLanguages gets a list of available languages for your wallet's seed.
+func (c *Client) GetLanguages() (languages []string, err error) {
 	jd := struct {
 		Languages []string `json:"languages"`
 	}{}
@@ -606,7 +550,12 @@ func (c *client) GetLanguages() (languages []string, err error) {
 	return
 }
 
-func (c *client) CreateWallet(filename, password, language string) error {
+// CreateWallet creates a new wallet. You need to have set the argument "–wallet-dir" when
+// launching monero-wallet-rpc to make this work.
+//   filename - string;
+//    password - string;
+//    language - string; Language for your wallets' seed.
+func (c *Client) CreateWallet(filename, password, language string) error {
 	jin := struct {
 		Filename string `json:"filename"`
 		Password string `json:"password"`
@@ -619,7 +568,9 @@ func (c *client) CreateWallet(filename, password, language string) error {
 	return c.do("create_wallet", &jin, nil)
 }
 
-func (c *client) OpenWallet(filename, password string) error {
+// OpenWallet opens a wallet. You need to have set the argument "–wallet-dir" when
+// launching monero-wallet-rpc to make this work.
+func (c *Client) OpenWallet(filename, password string) error {
 	jin := struct {
 		Filename string `json:"filename"`
 		Password string `json:"password"`

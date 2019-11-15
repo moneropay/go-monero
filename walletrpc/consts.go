@@ -96,7 +96,7 @@ const (
 	TransferUnavailable GetTransferType = "unavailable"
 )
 
-// QueryKeyType is the parameter to send with client.QueryKey()
+// QueryKeyType is the parameter to send with QueryKey()
 type QueryKeyType string
 
 const (
