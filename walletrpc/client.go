@@ -69,6 +69,10 @@ type Client interface {
 	SetTxNotes(txids, notes []string) error
 	// Get string notes for transactions.
 	GetTxNotes(txids []string) (notes []string, err error)
+	// Set an attribute value
+	SetAttribute(key string, value string) error
+	// Get an attribute value
+	GetAttribute(key string) (value string, err error)
 	// Sign a string.
 	Sign(data string) (signature string, err error)
 	// Verify a signature on a string.
@@ -273,7 +277,7 @@ func (c *client) GetPayments(paymentid string) ([]Payment, error) {
 func (c *client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]Payment, error) {
 	jin := struct {
 		PaymentIDs     []string `json:"payment_ids"`
-		MinBlockHeight uint64     `json:"min_block_height"`
+		MinBlockHeight uint64   `json:"min_block_height"`
 	}{
 		paymentids,
 		minblockheight,
@@ -427,6 +431,34 @@ func (c *client) GetTxNotes(txids []string) (notes []string, err error) {
 		return nil, err
 	}
 	notes = jd.Notes
+	return
+}
+
+func (c *client) SetAttribute(key string, value string) error {
+	jin := struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}{
+		key,
+		value,
+	}
+	return c.do("set_attribute", &jin, nil)
+}
+
+func (c *client) GetAttribute(key string) (value string, err error) {
+	jin := struct {
+		Key string `json:"key"`
+	}{
+		key,
+	}
+	jd := struct {
+		Value string `json:"value"`
+	}{}
+	err = c.do("get_attribute", &jin, &jd)
+	if err != nil {
+		return "", err
+	}
+	value = jd.Value
 	return
 }
 
