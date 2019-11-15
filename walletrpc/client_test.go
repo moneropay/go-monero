@@ -198,6 +198,8 @@ func skipCI(t *testing.T) {
 }
 
 func TestClient_GetBulkPayments(t *testing.T) {
+	skipCI(t)
+
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
@@ -222,6 +224,8 @@ func TestClient_GetBulkPayments(t *testing.T) {
 }
 
 func TestClient_Transfer(t *testing.T) {
+	skipCI(t)
+
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
