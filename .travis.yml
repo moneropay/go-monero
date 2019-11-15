@@ -1,6 +1,5 @@
 language: go
 go:
   - "1.13"
-  - master
 
 script: go test -v ./...
