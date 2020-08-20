@@ -30,7 +30,7 @@ type Client struct {
 	headers map[string]string
 }
 
-func (c *Client) do(method string, in, out interface{}) error {
+func (c *Client) Do(method string, in, out interface{}) error {
 	payload, err := json2.EncodeClientRequest(method, in)
 	if err != nil {
 		return err
@@ -67,7 +67,7 @@ func (c *Client) do(method string, in, out interface{}) error {
 // CreateAddress returns new address
 func (c *Client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse, error) {
 	resp := &CreateAddressResponse{}
-	err := c.do("create_address", &req, resp)
+	err := c.Do("create_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (c *Client) CreateAddress(req CreateAddressRequest) (*CreateAddressResponse
 // CreateAccount returns new account
 func (c *Client) CreateAccount() (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
-	err := c.do("create_account", nil, resp)
+	err := c.Do("create_account", nil, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (c *Client) CreateAccount() (*CreateAccountResponse, error) {
 // GetBalance returns the wallet's balance.
 func (c *Client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) {
 	resp := &GetBalanceResponse{}
-	err := c.do("get_balance", &req, resp)
+	err := c.Do("get_balance", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (c *Client) GetBalance(req GetBalanceRequest) (*GetBalanceResponse, error) 
 // address - string; The 95-character hex address string of the monero-wallet-rpc in session.
 func (c *Client) GetAddress(req GetAddressRequest) (*GetAddressResponse, error) {
 	resp := &GetAddressResponse{}
-	err := c.do("get_address", &req, resp)
+	err := c.Do("get_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (c *Client) GetHeight() (uint64, error) {
 	jd := struct {
 		Height uint64 `json:"height"`
 	}{}
-	err := c.do("get_height", nil, &jd)
+	err := c.Do("get_height", nil, &jd)
 	if err != nil {
 		return 0, err
 	}
@@ -122,7 +122,7 @@ func (c *Client) GetHeight() (uint64, error) {
 // Transfer sends monero to a number of recipients.
 func (c *Client) Transfer(req TransferRequest) (*TransferResponse, error) {
 	resp := &TransferResponse{}
-	err := c.do("transfer", &req, resp)
+	err := c.Do("transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (c *Client) Transfer(req TransferRequest) (*TransferResponse, error) {
 // TransferSplit is same as transfer, but can split into more than one tx if necessary.
 func (c *Client) TransferSplit(req TransferRequest) (resp *TransferSplitResponse, err error) {
 	resp = &TransferSplitResponse{}
-	err = c.do("transfer_split", &req, resp)
+	err = c.Do("transfer_split", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (c *Client) SweepDust() (txHashList []string, err error) {
 	jd := struct {
 		TxHashList []string `json:"tx_hash_list"`
 	}{}
-	err = c.do("sweep_dust", nil, &jd)
+	err = c.Do("sweep_dust", nil, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -154,7 +154,7 @@ func (c *Client) SweepDust() (txHashList []string, err error) {
 // SweepAll sends all unlocked balance to an address.
 func (c *Client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err error) {
 	resp = &SweepAllResponse{}
-	err = c.do("sweep_all", &req, resp)
+	err = c.Do("sweep_all", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +164,7 @@ func (c *Client) SweepAll(req SweepAllRequest) (resp *SweepAllResponse, err erro
 // SweepSingle sends all of a specific unlocked output to an address.
 func (c *Client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse, err error) {
 	resp = &SweepSingleResponse{}
-	err = c.do("sweep_single", &req, resp)
+	err = c.Do("sweep_single", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +173,7 @@ func (c *Client) SweepSingle(req SweepSingleRequest) (resp *SweepSingleResponse,
 
 // Store saves the blockchain.
 func (c *Client) Store() error {
-	return c.do("store", nil, nil)
+	return c.Do("store", nil, nil)
 }
 
 // GetPayments returns a list of incoming payments using a given payment id.
@@ -186,7 +186,7 @@ func (c *Client) GetPayments(paymentid string) ([]Payment, error) {
 	jd := struct {
 		Payments []Payment `json:"payments"`
 	}{}
-	err := c.do("get_payments", &jin, &jd)
+	err := c.Do("get_payments", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func (c *Client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]
 	jd := struct {
 		Payments []Payment `json:"payments"`
 	}{}
-	err := c.do("get_bulk_payments", &jin, &jd)
+	err := c.Do("get_bulk_payments", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (c *Client) GetBulkPayments(paymentids []string, minblockheight uint64) ([]
 // GetTransfers returns a list of transfers.
 func (c *Client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, error) {
 	resp := &GetTransfersResponse{}
-	err := c.do("get_transfers", &req, resp)
+	err := c.Do("get_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +230,7 @@ func (c *Client) GetTransfers(req GetTransfersRequest) (*GetTransfersResponse, e
 // GetTransferByTxID shows information about a transfer to/from this address.
 func (c *Client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
 	resp := &GetTransferByTxidResponse{}
-	err := c.do("get_transfer_by_txid", &req, resp)
+	err := c.Do("get_transfer_by_txid", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +240,7 @@ func (c *Client) GetTransferByTxID(req GetTransferByTxidRequest) (*GetTransferBy
 // IncomingTransfers returns a list of incoming transfers to the wallet.
 func (c *Client) IncomingTransfers(req GetIncomingTransferRequest) (*GetIncomingTransferResponse, error) {
 	resp := &GetIncomingTransferResponse{}
-	err := c.do("incoming_transfers", &req, resp)
+	err := c.Do("incoming_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func (c *Client) QueryKey(keytype QueryKeyType) (key string, err error) {
 	jd := struct {
 		Key string `json:"key"`
 	}{}
-	err = c.do("query_key", &jin, &jd)
+	err = c.Do("query_key", &jin, &jd)
 	if err != nil {
 		return
 	}
@@ -276,7 +276,7 @@ func (c *Client) MakeIntegratedAddress(paymentid string) (integratedaddr string,
 	jd := struct {
 		Address string `json:"integrated_address"`
 	}{}
-	err = c.do("make_integrated_address", &jin, &jd)
+	err = c.Do("make_integrated_address", &jin, &jd)
 	if err != nil {
 		return
 	}
@@ -295,7 +295,7 @@ func (c *Client) SplitIntegratedAddress(integratedaddr string) (paymentid, addre
 		Address   string `json:"standard_address"`
 		PaymentID string `json:"payment_id"`
 	}{}
-	err = c.do("split_integrated_address", &jin, &jd)
+	err = c.Do("split_integrated_address", &jin, &jd)
 	if err != nil {
 		return
 	}
@@ -306,7 +306,7 @@ func (c *Client) SplitIntegratedAddress(integratedaddr string) (paymentid, addre
 
 // StopWallet stops the wallet, storing the current state.
 func (c *Client) StopWallet() error {
-	return c.do("stop_wallet", nil, nil)
+	return c.Do("stop_wallet", nil, nil)
 }
 
 // MakeURI creates a payment URI using the official URI spec.
@@ -314,7 +314,7 @@ func (c *Client) MakeURI(req URIDef) (uri string, err error) {
 	jd := struct {
 		URI string `json:"uri"`
 	}{}
-	err = c.do("make_uri", &req, &jd)
+	err = c.Do("make_uri", &req, &jd)
 	if err != nil {
 		return
 	}
@@ -330,7 +330,7 @@ func (c *Client) ParseURI(uri string) (parsed *URIDef, err error) {
 		uri,
 	}
 	parsed = &URIDef{}
-	err = c.do("parse_uri", &jin, parsed)
+	err = c.Do("parse_uri", &jin, parsed)
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +339,7 @@ func (c *Client) ParseURI(uri string) (parsed *URIDef, err error) {
 
 // RescanBlockchain rescans blockchain from scratch.
 func (c *Client) RescanBlockchain() error {
-	return c.do("rescan_blockchain", nil, nil)
+	return c.Do("rescan_blockchain", nil, nil)
 }
 
 // SetTxNotes sets arbitrary string notes for transactions.
@@ -351,7 +351,7 @@ func (c *Client) SetTxNotes(txids, notes []string) error {
 		txids,
 		notes,
 	}
-	return c.do("set_tx_notes", &jin, nil)
+	return c.Do("set_tx_notes", &jin, nil)
 }
 
 // GetTxNotes gets string notes for transactions.
@@ -364,7 +364,7 @@ func (c *Client) GetTxNotes(txids []string) (notes []string, err error) {
 	jd := struct {
 		Notes []string `json:"notes"`
 	}{}
-	err = c.do("get_tx_notes", &jin, &jd)
+	err = c.Do("get_tx_notes", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (c *Client) SetAttribute(key string, value string) error {
 		key,
 		value,
 	}
-	return c.do("set_attribute", &jin, nil)
+	return c.Do("set_attribute", &jin, nil)
 }
 
 // GetAttribute gets an attribute value
@@ -394,7 +394,7 @@ func (c *Client) GetAttribute(key string) (value string, err error) {
 	jd := struct {
 		Value string `json:"value"`
 	}{}
-	err = c.do("get_attribute", &jin, &jd)
+	err = c.Do("get_attribute", &jin, &jd)
 	if err != nil {
 		return "", err
 	}
@@ -412,7 +412,7 @@ func (c *Client) Sign(data string) (signature string, err error) {
 	jd := struct {
 		Signature string `json:"signature"`
 	}{}
-	err = c.do("sign", &jin, &jd)
+	err = c.Do("sign", &jin, &jd)
 	if err != nil {
 		return "", err
 	}
@@ -434,7 +434,7 @@ func (c *Client) Verify(data, address, signature string) (good bool, err error) 
 	jd := struct {
 		Good bool `json:"good"`
 	}{}
-	err = c.do("verify", &jin, &jd)
+	err = c.Do("verify", &jin, &jd)
 	if err != nil {
 		return false, err
 	}
@@ -447,7 +447,7 @@ func (c *Client) ExportKeyImages() (signedkeyimages []SignedKeyImage, err error)
 	jd := struct {
 		SignedKeyImages []SignedKeyImage `json:"signed_key_images"`
 	}{}
-	err = c.do("export_key_images", nil, &jd)
+	err = c.Do("export_key_images", nil, &jd)
 	signedkeyimages = jd.SignedKeyImages
 	return
 }
@@ -460,7 +460,7 @@ func (c *Client) ImportKeyImages(signedkeyimages []SignedKeyImage) (resp *Import
 		signedkeyimages,
 	}
 	resp = &ImportKeyImageResponse{}
-	err = c.do("import_key_images", &jin, resp)
+	err = c.Do("import_key_images", &jin, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -478,7 +478,7 @@ func (c *Client) GetAddressBook(indexes []uint64) (entries []AddressBookEntry, e
 	jd := struct {
 		Entries []AddressBookEntry `json:"entries"`
 	}{}
-	err = c.do("get_address_book", &jin, &jd)
+	err = c.Do("get_address_book", &jin, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -492,7 +492,7 @@ func (c *Client) AddAddressBook(entry AddressBookEntry) (index uint64, err error
 	jd := struct {
 		Index uint64 `json:"index"`
 	}{}
-	err = c.do("add_address_book", &entry, &jd)
+	err = c.Do("add_address_book", &entry, &jd)
 	if err != nil {
 		return 0, err
 	}
@@ -507,12 +507,12 @@ func (c *Client) DeleteAddressBook(index uint64) error {
 	}{
 		index,
 	}
-	return c.do("delete_address_book", &jin, nil)
+	return c.Do("delete_address_book", &jin, nil)
 }
 
 // RescanSpent rescans the blockchain for spent outputs.
 func (c *Client) RescanSpent() error {
-	return c.do("rescan_spent", nil, nil)
+	return c.Do("rescan_spent", nil, nil)
 }
 
 // StartMining starts mining in the Monero daemon.
@@ -529,12 +529,12 @@ func (c *Client) StartMining(threads uint, background, ignorebattery bool) error
 		background,
 		ignorebattery,
 	}
-	return c.do("start_mining", &jin, nil)
+	return c.Do("start_mining", &jin, nil)
 }
 
 // StopMining stops mining in the Monero daemon.
 func (c *Client) StopMining() error {
-	return c.do("stop_mining", nil, nil)
+	return c.Do("stop_mining", nil, nil)
 }
 
 // GetLanguages gets a list of available languages for your wallet's seed.
@@ -542,7 +542,7 @@ func (c *Client) GetLanguages() (languages []string, err error) {
 	jd := struct {
 		Languages []string `json:"languages"`
 	}{}
-	err = c.do("get_languages", nil, &jd)
+	err = c.Do("get_languages", nil, &jd)
 	if err != nil {
 		return nil, err
 	}
@@ -565,7 +565,7 @@ func (c *Client) CreateWallet(filename, password, language string) error {
 		password,
 		language,
 	}
-	return c.do("create_wallet", &jin, nil)
+	return c.Do("create_wallet", &jin, nil)
 }
 
 // OpenWallet opens a wallet. You need to have set the argument "–wallet-dir" when
@@ -578,5 +578,5 @@ func (c *Client) OpenWallet(filename, password string) error {
 		filename,
 		password,
 	}
-	return c.do("open_wallet", &jin, nil)
+	return c.Do("open_wallet", &jin, nil)
 }
