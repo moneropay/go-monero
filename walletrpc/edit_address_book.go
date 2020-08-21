@@ -25,7 +25,7 @@ type EditAddressBookRequest struct {
 
 // EditAddressBook Edit an existing address book entry.
 func (c *Client) EditAddressBook(req *EditAddressBookRequest) error {
-	err := c.do("edit_address_book", &req, nil)
+	err := c.Do("edit_address_book", &req, nil)
 	if err != nil {
 		return err
 	}

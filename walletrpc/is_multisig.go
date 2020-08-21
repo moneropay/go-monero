@@ -14,7 +14,7 @@ type IsMultisigResponse struct {
 // IsMultisig Check if a wallet is a multisig one.
 func (c *Client) IsMultisig() (*IsMultisigResponse, error) {
 	resp := &IsMultisigResponse{}
-	err := c.do("is_multisig", nil, resp)
+	err := c.Do("is_multisig", nil, resp)
 	if err != nil {
 		return nil, err
 	}

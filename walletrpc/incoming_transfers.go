@@ -22,7 +22,7 @@ type IncomingTransfersResponse struct {
 // IncomingTransfers Return a list of incoming transfers to the wallet.
 func (c *Client) IncomingTransfers(req *IncomingTransfersRequest) (*IncomingTransfersResponse, error) {
 	resp := &IncomingTransfersResponse{}
-	err := c.do("incoming_transfers", &req, resp)
+	err := c.Do("incoming_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}

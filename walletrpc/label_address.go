@@ -10,7 +10,7 @@ type LabelAddressRequest struct {
 
 // LabelAddress Label an address.
 func (c *Client) LabelAddress(req *LabelAddressRequest) error {
-	err := c.do("label_address", &req, nil)
+	err := c.Do("label_address", &req, nil)
 	if err != nil {
 		return err
 	}

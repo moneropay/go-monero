@@ -22,7 +22,7 @@ type GetReserveProofResponse struct {
 // GetReserveProof Generate a signature to prove of an available amount in a wallet.
 func (c *Client) GetReserveProof(req *GetReserveProofRequest) (*GetReserveProofResponse, error) {
 	resp := &GetReserveProofResponse{}
-	err := c.do("get_reserve_proof", &req, resp)
+	err := c.Do("get_reserve_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -8,7 +8,7 @@ type GetLanguagesResponse struct {
 // GetLanguages Get a list of available languages for your wallet's seed.
 func (c *Client) GetLanguages() (*GetLanguagesResponse, error) {
 	resp := &GetLanguagesResponse{}
-	err := c.do("get_languages", nil, resp)
+	err := c.Do("get_languages", nil, resp)
 	if err != nil {
 		return nil, err
 	}

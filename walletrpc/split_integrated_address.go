@@ -17,7 +17,7 @@ type SplitIntegratedAddressResponse struct {
 // SplitIntegratedAddress Retrieve the standard address and payment id corresponding to an integrated address.
 func (c *Client) SplitIntegratedAddress(req *SplitIntegratedAddressRequest) (*SplitIntegratedAddressResponse, error) {
 	resp := &SplitIntegratedAddressResponse{}
-	err := c.do("split_integrated_address", &req, resp)
+	err := c.Do("split_integrated_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

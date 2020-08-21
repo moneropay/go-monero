@@ -13,7 +13,7 @@ type GetTxNotesResponse struct {
 // GetTxNotes Get string notes for transactions.
 func (c *Client) GetTxNotes(req *GetTxNotesRequest) (*GetTxNotesResponse, error) {
 	resp := &GetTxNotesResponse{}
-	err := c.do("get_tx_notes", &req, resp)
+	err := c.Do("get_tx_notes", &req, resp)
 	if err != nil {
 		return nil, err
 	}

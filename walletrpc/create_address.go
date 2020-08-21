@@ -19,7 +19,7 @@ type CreateAddressResponse struct {
 // CreateAddress Create a new address for an account. Optionally, label the new address.
 func (c *Client) CreateAddress(req *CreateAddressRequest) (*CreateAddressResponse, error) {
 	resp := &CreateAddressResponse{}
-	err := c.do("create_address", &req, resp)
+	err := c.Do("create_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

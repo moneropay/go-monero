@@ -13,7 +13,7 @@ type ImportMultisigInfoResponse struct {
 // ImportMultisigInfo Import multisig info from other participants.
 func (c *Client) ImportMultisigInfo(req *ImportMultisigInfoRequest) (*ImportMultisigInfoResponse, error) {
 	resp := &ImportMultisigInfoResponse{}
-	err := c.do("import_multisig_info", &req, resp)
+	err := c.Do("import_multisig_info", &req, resp)
 	if err != nil {
 		return nil, err
 	}

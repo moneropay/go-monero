@@ -19,7 +19,7 @@ type GetTxProofResponse struct {
 // GetTxProof Get transaction signature to prove it.
 func (c *Client) GetTxProof(req *GetTxProofRequest) (*GetTxProofResponse, error) {
 	resp := &GetTxProofResponse{}
-	err := c.do("get_tx_proof", &req, resp)
+	err := c.Do("get_tx_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

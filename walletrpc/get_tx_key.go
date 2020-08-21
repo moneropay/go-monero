@@ -13,7 +13,7 @@ type GetTxKeyResponse struct {
 // GetTxKey Get transaction secret key from transaction id.
 func (c *Client) GetTxKey(req *GetTxKeyRequest) (*GetTxKeyResponse, error) {
 	resp := &GetTxKeyResponse{}
-	err := c.do("get_tx_key", &req, resp)
+	err := c.Do("get_tx_key", &req, resp)
 	if err != nil {
 		return nil, err
 	}

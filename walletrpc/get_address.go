@@ -19,7 +19,7 @@ type GetAddressResponse struct {
 // GetAddress Return the wallet's addresses for an account. Optionally filter for specific set of subaddresses.
 func (c *Client) GetAddress(req *GetAddressRequest) (*GetAddressResponse, error) {
 	resp := &GetAddressResponse{}
-	err := c.do("get_address", &req, resp)
+	err := c.Do("get_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

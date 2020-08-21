@@ -1,7 +1,7 @@
 package walletrpc
 
 type QueryKeyRequest struct {
-	// KeyType Which key to retrieve: "mnemonic" - the mnemonic seed (older wallets do not have one) OR "view_key" - the view key
+	// KeyType Which key to retrieve: "mnemonic" - the mnemonic seed (older wallets Do not have one) OR "view_key" - the view key
 	KeyType string `json:"key_type"`
 }
 
@@ -13,7 +13,7 @@ type QueryKeyResponse struct {
 // QueryKey Return the spend or view private key.
 func (c *Client) QueryKey(req *QueryKeyRequest) (*QueryKeyResponse, error) {
 	resp := &QueryKeyResponse{}
-	err := c.do("query_key", &req, resp)
+	err := c.Do("query_key", &req, resp)
 	if err != nil {
 		return nil, err
 	}

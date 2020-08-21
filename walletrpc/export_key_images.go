@@ -8,7 +8,7 @@ type ExportKeyImagesResponse struct {
 // ExportKeyImages Export a signed set of key images.
 func (c *Client) ExportKeyImages() (*ExportKeyImagesResponse, error) {
 	resp := &ExportKeyImagesResponse{}
-	err := c.do("export_key_images", nil, resp)
+	err := c.Do("export_key_images", nil, resp)
 	if err != nil {
 		return nil, err
 	}

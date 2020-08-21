@@ -13,7 +13,7 @@ type RelayTxResponse struct {
 // RelayTx Relay a transaction previously created with "do_not_relay":true.
 func (c *Client) RelayTx(req *RelayTxRequest) (*RelayTxResponse, error) {
 	resp := &RelayTxResponse{}
-	err := c.do("relay_tx", &req, resp)
+	err := c.Do("relay_tx", &req, resp)
 	if err != nil {
 		return nil, err
 	}

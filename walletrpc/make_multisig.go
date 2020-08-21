@@ -22,7 +22,7 @@ type MakeMultisigResponse struct {
 // MakeMultisig Make a wallet multisig by importing peers multisig string.
 func (c *Client) MakeMultisig(req *MakeMultisigRequest) (*MakeMultisigResponse, error) {
 	resp := &MakeMultisigResponse{}
-	err := c.do("make_multisig", &req, resp)
+	err := c.Do("make_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -22,7 +22,7 @@ type SignTransferResponse struct {
 // SignTransfer Sign a transaction created on a read-only wallet (in cold-signing process)
 func (c *Client) SignTransfer(req *SignTransferRequest) (*SignTransferResponse, error) {
 	resp := &SignTransferResponse{}
-	err := c.do("sign_transfer", &req, resp)
+	err := c.Do("sign_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

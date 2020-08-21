@@ -8,7 +8,7 @@ type PrepareMultisigResponse struct {
 // PrepareMultisig Prepare a wallet for multisig by generating a multisig string to share with peers.
 func (c *Client) PrepareMultisig() (*PrepareMultisigResponse, error) {
 	resp := &PrepareMultisigResponse{}
-	err := c.do("prepare_multisig", nil, resp)
+	err := c.Do("prepare_multisig", nil, resp)
 	if err != nil {
 		return nil, err
 	}

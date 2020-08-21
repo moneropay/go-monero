@@ -19,7 +19,7 @@ type ImportKeyImagesResponse struct {
 // ImportKeyImages Import signed key images list and verify their spent status.
 func (c *Client) ImportKeyImages(req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error) {
 	resp := &ImportKeyImagesResponse{}
-	err := c.do("import_key_images", &req, resp)
+	err := c.Do("import_key_images", &req, resp)
 	if err != nil {
 		return nil, err
 	}

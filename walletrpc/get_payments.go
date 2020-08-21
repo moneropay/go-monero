@@ -13,7 +13,7 @@ type GetPaymentsResponse struct {
 // GetPayments Get a list of incoming payments using a given payment id.
 func (c *Client) GetPayments(req *GetPaymentsRequest) (*GetPaymentsResponse, error) {
 	resp := &GetPaymentsResponse{}
-	err := c.do("get_payments", &req, resp)
+	err := c.Do("get_payments", &req, resp)
 	if err != nil {
 		return nil, err
 	}

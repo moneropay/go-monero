@@ -25,7 +25,7 @@ type GetBalanceResponse struct {
 // GetBalance Return the wallet's balance.
 func (c *Client) GetBalance(req *GetBalanceRequest) (*GetBalanceResponse, error) {
 	resp := &GetBalanceResponse{}
-	err := c.do("get_balance", &req, resp)
+	err := c.Do("get_balance", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -28,7 +28,7 @@ type SweepAllRequest struct {
 	// BelowAmount (Optional) Include outputs below this amount.
 	BelowAmount uint64 `json:"below_amount"`
 
-	// DoNotRelay (Optional) If true, do not relay this sweep transfer. (Defaults to false)
+	// DoNotRelay (Optional) If true, Do not relay this sweep transfer. (Defaults to false)
 	DoNotRelay bool `json:"do_not_relay"`
 
 	// GetTxHex (Optional) return the transactions as hex encoded string. (Defaults to false)
@@ -67,7 +67,7 @@ type SweepAllResponse struct {
 // SweepAll Send all unlocked balance to an address.
 func (c *Client) SweepAll(req *SweepAllRequest) (*SweepAllResponse, error) {
 	resp := &SweepAllResponse{}
-	err := c.do("sweep_all", &req, resp)
+	err := c.Do("sweep_all", &req, resp)
 	if err != nil {
 		return nil, err
 	}

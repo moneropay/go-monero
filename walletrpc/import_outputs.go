@@ -13,7 +13,7 @@ type ImportOutputsResponse struct {
 // ImportOutputs Import outputs in hex format.
 func (c *Client) ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsResponse, error) {
 	resp := &ImportOutputsResponse{}
-	err := c.do("import_outputs", &req, resp)
+	err := c.Do("import_outputs", &req, resp)
 	if err != nil {
 		return nil, err
 	}

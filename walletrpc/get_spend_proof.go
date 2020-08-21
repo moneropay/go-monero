@@ -16,7 +16,7 @@ type GetSpendProofResponse struct {
 // GetSpendProof Generate a signature to prove a spend. Unlike proving a transaction, it does not requires the destination public address.
 func (c *Client) GetSpendProof(req *GetSpendProofRequest) (*GetSpendProofResponse, error) {
 	resp := &GetSpendProofResponse{}
-	err := c.do("get_spend_proof", &req, resp)
+	err := c.Do("get_spend_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

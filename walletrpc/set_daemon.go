@@ -25,7 +25,7 @@ type SetDaemonRequest struct {
 
 // SetDaemon connect the RPC server to a Monero daemon.
 func (c *Client) SetDaemon(req *SetDaemonRequest) error {
-	err := c.do("set_daemon", &req, nil)
+	err := c.Do("set_daemon", &req, nil)
 	if err != nil {
 		return err
 	}

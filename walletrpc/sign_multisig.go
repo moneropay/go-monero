@@ -16,7 +16,7 @@ type SignMultisigResponse struct {
 // SignMultisig Sign a transaction in multisig.
 func (c *Client) SignMultisig(req *SignMultisigRequest) (*SignMultisigResponse, error) {
 	resp := &SignMultisigResponse{}
-	err := c.do("sign_multisig", &req, resp)
+	err := c.Do("sign_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

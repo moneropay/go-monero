@@ -18,7 +18,7 @@ type VerifyResponse struct {
 // Verify Verify a signature on a string.
 func (c *Client) Verify(req *VerifyRequest) (*VerifyResponse, error) {
 	resp := &VerifyResponse{}
-	err := c.do("verify", &req, resp)
+	err := c.Do("verify", &req, resp)
 	if err != nil {
 		return nil, err
 	}

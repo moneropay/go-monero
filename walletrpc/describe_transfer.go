@@ -57,7 +57,7 @@ type Description struct {
 // DescribeTransfer Returns details for each transaction in an unsigned or multisig transaction set.
 func (c *Client) DescribeTransfer(req *DescribeTransferRequest) (*DescribeTransferResponse, error) {
 	resp := &DescribeTransferResponse{}
-	err := c.do("describe_transfer", &req, resp)
+	err := c.Do("describe_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

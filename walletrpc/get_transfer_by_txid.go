@@ -16,7 +16,7 @@ type GetTransferByTxidResponse struct {
 // GetTransferByTxid Show information about a transfer to/from this address.
 func (c *Client) GetTransferByTxid(req *GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
 	resp := &GetTransferByTxidResponse{}
-	err := c.do("get_transfer_by_txid", &req, resp)
+	err := c.Do("get_transfer_by_txid", &req, resp)
 	if err != nil {
 		return nil, err
 	}

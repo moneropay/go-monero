@@ -19,7 +19,7 @@ type CheckReserveProofResponse struct {
 // CheckReserveProof Proves a wallet has a disposable reserve using a signature.
 func (c *Client) CheckReserveProof(req *CheckReserveProofRequest) (*CheckReserveProofResponse, error) {
 	resp := &CheckReserveProofResponse{}
-	err := c.do("check_reserve_proof", &req, resp)
+	err := c.Do("check_reserve_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

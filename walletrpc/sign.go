@@ -13,7 +13,7 @@ type SignResponse struct {
 // Sign Sign a string.
 func (c *Client) Sign(req *SignRequest) (*SignResponse, error) {
 	resp := &SignResponse{}
-	err := c.do("sign", &req, resp)
+	err := c.Do("sign", &req, resp)
 	if err != nil {
 		return nil, err
 	}

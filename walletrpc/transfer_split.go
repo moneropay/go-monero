@@ -73,7 +73,7 @@ type TransferSplitResponse struct {
 // TransferSplit Same as transfer, but can split into more than one tx if necessary.
 func (c *Client) TransferSplit(req *TransferSplitRequest) (*TransferSplitResponse, error) {
 	resp := &TransferSplitResponse{}
-	err := c.do("transfer_split", &req, resp)
+	err := c.Do("transfer_split", &req, resp)
 	if err != nil {
 		return nil, err
 	}

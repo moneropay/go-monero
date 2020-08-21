@@ -16,7 +16,7 @@ type MakeIntegratedAddressResponse struct {
 // MakeIntegratedAddress Make an integrated address from the wallet address and a payment id.
 func (c *Client) MakeIntegratedAddress(req *MakeIntegratedAddressRequest) (*MakeIntegratedAddressResponse, error) {
 	resp := &MakeIntegratedAddressResponse{}
-	err := c.do("make_integrated_address", &req, resp)
+	err := c.Do("make_integrated_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

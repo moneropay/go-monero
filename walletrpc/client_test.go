@@ -213,7 +213,7 @@ func TestClient_GetBulkPayments(t *testing.T) {
 		"c7bec4ff888f29fd9d4a2f9299109799d298430a717bffe61b696b08c00ef5d9",
 		"0207cac71ea09d9a5c48ce0c0656788b9358753805ff66150bc615fab4567666",
 		"319bcfc82906d83b23e42878ad58a32afae31ea47fecf6740578dea24e72bf1f",
-		//"a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac", // do not get withdrawal by payment id
+		//"a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac", // Do not get withdrawal by payment id
 	}
 
 	payment, err := client.GetBulkPayments(&GetBulkPaymentsRequest{

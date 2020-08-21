@@ -30,7 +30,7 @@ type Client struct {
 	headers map[string]string
 }
 
-func (c *Client) do(method string, in, out interface{}) error {
+func (c *Client) Do(method string, in, out interface{}) error {
 	payload, err := json2.EncodeClientRequest(method, in)
 	if err != nil {
 		return err

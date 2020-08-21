@@ -13,7 +13,7 @@ type CreateWalletRequest struct {
 
 // CreateWallet Create a new wallet. You need to have set the argument "–wallet-dir" when launching monero-wallet-rpc to make this work.
 func (c *Client) CreateWallet(req *CreateWalletRequest) error {
-	err := c.do("create_wallet", &req, nil)
+	err := c.Do("create_wallet", &req, nil)
 	if err != nil {
 		return err
 	}

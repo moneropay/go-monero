@@ -8,7 +8,7 @@ type GetHeightResponse struct {
 // GetHeight Returns the wallet's current block height.
 func (c *Client) GetHeight() (*GetHeightResponse, error) {
 	resp := &GetHeightResponse{}
-	err := c.do("get_height", nil, resp)
+	err := c.Do("get_height", nil, resp)
 	if err != nil {
 		return nil, err
 	}

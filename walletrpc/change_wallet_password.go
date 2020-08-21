@@ -10,7 +10,7 @@ type ChangeWalletPasswordRequest struct {
 
 // ChangeWalletPassword Change a wallet password.
 func (c *Client) ChangeWalletPassword(req *ChangeWalletPasswordRequest) error {
-	err := c.do("change_wallet_password", &req, nil)
+	err := c.Do("change_wallet_password", &req, nil)
 	if err != nil {
 		return err
 	}

@@ -30,7 +30,7 @@ type UriPaymentInfo struct {
 // ParseUri Parse a payment URI to get payment information.
 func (c *Client) ParseUri(req *ParseUriRequest) (*ParseUriResponse, error) {
 	resp := &ParseUriResponse{}
-	err := c.do("parse_uri", &req, resp)
+	err := c.Do("parse_uri", &req, resp)
 	if err != nil {
 		return nil, err
 	}

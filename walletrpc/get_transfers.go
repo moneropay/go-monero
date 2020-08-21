@@ -43,7 +43,7 @@ type GetTransfersResponse struct {
 // GetTransfers Returns a list of transfers.
 func (c *Client) GetTransfers(req *GetTransfersRequest) (*GetTransfersResponse, error) {
 	resp := &GetTransfersResponse{}
-	err := c.do("get_transfers", &req, resp)
+	err := c.Do("get_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}

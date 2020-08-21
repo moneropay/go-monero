@@ -13,7 +13,7 @@ type SubmitTransferResponse struct {
 // SubmitTransfer Submit a previously signed transaction on a read-only wallet (in cold-signing process).
 func (c *Client) SubmitTransfer(req *SubmitTransferRequest) (*SubmitTransferResponse, error) {
 	resp := &SubmitTransferResponse{}
-	err := c.do("submit_transfer", &req, resp)
+	err := c.Do("submit_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

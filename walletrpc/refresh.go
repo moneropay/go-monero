@@ -16,7 +16,7 @@ type RefreshResponse struct {
 // Refresh Refresh a wallet after openning.
 func (c *Client) Refresh(req *RefreshRequest) (*RefreshResponse, error) {
 	resp := &RefreshResponse{}
-	err := c.do("refresh", &req, resp)
+	err := c.Do("refresh", &req, resp)
 	if err != nil {
 		return nil, err
 	}

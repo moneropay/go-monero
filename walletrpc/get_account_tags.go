@@ -19,7 +19,7 @@ type AccountTag struct {
 // GetAccountTags Get a list of user-defined account tags.
 func (c *Client) GetAccountTags() (*GetAccountTagsResponse, error) {
 	resp := &GetAccountTagsResponse{}
-	err := c.do("get_account_tags", nil, resp)
+	err := c.Do("get_account_tags", nil, resp)
 	if err != nil {
 		return nil, err
 	}

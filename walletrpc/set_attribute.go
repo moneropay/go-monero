@@ -10,7 +10,7 @@ type SetAttributeRequest struct {
 
 // SetAttribute Set arbitrary attribute.
 func (c *Client) SetAttribute(req *SetAttributeRequest) error {
-	err := c.do("set_attribute", &req, nil)
+	err := c.Do("set_attribute", &req, nil)
 	if err != nil {
 		return err
 	}

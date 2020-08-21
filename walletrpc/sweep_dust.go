@@ -43,7 +43,7 @@ type SweepDustResponse struct {
 // SweepDust Send all dust outputs back to the wallet's, to make them easier to spend (and mix).
 func (c *Client) SweepDust(req *SweepDustRequest) (*SweepDustResponse, error) {
 	resp := &SweepDustResponse{}
-	err := c.do("sweep_dust", &req, resp)
+	err := c.Do("sweep_dust", &req, resp)
 	if err != nil {
 		return nil, err
 	}

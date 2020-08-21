@@ -16,7 +16,7 @@ type CreateAccountResponse struct {
 // CreateAccount Create a new account with an optional label.
 func (c *Client) CreateAccount(req *CreateAccountRequest) (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
-	err := c.do("create_account", &req, resp)
+	err := c.Do("create_account", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -13,7 +13,7 @@ type SubmitMultisigResponse struct {
 // SubmitMultisig Submit a signed multisig transaction.
 func (c *Client) SubmitMultisig(req *SubmitMultisigRequest) (*SubmitMultisigResponse, error) {
 	resp := &SubmitMultisigResponse{}
-	err := c.do("submit_multisig", &req, resp)
+	err := c.Do("submit_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

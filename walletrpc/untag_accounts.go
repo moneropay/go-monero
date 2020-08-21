@@ -7,7 +7,7 @@ type UntagAccountsRequest struct {
 
 // UntagAccounts Remove filtering tag from a list of accounts.
 func (c *Client) UntagAccounts(req *UntagAccountsRequest) error {
-	err := c.do("untag_accounts", &req, nil)
+	err := c.Do("untag_accounts", &req, nil)
 	if err != nil {
 		return err
 	}

@@ -31,7 +31,7 @@ type ValidateAddressResponse struct {
 // ValidateAddress Analyzes a string to determine whether it is a valid monero wallet address and returns the result and the address specifications.
 func (c *Client) ValidateAddress(req *ValidateAddressRequest) (*ValidateAddressResponse, error) {
 	resp := &ValidateAddressResponse{}
-	err := c.do("validate_address", &req, resp)
+	err := c.Do("validate_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

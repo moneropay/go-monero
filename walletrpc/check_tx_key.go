@@ -25,7 +25,7 @@ type CheckTxKeyResponse struct {
 // CheckTxKey Check a transaction in the blockchain with its secret key.
 func (c *Client) CheckTxKey(req *CheckTxKeyRequest) (*CheckTxKeyResponse, error) {
 	resp := &CheckTxKeyResponse{}
-	err := c.do("check_tx_key", &req, resp)
+	err := c.Do("check_tx_key", &req, resp)
 	if err != nil {
 		return nil, err
 	}

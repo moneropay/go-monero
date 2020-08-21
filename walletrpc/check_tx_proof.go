@@ -31,7 +31,7 @@ type CheckTxProofResponse struct {
 // CheckTxProof Prove a transaction by checking its signature.
 func (c *Client) CheckTxProof(req *CheckTxProofRequest) (*CheckTxProofResponse, error) {
 	resp := &CheckTxProofResponse{}
-	err := c.do("check_tx_proof", &req, resp)
+	err := c.Do("check_tx_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -25,7 +25,7 @@ type MakeUriResponse struct {
 // MakeUri Create a payment URI using the official URI spec.
 func (c *Client) MakeUri(req *MakeUriRequest) (*MakeUriResponse, error) {
 	resp := &MakeUriResponse{}
-	err := c.do("make_uri", &req, resp)
+	err := c.Do("make_uri", &req, resp)
 	if err != nil {
 		return nil, err
 	}

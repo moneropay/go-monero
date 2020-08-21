@@ -40,7 +40,7 @@ type RestoreDeterministicWalletResponse struct {
 // RestoreDeterministicWallet Create and open a wallet on the RPC server from an existing mnemonic phrase and close the currently open wallet.
 func (c *Client) RestoreDeterministicWallet(req *RestoreDeterministicWalletRequest) (*RestoreDeterministicWalletResponse, error) {
 	resp := &RestoreDeterministicWalletResponse{}
-	err := c.do("restore_deterministic_wallet", &req, resp)
+	err := c.Do("restore_deterministic_wallet", &req, resp)
 	if err != nil {
 		return nil, err
 	}

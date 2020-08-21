@@ -8,7 +8,7 @@ type ExportMultisigInfoResponse struct {
 // ExportMultisigInfo Export multisig info for other participants.
 func (c *Client) ExportMultisigInfo() (*ExportMultisigInfoResponse, error) {
 	resp := &ExportMultisigInfoResponse{}
-	err := c.do("export_multisig_info", nil, resp)
+	err := c.Do("export_multisig_info", nil, resp)
 	if err != nil {
 		return nil, err
 	}

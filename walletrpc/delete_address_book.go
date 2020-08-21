@@ -7,7 +7,7 @@ type DeleteAddressBookRequest struct {
 
 // DeleteAddressBook Delete an entry from the address book.
 func (c *Client) DeleteAddressBook(req *DeleteAddressBookRequest) error {
-	err := c.do("delete_address_book", &req, nil)
+	err := c.Do("delete_address_book", &req, nil)
 	if err != nil {
 		return err
 	}

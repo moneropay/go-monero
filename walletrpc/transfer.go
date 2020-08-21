@@ -64,7 +64,7 @@ type TransferResponse struct {
 // Transfer Send monero to a number of recipients.
 func (c *Client) Transfer(req *TransferRequest) (*TransferResponse, error) {
 	resp := &TransferResponse{}
-	err := c.do("transfer", &req, resp)
+	err := c.Do("transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -19,7 +19,7 @@ type GetAccountsResponse struct {
 // GetAccounts Get all accounts for a wallet. Optionally filter accounts by tag.
 func (c *Client) GetAccounts(req *GetAccountsRequest) (*GetAccountsResponse, error) {
 	resp := &GetAccountsResponse{}
-	err := c.do("get_accounts", &req, resp)
+	err := c.Do("get_accounts", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -8,7 +8,7 @@ type GetVersionResponse struct {
 // GetVersion Get RPC version Major & Minor integer-format, where Major is the first 16 bits and Minor the last 16 bits.
 func (c *Client) GetVersion() (*GetVersionResponse, error) {
 	resp := &GetVersionResponse{}
-	err := c.do("get_version", nil, resp)
+	err := c.Do("get_version", nil, resp)
 	if err != nil {
 		return nil, err
 	}
