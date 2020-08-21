@@ -56,8 +56,8 @@ import (
 //		func(method string, params *json.RawMessage, w http.ResponseWriter, r *http.Request) bool {
 //			if method == "getbalance" {
 //				r0 := struct {
-//					Balance  uint64 `json:"balance"`
-//					Unlocked uint64 `json:"unlocked_balance"`
+//					Balance  uint6464 `json:"balance"`
+//					Unlocked uint6464 `json:"unlocked_balance"`
 //				}{
 //					1e12,
 //					1e13,
@@ -77,9 +77,9 @@ import (
 //	balance, unlocked, err := rpccl.GetBalance()
 //	assert.NoError(t, err)
 //	// 1 XMR
-//	assert.Equal(t, uint64(1000000000000), balance)
+//	assert.Equal(t, uint6464(1000000000000), balance)
 //	// 10 XMR
-//	assert.Equal(t, uint64(10000000000000), unlocked)
+//	assert.Equal(t, uint6464(10000000000000), unlocked)
 //}
 
 //TODO: write more server stubs
@@ -170,7 +170,9 @@ func newClient() {
 	})
 
 	// check wallet balance
-	balance, err := client.GetBalance(GetBalanceRequest{AccountIndex: 0})
+	balance, err := client.GetBalance(&GetBalanceRequest{
+		AccountIndex: 0,
+	})
 
 	// there are two types of error that can happen:
 	//   connection errors
@@ -213,12 +215,16 @@ func TestClient_GetBulkPayments(t *testing.T) {
 		"319bcfc82906d83b23e42878ad58a32afae31ea47fecf6740578dea24e72bf1f",
 		//"a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac", // do not get withdrawal by payment id
 	}
-	payment, err := client.GetBulkPayments(ids, 1881753)
+
+	payment, err := client.GetBulkPayments(&GetBulkPaymentsRequest{
+		PaymentIds:     ids,
+		MinBlockHeight: 1881753,
+	})
 	if err != nil {
 		t.Log(err)
 	}
 
-	t.Log(len(payment))
+	t.Log(len(payment.Payments))
 	t.Logf("%v\n", payment)
 
 }
@@ -242,7 +248,7 @@ func TestClient_Transfer(t *testing.T) {
 		},
 		Mixin: 3,
 		// RingSize: default RingSize = mixin + 1
-		PaymentId:     "a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac",
+		//PaymentId:     "a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac",
 		Priority:      PriorityUnimportant,
 		GetTxHex:      true,
 		GetTxMetadata: false,
@@ -255,7 +261,7 @@ func TestClient_Transfer(t *testing.T) {
 	}
 	t.Logf("%v", string(payload))
 
-	resp, err := client.Transfer(req)
+	resp, err := client.Transfer(&req)
 	if err != nil {
 		t.Log(err)
 	}
@@ -271,7 +277,9 @@ func TestClient_GetTransferByTxID(t *testing.T) {
 		Address:   "http://127.0.0.1:18085/json_rpc",
 		Transport: trans,
 	})
-	resp, err := client.GetTransferByTxID(GetTransferByTxidRequest{TxId: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d"})
+	resp, err := client.GetTransferByTxid(&GetTransferByTxidRequest{
+		Txid: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d",
+	})
 	if err != nil {
 		t.Logf("%v", err)
 	}

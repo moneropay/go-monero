@@ -48,7 +48,9 @@ func main() {
 	})
 
 	// check wallet balance
-	balance, unlocked, err := client.GetBalance()
+	balance, err := client.GetBalance(&walletrpc.GetBalanceRequest{
+		AccountIndex: 0,
+	})
 
 	// there are two types of error that can happen:
 	//   connection errors
@@ -65,15 +67,15 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Balance:", walletrpc.XMRToDecimal(balance))
-	fmt.Println("Unlocked balance:", walletrpc.XMRToDecimal(unlocked))
+	fmt.Println("Balance:", walletrpc.XMRToDecimal(balance.Balance))
+	fmt.Println("Unlocked balance:", walletrpc.XMRToDecimal(balance.UnlockedBalance))
 
 	// Make a transfer
-	res, err := client.Transfer(walletrpc.TransferRequest{
+	res, err := client.Transfer(&walletrpc.TransferRequest{
 		Destinations: []walletrpc.Destination{
 			{
 				Address: "45eoXYNHC4LcL2Hh42T9FMPTmZHyDEwDbgfBEuNj3RZUek8A4og4KiCfVL6ZmvHBfCALnggWtHH7QHF8426yRayLQq7MLf5",
-				Amount:  10*unit.Millinero, // 0.01 XMR
+				Amount:  10 * unit.Millinero, // 0.01 XMR
 			},
 		},
 		Priority: walletrpc.PriorityUnimportant,
@@ -89,7 +91,7 @@ func main() {
 		fmt.Println("Error:", err.Error())
 		os.Exit(1)
 	}
-	fmt.Println("Transfer success! Fee:", walletrpc.XMRToDecimal(res.Fee), "Hash:", res.TxHash)
+	fmt.Println("Transfer success! Fee:", walletrpc.XMRToDecimal(uint64(res.Fee)), "Hash:", res.TxHash)
 }
 ```
 
@@ -105,8 +107,9 @@ package main
 import (
 	"fmt"
 
+	"github.com/gabstv/httpdigest"
+
 	"github.com/LuaxY/go-monero/walletrpc"
-	"github.com/LuaxY/httpdigest"
 )
 
 func main() {
@@ -119,13 +122,15 @@ func main() {
 		Transport: t,
 	})
 
-	balance, unlocked, err := client.GetBalance()
+	balance, err := client.GetBalance(&walletrpc.GetBalanceRequest{
+		AccountIndex: 0,
+	})
 
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("balance", walletrpc.XMRToDecimal(balance))
-	fmt.Println("unlocked balance", walletrpc.XMRToDecimal(unlocked))
+	fmt.Println("balance", walletrpc.XMRToDecimal(balance.Balance))
+	fmt.Println("unlocked balance", walletrpc.XMRToDecimal(balance.UnlockedBalance))
 }
 ```
 
@@ -192,7 +197,9 @@ func main() {
 	})
 
 	// check wallet balance
-	balance, unlocked, err := client.GetBalance()
+	balance, err := client.GetBalance(&walletrpc.GetBalanceRequest{
+        AccountIndex: 0,
+    })
 
 	// there are two types of error that can happen:
 	//   connection errors
@@ -209,8 +216,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Balance:", walletrpc.XMRToDecimal(balance))
-    fmt.Println("Unlocked balance:", walletrpc.XMRToDecimal(unlocked))
+	fmt.Println("Balance:", walletrpc.XMRToDecimal(balance.Balance))
+    fmt.Println("Unlocked balance:", walletrpc.XMRToDecimal(balance.UnlockedBalance))
 }
 ```
 
