@@ -103,7 +103,7 @@ type Destination struct {
 // TransferResponse is the successful output of a Transfer()
 type TransferResponse struct {
 	// amount - Amount transferred for the transaction.
-	Amonut uint64 `json:"amonut"`
+	Amount uint64 `json:"amount"`
 	// fee - Integer value of the fee charged for the txn.
 	Fee uint64 `json:"fee"`
 	//multisig_txset - Set of multisig transactions in the process of being signed (empty for non-multisig).
