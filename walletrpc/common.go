@@ -75,6 +75,9 @@ type Transfer struct {
 	// Amount of this transfer.
 	Amount uint64 `json:"amount"`
 
+	// Array containing transfer destinations.
+	Destinations []Destination `json:"destinations"`
+
 	// GlobalIndex Mostly internal use, can be ignored by most users.
 	GlobalIndex uint64 `json:"global_index"`
 
