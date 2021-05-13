@@ -37,10 +37,10 @@ type TransferRequest struct {
 
 type TransferResponse struct {
 	// Amount transferred for the transaction.
-	Amount int64 `json:"amount"`
+	Amount uint64 `json:"amount"`
 
 	// Fee value of the fee charged for the txn.
-	Fee int64 `json:"fee"`
+	Fee uint64 `json:"fee"`
 
 	// MultisigTxset (empty for non-multisig).
 	MultisigTxset interface{} `json:"multisig_txset"`

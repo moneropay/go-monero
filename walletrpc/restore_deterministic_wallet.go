@@ -11,7 +11,7 @@ type RestoreDeterministicWalletRequest struct {
 	Seed string `json:"seed"`
 
 	// RestoreHeight (Optional) Block height to restore the wallet from (default = 0).
-	RestoreHeight int64 `json:"restore_height"`
+	RestoreHeight uint64 `json:"restore_height"`
 
 	// Language (Optional) Language of the mnemonic phrase in case the old language is invalid.
 	Language string `json:"language"`
