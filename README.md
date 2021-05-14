@@ -2,12 +2,9 @@
 
 This package is a hub of monero related tools for Go. At this time, only the Wallet RPC Client is available.
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/LuaxY/go-monero)](https://goreportcard.com/report/github.com/LuaxY/go-monero)
-[![Build Status](https://travis-ci.org/LuaxY/go-monero.svg?branch=master)](https://travis-ci.org/LuaxY/go-monero)
-
 ## Wallet RPC Client
 
-[![GoDoc](https://godoc.org/github.com/LuaxY/go-monero/walletrpc?status.svg)](https://godoc.org/github.com/LuaxY/go-monero/walletrpc)
+[![GoDoc](https://godoc.org/gitlab.com/moneropay/go-monero/walletrpc?status.svg)](https://godoc.org/gitlab.com/moneropay/go-monero/walletrpc)
 
 The ```go-monero/walletrpc``` package is a RPC client with all the methods of the v0.15.0.0 release.
 It does support digest authentication, [however I don't recommend using it alone (without https).](https://en.wikipedia.org/wiki/Digest_access_authentication#Disadvantages) If there is a need to split the RPC client and server into separate instances, you could put a proxy on the instance that contains the RPC server and check the authenticity of the requests using https + X-API-KEY headers between the proxy and this RPC client (there is an example about this implementation below)
@@ -15,7 +12,7 @@ It does support digest authentication, [however I don't recommend using it alone
 ### Installation
 
 ```sh
-go get -u github.com/LuaxY/go-monero/walletrpc
+go get -u gitlab.com/moneropay/go-monero/walletrpc
 ```
 
 ### Usage
@@ -37,8 +34,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/LuaxY/go-monero/walletrpc"
-	"github.com/LuaxY/go-monero/walletrpc/unit"
+	"gitlab.com/moneropay/go-monero/walletrpc"
+	"gitlab.com/moneropay/go-monero/walletrpc/unit"
 )
 
 func main() {
@@ -109,7 +106,7 @@ import (
 
 	"github.com/gabstv/httpdigest"
 
-	"github.com/LuaxY/go-monero/walletrpc"
+	"gitlab.com/moneropay/go-monero/walletrpc"
 )
 
 func main() {
@@ -155,7 +152,7 @@ debug: true
 listen_addr_tls: :23456
 fallback_domain: moneroproxy
 routes:
-  - 
+  -
     domain:        moneroproxy
     out_conn_type: HTTP
     out_addr:      localhost:18082
@@ -176,8 +173,8 @@ import (
     "fmt"
     "net/http"
     "os"
-    
-    "github.com/LuaxY/go-monero/walletrpc"
+
+    "gitlab.com/moneropay/go-monero/walletrpc"
 )
 
 func main() {
@@ -224,7 +221,7 @@ func main() {
 # Special Thanks
 
 This version of `go-monero` is based on the works of:
-
+- [LuaxY](https://github.com/LuaxY/go-monero)
 - [gabstv](https://github.com/gabstv/go-monero)
 - [carryon](https://github.com/carryon/go-monero)
 - [TemaKozyrev](https://github.com/TemaKozyrev/go-monero)
