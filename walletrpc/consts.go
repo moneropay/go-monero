@@ -70,7 +70,7 @@ func GetWalletError(err error) (isWalletError bool, werr *WalletError) {
 }
 
 // Priority represents a transaction priority
-type Priority uint
+type Priority uint64
 
 // Accepted Values are: 0-4 for: default, unimportant, normal, elevated, priority.
 const (
