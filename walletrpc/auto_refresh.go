@@ -1,14 +1,14 @@
 package walletrpc
 
 type AutoRefreshRequest struct {
-	// Enable (Optional) Enable or disable automatic refreshing (default = true).
+	// (Optional) Enable or disable automatic refreshing (Defaults to true).
 	Enable bool `json:"enable"`
 
-	// Period (Optional) The period of the wallet refresh cycle (i.e. time between refreshes) in seconds.
-	Period uint64 `json:"period"`
+	// (Optional) The period of the wallet refresh cycle (i.e. time between refreshes) in seconds.
+	Period uint64 `json:"period,omitempty"`
 }
 
-// AutoRefresh Set whether and how often to automatically refresh the current wallet.
+// Set whether and how often to automatically refresh the current wallet.
 func (c *Client) AutoRefresh(req *AutoRefreshRequest) error {
 	err := c.Do("auto_refresh", &req, nil)
 	if err != nil {

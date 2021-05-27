@@ -1,22 +1,22 @@
 package walletrpc
 
 type GetAccountsRequest struct {
-	// Tag (Optional) Tag for filtering accounts.
-	Tag string `json:"tag"`
+	// (Optional) Tag for filtering accounts.
+	Tag string `json:"tag,omitempty"`
 }
 
 type GetAccountsResponse struct {
-	// SubaddressAccounts information:
+	// Array of subaddress account information.
 	SubaddressAccounts []Address `json:"subaddress_accounts"`
 
-	// TotalBalance Total balance of the selected accounts (locked or unlocked).
+	// Total balance of the selected accounts (locked or unlocked).
 	TotalBalance uint64 `json:"total_balance"`
 
-	// TotalUnlockedBalance Total unlocked balance of the selected accounts.
+	// Total unlocked balance of the selected accounts.
 	TotalUnlockedBalance uint64 `json:"total_unlocked_balance"`
 }
 
-// GetAccounts Get all accounts for a wallet. Optionally filter accounts by tag.
+// Get all accounts for a wallet. Optionally filter accounts by tag.
 func (c *Client) GetAccounts(req *GetAccountsRequest) (*GetAccountsResponse, error) {
 	resp := &GetAccountsResponse{}
 	err := c.Do("get_accounts", &req, resp)

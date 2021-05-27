@@ -1,28 +1,28 @@
 package walletrpc
 
 type MakeUriRequest struct {
-	// Address Wallet address
+	// Wallet address.
 	Address string `json:"address"`
 
-	// Amount (optional) the integer amount to receive, in atomic units
-	Amount uint64 `json:"amount"`
+	// (Optional) The integer amount to receive, in atomic units.
+	Amount uint64 `json:"amount,omitempty"`
 
-	// PaymentId (optional) 16 or 64 character hexadecimal payment id
-	PaymentId string `json:"payment_id"`
+	// (Optional) 16 or 64 character hexadecimal payment id.
+	PaymentId string `json:"payment_id,omitempty"`
 
-	// RecipientName (optional) name of the payment recipient
-	RecipientName string `json:"recipient_name"`
+	// (Optional) Name of the payment recipient.
+	RecipientName string `json:"recipient_name,omitempty"`
 
-	// TxDescription (optional) Description of the reason for the tx
-	TxDescription string `json:"tx_description"`
+	// (Optional) Description of the reason for the tx.
+	TxDescription string `json:"tx_description,omitempty"`
 }
 
 type MakeUriResponse struct {
-	// Uri This contains all the payment input information as a properly formatted payment URI
+	// This contains all the payment input information as a properly formatted payment URI.
 	Uri string `json:"uri"`
 }
 
-// MakeUri Create a payment URI using the official URI spec.
+// Create a payment URI using the official URI spec.
 func (c *Client) MakeUri(req *MakeUriRequest) (*MakeUriResponse, error) {
 	resp := &MakeUriResponse{}
 	err := c.Do("make_uri", &req, resp)

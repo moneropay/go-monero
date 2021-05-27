@@ -4,11 +4,11 @@ type TagAccountsRequest struct {
 	// Tag for the accounts.
 	Tag string `json:"tag"`
 
-	// Accounts Tag this list of accounts.
+	// Tag this list of accounts.
 	Accounts []uint64 `json:"accounts"`
 }
 
-// TagAccounts Apply a filtering tag to a list of accounts.
+// Apply a filtering tag to a list of accounts.
 func (c *Client) TagAccounts(req *TagAccountsRequest) error {
 	err := c.Do("tag_accounts", &req, nil)
 	if err != nil {

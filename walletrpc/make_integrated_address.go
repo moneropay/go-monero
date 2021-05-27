@@ -1,19 +1,19 @@
 package walletrpc
 
 type MakeIntegratedAddressRequest struct {
-	// StandardAddress (Optional, defaults to primary address) Destination public address.
-	StandardAddress string `json:"standard_address"`
+	// (Optional) Destination public address. (Defaults to primary address)
+	StandardAddress string `json:"standard_address,omitempty"`
 
-	// PaymentId (Optional, defaults to a random ID) 16 characters hex encoded.
-	PaymentId string `json:"payment_id"`
+	// (Optional) 16 characters hex encoded. (Defaults to a random ID)
+	PaymentId string `json:"payment_id,omitempty"`
 }
 
 type MakeIntegratedAddressResponse struct {
-	// PaymentId hex encoded;
+	// Hex encoded payment id.
 	PaymentId string `json:"payment_id"`
 }
 
-// MakeIntegratedAddress Make an integrated address from the wallet address and a payment id.
+// Make an integrated address from the wallet address and a payment id.
 func (c *Client) MakeIntegratedAddress(req *MakeIntegratedAddressRequest) (*MakeIntegratedAddressResponse, error) {
 	resp := &MakeIntegratedAddressResponse{}
 	err := c.Do("make_integrated_address", &req, resp)

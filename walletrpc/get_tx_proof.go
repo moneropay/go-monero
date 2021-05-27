@@ -1,22 +1,22 @@
 package walletrpc
 
 type GetTxProofRequest struct {
-	// Txid transaction id.
+	// Transaction id.
 	Txid string `json:"txid"`
 
-	// Address destination public address of the transaction.
+	// Destination public address of the transaction.
 	Address string `json:"address"`
 
-	// Message (Optional) add a message to the signature to further authenticate the prooving process.
-	Message string `json:"message"`
+	// (Optional) add a message to the signature to further authenticate the proving process.
+	Message string `json:"message,omitempty"`
 }
 
 type GetTxProofResponse struct {
-	// Signature transaction signature.
+	// Transaction signature.
 	Signature string `json:"signature"`
 }
 
-// GetTxProof Get transaction signature to prove it.
+// Get transaction signature to prove it.
 func (c *Client) GetTxProof(req *GetTxProofRequest) (*GetTxProofResponse, error) {
 	resp := &GetTxProofResponse{}
 	err := c.Do("get_tx_proof", &req, resp)

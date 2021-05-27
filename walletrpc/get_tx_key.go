@@ -1,16 +1,16 @@
 package walletrpc
 
 type GetTxKeyRequest struct {
-	// Txid transaction id.
+	// Transaction id.
 	Txid string `json:"txid"`
 }
 
 type GetTxKeyResponse struct {
-	// TxKey transaction secret key.
+	// Transaction secret key.
 	TxKey string `json:"tx_key"`
 }
 
-// GetTxKey Get transaction secret key from transaction id.
+// Get transaction secret key from transaction id.
 func (c *Client) GetTxKey(req *GetTxKeyRequest) (*GetTxKeyResponse, error) {
 	resp := &GetTxKeyResponse{}
 	err := c.Do("get_tx_key", &req, resp)

@@ -1,11 +1,11 @@
 package walletrpc
 
 type ExportMultisigInfoResponse struct {
-	// Info Multisig info in hex format for other participants.
+	// Multisig info in hex format for other participants.
 	Info string `json:"info"`
 }
 
-// ExportMultisigInfo Export multisig info for other participants.
+// Export multisig info for other participants.
 func (c *Client) ExportMultisigInfo() (*ExportMultisigInfoResponse, error) {
 	resp := &ExportMultisigInfoResponse{}
 	err := c.Do("export_multisig_info", nil, resp)

@@ -1,11 +1,16 @@
 package walletrpc
 
+type ExportOutputsRequest struct {
+	// (Optional) If true, export all outputs. Otherwise, export outputs since the last export. (Defaults to false)
+	All bool `json:"all,omitemtpy"`
+}
+
 type ExportOutputsResponse struct {
-	// OutputsDataHex wallet outputs in hex format.
+	// Wallet outputs in hex format.
 	OutputsDataHex string `json:"outputs_data_hex"`
 }
 
-// ExportOutputs Export all outputs in hex format.
+// Export all outputs in hex format.
 func (c *Client) ExportOutputs() (*ExportOutputsResponse, error) {
 	resp := &ExportOutputsResponse{}
 	err := c.Do("export_outputs", nil, resp)

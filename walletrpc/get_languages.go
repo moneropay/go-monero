@@ -1,11 +1,11 @@
 package walletrpc
 
 type GetLanguagesResponse struct {
-	// Languages List of available languages
+	// List of available languages
 	Languages []string `json:"languages"`
 }
 
-// GetLanguages Get a list of available languages for your wallet's seed.
+// Get a list of available languages for your wallet's seed.
 func (c *Client) GetLanguages() (*GetLanguagesResponse, error) {
 	resp := &GetLanguagesResponse{}
 	err := c.Do("get_languages", nil, resp)

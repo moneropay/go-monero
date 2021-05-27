@@ -1,6 +1,6 @@
 package walletrpc
 
-// Store Save the wallet file.
+// Save the wallet file.
 func (c *Client) Store() error {
 	err := c.Do("store", nil, nil)
 	if err != nil {

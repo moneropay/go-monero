@@ -1,29 +1,29 @@
 package walletrpc
 
 type SetDaemonRequest struct {
-	// Address - string; (Optional; Default: "") The URL of the daemon to connect to.
-	Address string `json:"address"`
+	// (Optional) The URL of the daemon to connect to. (Default: "") 
+	Address string `json:"address,omitempty"`
 
-	// Trusted - boolean; (Optional; Default: false) If false, some RPC wallet methods will be disabled.
-	Trusted bool `json:"trusted"`
+	// (Optional) If false, some RPC wallet methods will be disabled. (Default: false)
+	Trusted bool `json:"trusted,omitempty"`
 
-	// SslSupport - string; (Optional; Default: autodetect; Accepts: disabled, enabled, autodetect) Specifies whether the Daemon uses SSL encryption.
-	SslSupport string `json:"ssl_support"`
+	// (Optional) Specifies whether the Daemon uses SSL encryption. (Default: autodetect; Accepts: disabled, enabled, autodetect) 
+	SslSupport string `json:"ssl_support,omitempty"`
 
-	// SslPrivateKeyPath - string; (Optional) The file path location of the SSL key.
-	SslPrivateKeyPath string `json:"ssl_private_key_path"`
+	// (Optional) The file path location of the SSL key.
+	SslPrivateKeyPath string `json:"ssl_private_key_path,omitempty"`
 
-	// SslCertificatePath - string; (Optional) The file path location of the SSL certificate.
-	SslCertificatePath string `json:"ssl_certificate_path"`
+	// (Optional) The file path location of the SSL certificate.
+	SslCertificatePath string `json:"ssl_certificate_path,omitempty"`
 
-	// SslAllowedFingerprints - array of string; (Optional) The SHA1 fingerprints accepted by the SSL certificate.
-	SslAllowedFingerprints []string `json:"ssl_allowed_fingerprints"`
+	// (Optional) The SHA1 fingerprints accepted by the SSL certificate.
+	SslAllowedFingerprints []string `json:"ssl_allowed_fingerprints,omitempty"`
 
-	// SslAllowAnyCert - boolean; (Optional; Default: false) If false, the certificate must be signed by a trusted certificate authority.
-	SslAllowAnyCert bool `json:"ssl_allow_any_cert"`
+	// (Optional) If false, the certificate must be signed by a trusted certificate authority. (Default: false)
+	SslAllowAnyCert bool `json:"ssl_allow_any_cert,omitempty"`
 }
 
-// SetDaemon connect the RPC server to a Monero daemon.
+// Connect the RPC server to a Monero daemon.
 func (c *Client) SetDaemon(req *SetDaemonRequest) error {
 	err := c.Do("set_daemon", &req, nil)
 	if err != nil {

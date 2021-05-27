@@ -5,16 +5,16 @@ type SplitIntegratedAddressRequest struct {
 }
 
 type SplitIntegratedAddressResponse struct {
-	// IsSubaddress States if the address is a subaddress
+	// States if the address is a subaddress
 	IsSubaddress bool `json:"is_subaddress"`
 
-	// Payment hex encoded
+	// Hex encoded payment.
 	Payment string `json:"payment"`
 
 	StandardAddress string `json:"standard_address"`
 }
 
-// SplitIntegratedAddress Retrieve the standard address and payment id corresponding to an integrated address.
+// Retrieve the standard address and payment id corresponding to an integrated address.
 func (c *Client) SplitIntegratedAddress(req *SplitIntegratedAddressRequest) (*SplitIntegratedAddressResponse, error) {
 	resp := &SplitIntegratedAddressResponse{}
 	err := c.Do("split_integrated_address", &req, resp)

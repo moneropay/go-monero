@@ -1,11 +1,11 @@
 package walletrpc
 
 type UntagAccountsRequest struct {
-	// Accounts Remove tag from this list of accounts.
+	// Remove tag from this list of accounts.
 	Accounts []uint64 `json:"accounts"`
 }
 
-// UntagAccounts Remove filtering tag from a list of accounts.
+// Remove filtering tag from a list of accounts.
 func (c *Client) UntagAccounts(req *UntagAccountsRequest) error {
 	err := c.Do("untag_accounts", &req, nil)
 	if err != nil {

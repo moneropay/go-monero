@@ -1,14 +1,14 @@
 package walletrpc
 
 type SetAttributeRequest struct {
-	// Key attribute name
+	// Attribute name
 	Key string `json:"key"`
 
-	// Value attribute value
+	// Attribute value
 	Value string `json:"value"`
 }
 
-// SetAttribute Set arbitrary attribute.
+// Set arbitrary attribute.
 func (c *Client) SetAttribute(req *SetAttributeRequest) error {
 	err := c.Do("set_attribute", &req, nil)
 	if err != nil {

@@ -1,16 +1,16 @@
 package walletrpc
 
 type GetTxNotesRequest struct {
-	// Txids transaction ids
+	// Transaction ids
 	Txids []string `json:"txids"`
 }
 
 type GetTxNotesResponse struct {
-	// Notes notes for the transactions
+	// Notes for the transactions
 	Notes []string `json:"notes"`
 }
 
-// GetTxNotes Get string notes for transactions.
+// Get string notes for transactions.
 func (c *Client) GetTxNotes(req *GetTxNotesRequest) (*GetTxNotesResponse, error) {
 	resp := &GetTxNotesResponse{}
 	err := c.Do("get_tx_notes", &req, resp)

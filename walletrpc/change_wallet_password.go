@@ -1,14 +1,14 @@
 package walletrpc
 
 type ChangeWalletPasswordRequest struct {
-	// OldPassword (Optional) Current wallet password, if defined.
-	OldPassword string `json:"old_password"`
+	// (Optional) Current wallet password, if defined.
+	OldPassword string `json:"old_password,omitempty"`
 
-	// NewPassword (Optional) New wallet password, if not blank.
-	NewPassword string `json:"new_password"`
+	// (Optional) New wallet password, if not blank.
+	NewPassword string `json:"new_password,omitempty"`
 }
 
-// ChangeWalletPassword Change a wallet password.
+// Change a wallet password.
 func (c *Client) ChangeWalletPassword(req *ChangeWalletPasswordRequest) error {
 	err := c.Do("change_wallet_password", &req, nil)
 	if err != nil {
