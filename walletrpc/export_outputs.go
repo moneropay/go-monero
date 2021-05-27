@@ -11,9 +11,9 @@ type ExportOutputsResponse struct {
 }
 
 // Export all outputs in hex format.
-func (c *Client) ExportOutputs() (*ExportOutputsResponse, error) {
+func (c *Client) ExportOutputs(req *ExportOutputsRequest) (*ExportOutputsResponse, error) {
 	resp := &ExportOutputsResponse{}
-	err := c.Do("export_outputs", nil, resp)
+	err := c.Do("export_outputs", &req, resp)
 	if err != nil {
 		return nil, err
 	}

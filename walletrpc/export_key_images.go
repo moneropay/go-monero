@@ -10,9 +10,9 @@ type ExportKeyImagesResponse struct {
 }
 
 // Export a signed set of key images.
-func (c *Client) ExportKeyImages() (*ExportKeyImagesResponse, error) {
+func (c *Client) ExportKeyImages(req *ExportKeyImagesRequest) (*ExportKeyImagesResponse, error) {
 	resp := &ExportKeyImagesResponse{}
-	err := c.Do("export_key_images", nil, resp)
+	err := c.Do("export_key_images", &req, resp)
 	if err != nil {
 		return nil, err
 	}

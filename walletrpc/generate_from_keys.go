@@ -23,11 +23,20 @@ type GenerateFromKeysRequest struct {
 	AutosaveCurrent bool `json:"autosave_current"`
 }
 
+type GenerateFromKeysResponse struct {
+	// The wallet's address.
+	Address string `json:"address"`
+
+	// Verification message indicating that the wallet was generated successfully and whether or not it is a view-only wallet.
+	Info string `json:"info"`
+}
+
 // Restores a wallet from a given wallet address, view key, and optional spend key.
-func (c *Client) CreateWallet(req *CreateWalletRequest) error {
-	err := c.Do("create_wallet", &req, nil)
+func (c *Client) GenerateFromKeys(req *GenerateFromKeysRequest) (*GenerateFromKeysResponse, error) {
+	resp := &GenerateFromKeysResponse{}
+	err := c.Do("generate_from_keys", &req, resp)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return resp, nil
 }
