@@ -11,9 +11,31 @@ type IncomingTransfersRequest struct {
 	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
 }
 
+type IncomingTransfer struct {
+	// Amount of this transfer.
+	Amount uint64 `json:"amount"`
+
+	// Mostly internal use, can be ignored by most users.
+	GlobalIndex uint64 `json:"global_index"`
+
+	// Key image for the incoming transfer's unspent output (empty unless verbose is true).
+	KeyImage string `json:"key_image"`
+
+	// Indicates if this transfer has been spent.
+	Spent bool `json:"spent"`
+
+	// Subaddress index for incoming transfer.
+	SubaddrIndex SubaddressIndex `json:"subaddr_index"`
+
+	// Several incoming transfers may share the same hash if they were in the same transaction.
+	TxHash string `json:"tx_hash"`
+
+	// Size of transaction in bytes.
+	TxSize uint64 `json:"tx_size"`
+}
+
 type IncomingTransfersResponse struct {
-	// List of transfers
-	Transfers []Transfer `json:"transfers"`
+	Transfers []IncomingTransfer `json:"transfers"`
 }
 
 // Return a list of incoming transfers to the wallet.
