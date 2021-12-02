@@ -206,8 +206,8 @@ func TestClient_GetBulkPayments(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{Transport: trans},
 	})
 
 	ids := []string{
@@ -236,8 +236,10 @@ func TestClient_Transfer(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{
+			Transport: trans,
+		},
 	})
 	req := TransferRequest{
 
@@ -274,8 +276,8 @@ func TestClient_GetTransferByTxID(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{Transport: trans},
 	})
 	resp, err := client.GetTransferByTxid(context.Background(), &GetTransferByTxidRequest{
 		Txid: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d",

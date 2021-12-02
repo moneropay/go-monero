@@ -15,12 +15,10 @@ func New(cfg Config) *Client {
 		addr:    cfg.Address,
 		headers: cfg.CustomHeaders,
 	}
-	if cfg.Transport == nil {
+	if cfg.Client == nil {
 		cl.httpcl = http.DefaultClient
 	} else {
-		cl.httpcl = &http.Client{
-			Transport: cfg.Transport,
-		}
+		cl.httpcl = cfg.Client
 	}
 	return cl
 }
