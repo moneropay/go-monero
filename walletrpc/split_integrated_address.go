@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SplitIntegratedAddressRequest struct {
 	IntegratedAddress string `json:"integrated_address"`
 }
@@ -15,9 +17,9 @@ type SplitIntegratedAddressResponse struct {
 }
 
 // Retrieve the standard address and payment id corresponding to an integrated address.
-func (c *Client) SplitIntegratedAddress(req *SplitIntegratedAddressRequest) (*SplitIntegratedAddressResponse, error) {
+func (c *Client) SplitIntegratedAddress(ctx context.Context, req *SplitIntegratedAddressRequest) (*SplitIntegratedAddressResponse, error) {
 	resp := &SplitIntegratedAddressResponse{}
-	err := c.Do("split_integrated_address", &req, resp)
+	err := c.Do(ctx, "split_integrated_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

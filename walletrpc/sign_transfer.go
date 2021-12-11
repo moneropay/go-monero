@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SignTransferRequest struct {
 	// Set of unsigned tx returned by "transfer" or "transfer_split" methods.
 	UnsignedTxset string `json:"unsigned_txset"`
@@ -20,9 +22,9 @@ type SignTransferResponse struct {
 }
 
 // Sign a transaction created on a read-only wallet (in cold-signing process)
-func (c *Client) SignTransfer(req *SignTransferRequest) (*SignTransferResponse, error) {
+func (c *Client) SignTransfer(ctx context.Context, req *SignTransferRequest) (*SignTransferResponse, error) {
 	resp := &SignTransferResponse{}
-	err := c.Do("sign_transfer", &req, resp)
+	err := c.Do(ctx, "sign_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

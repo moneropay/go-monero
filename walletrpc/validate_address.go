@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ValidateAddressRequest struct {
 	// The address to validate.
 	Address string `json:"address"`
@@ -29,9 +31,9 @@ type ValidateAddressResponse struct {
 }
 
 // Analyzes a string to determine whether it is a valid monero wallet address and returns the result and the address specifications.
-func (c *Client) ValidateAddress(req *ValidateAddressRequest) (*ValidateAddressResponse, error) {
+func (c *Client) ValidateAddress(ctx context.Context, req *ValidateAddressRequest) (*ValidateAddressResponse, error) {
 	resp := &ValidateAddressResponse{}
-	err := c.Do("validate_address", &req, resp)
+	err := c.Do(ctx, "validate_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

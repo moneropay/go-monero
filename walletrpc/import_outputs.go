@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ImportOutputsRequest struct {
 	// Wallet outputs in hex format.
 	OutputsDataHex int64 `json:"outputs_data_hex"`
@@ -11,9 +13,9 @@ type ImportOutputsResponse struct {
 }
 
 // Import outputs in hex format.
-func (c *Client) ImportOutputs(req *ImportOutputsRequest) (*ImportOutputsResponse, error) {
+func (c *Client) ImportOutputs(ctx context.Context, req *ImportOutputsRequest) (*ImportOutputsResponse, error) {
 	resp := &ImportOutputsResponse{}
-	err := c.Do("import_outputs", &req, resp)
+	err := c.Do(ctx, "import_outputs", &req, resp)
 	if err != nil {
 		return nil, err
 	}

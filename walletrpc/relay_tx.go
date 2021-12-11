@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type RelayTxRequest struct {
 	// Transaction metadata returned from a transfer method with get_tx_metadata set to true.
 	Hex string `json:"hex"`
@@ -11,9 +13,9 @@ type RelayTxResponse struct {
 }
 
 // Relay a transaction previously created with "do_not_relay":true.
-func (c *Client) RelayTx(req *RelayTxRequest) (*RelayTxResponse, error) {
+func (c *Client) RelayTx(ctx context.Context, req *RelayTxRequest) (*RelayTxResponse, error) {
 	resp := &RelayTxResponse{}
-	err := c.Do("relay_tx", &req, resp)
+	err := c.Do(ctx, "relay_tx", &req, resp)
 	if err != nil {
 		return nil, err
 	}

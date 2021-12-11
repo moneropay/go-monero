@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type TagAccountsRequest struct {
 	// Tag for the accounts.
 	Tag string `json:"tag"`
@@ -9,8 +11,8 @@ type TagAccountsRequest struct {
 }
 
 // Apply a filtering tag to a list of accounts.
-func (c *Client) TagAccounts(req *TagAccountsRequest) error {
-	err := c.Do("tag_accounts", &req, nil)
+func (c *Client) TagAccounts(ctx context.Context, req *TagAccountsRequest) error {
+	err := c.Do(ctx, "tag_accounts", &req, nil)
 	if err != nil {
 		return err
 	}

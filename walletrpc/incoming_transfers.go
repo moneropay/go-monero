@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type IncomingTransfersRequest struct {
 	// "all": all the transfers, "available": only transfers which are not yet spent, OR "unavailable": only transfers which are already spent.
 	TransferType string `json:"transfer_type"`
@@ -39,9 +41,9 @@ type IncomingTransfersResponse struct {
 }
 
 // Return a list of incoming transfers to the wallet.
-func (c *Client) IncomingTransfers(req *IncomingTransfersRequest) (*IncomingTransfersResponse, error) {
+func (c *Client) IncomingTransfers(ctx context.Context, req *IncomingTransfersRequest) (*IncomingTransfersResponse, error) {
 	resp := &IncomingTransfersResponse{}
-	err := c.Do("incoming_transfers", &req, resp)
+	err := c.Do(ctx, "incoming_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}

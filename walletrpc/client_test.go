@@ -1,6 +1,7 @@
 package walletrpc
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -170,7 +171,7 @@ func newClient() {
 	})
 
 	// check wallet balance
-	balance, err := client.GetBalance(&GetBalanceRequest{
+	balance, err := client.GetBalance(context.Background(), &GetBalanceRequest{
 		AccountIndex: 0,
 	})
 
@@ -205,8 +206,8 @@ func TestClient_GetBulkPayments(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{Transport: trans},
 	})
 
 	ids := []string{
@@ -216,7 +217,7 @@ func TestClient_GetBulkPayments(t *testing.T) {
 		//"a30f46f0189c2974281815f908ec91d44ca09987a0cf90211234567890abf5ac", // Do not get withdrawal by payment id
 	}
 
-	payment, err := client.GetBulkPayments(&GetBulkPaymentsRequest{
+	payment, err := client.GetBulkPayments(context.Background(), &GetBulkPaymentsRequest{
 		PaymentIds:     ids,
 		MinBlockHeight: 1881753,
 	})
@@ -235,8 +236,10 @@ func TestClient_Transfer(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{
+			Transport: trans,
+		},
 	})
 	req := TransferRequest{
 
@@ -260,8 +263,7 @@ func TestClient_Transfer(t *testing.T) {
 		t.Fatalf("%v", err)
 	}
 	t.Logf("%v", string(payload))
-
-	resp, err := client.Transfer(&req)
+	resp, err := client.Transfer(context.Background(), &req)
 	if err != nil {
 		t.Log(err)
 	}
@@ -274,10 +276,10 @@ func TestClient_GetTransferByTxID(t *testing.T) {
 	trans := httpdigest.New("username", "password")
 
 	client := New(Config{
-		Address:   "http://127.0.0.1:18085/json_rpc",
-		Transport: trans,
+		Address: "http://127.0.0.1:18085/json_rpc",
+		Client:  &http.Client{Transport: trans},
 	})
-	resp, err := client.GetTransferByTxid(&GetTransferByTxidRequest{
+	resp, err := client.GetTransferByTxid(context.Background(), &GetTransferByTxidRequest{
 		Txid: "25196f09a12ec5f5127ef0e0bba7228cbce22e885c0b959545ef65eea03ea15d",
 	})
 	if err != nil {

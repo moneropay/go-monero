@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetTransfersRequest struct {
 	// Include incoming transfers. (Defaults to false)
 	In bool `json:"in,omitempty"`
@@ -85,9 +87,9 @@ type GetTransfersResponse struct {
 }
 
 // Returns a list of transfers.
-func (c *Client) GetTransfers(req *GetTransfersRequest) (*GetTransfersResponse, error) {
+func (c *Client) GetTransfers(ctx context.Context, req *GetTransfersRequest) (*GetTransfersResponse, error) {
 	resp := &GetTransfersResponse{}
-	err := c.Do("get_transfers", &req, resp)
+	err := c.Do(ctx, "get_transfers", &req, resp)
 	if err != nil {
 		return nil, err
 	}

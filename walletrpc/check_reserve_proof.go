@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type CheckReserveProofRequest struct {
 	// Public address of the wallet.
 	Address string `json:"address"`
@@ -17,9 +19,9 @@ type CheckReserveProofResponse struct {
 }
 
 // Proves a wallet has a disposable reserve using a signature.
-func (c *Client) CheckReserveProof(req *CheckReserveProofRequest) (*CheckReserveProofResponse, error) {
+func (c *Client) CheckReserveProof(ctx context.Context, req *CheckReserveProofRequest) (*CheckReserveProofResponse, error) {
 	resp := &CheckReserveProofResponse{}
-	err := c.Do("check_reserve_proof", &req, resp)
+	err := c.Do(ctx, "check_reserve_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

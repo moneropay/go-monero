@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ImportMultisigInfoRequest struct {
 	// List of multisig info in hex format from other participants.
 	Info []string `json:"info"`
@@ -11,9 +13,9 @@ type ImportMultisigInfoResponse struct {
 }
 
 // Import multisig info from other participants.
-func (c *Client) ImportMultisigInfo(req *ImportMultisigInfoRequest) (*ImportMultisigInfoResponse, error) {
+func (c *Client) ImportMultisigInfo(ctx context.Context, req *ImportMultisigInfoRequest) (*ImportMultisigInfoResponse, error) {
 	resp := &ImportMultisigInfoResponse{}
-	err := c.Do("import_multisig_info", &req, resp)
+	err := c.Do(ctx, "import_multisig_info", &req, resp)
 	if err != nil {
 		return nil, err
 	}

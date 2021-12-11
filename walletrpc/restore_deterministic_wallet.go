@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type RestoreDeterministicWalletRequest struct {
 	// Name of the wallet.
 	Name string `json:"name"`
@@ -38,9 +40,9 @@ type RestoreDeterministicWalletResponse struct {
 }
 
 // Create and open a wallet on the RPC server from an existing mnemonic phrase and close the currently open wallet.
-func (c *Client) RestoreDeterministicWallet(req *RestoreDeterministicWalletRequest) (*RestoreDeterministicWalletResponse, error) {
+func (c *Client) RestoreDeterministicWallet(ctx context.Context, req *RestoreDeterministicWalletRequest) (*RestoreDeterministicWalletResponse, error) {
 	resp := &RestoreDeterministicWalletResponse{}
-	err := c.Do("restore_deterministic_wallet", &req, resp)
+	err := c.Do(ctx, "restore_deterministic_wallet", &req, resp)
 	if err != nil {
 		return nil, err
 	}

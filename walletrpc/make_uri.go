@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type MakeUriRequest struct {
 	// Wallet address.
 	Address string `json:"address"`
@@ -23,9 +25,9 @@ type MakeUriResponse struct {
 }
 
 // Create a payment URI using the official URI spec.
-func (c *Client) MakeUri(req *MakeUriRequest) (*MakeUriResponse, error) {
+func (c *Client) MakeUri(ctx context.Context, req *MakeUriRequest) (*MakeUriResponse, error) {
 	resp := &MakeUriResponse{}
-	err := c.Do("make_uri", &req, resp)
+	err := c.Do(ctx, "make_uri", &req, resp)
 	if err != nil {
 		return nil, err
 	}

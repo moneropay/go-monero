@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type CreateAddressRequest struct {
 	// Create a new address for this account.
 	AccountIndex uint64 `json:"account_index"`
@@ -17,9 +19,9 @@ type CreateAddressResponse struct {
 }
 
 // Create a new address for an account. Optionally, label the new address.
-func (c *Client) CreateAddress(req *CreateAddressRequest) (*CreateAddressResponse, error) {
+func (c *Client) CreateAddress(ctx context.Context, req *CreateAddressRequest) (*CreateAddressResponse, error) {
 	resp := &CreateAddressResponse{}
-	err := c.Do("create_address", &req, resp)
+	err := c.Do(ctx, "create_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

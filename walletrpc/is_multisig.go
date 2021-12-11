@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type IsMultisigResponse struct {
 	// States if the wallet is multisig
 	Multisig bool `json:"multisig"`
@@ -12,9 +14,9 @@ type IsMultisigResponse struct {
 }
 
 // Check if a wallet is a multisig one.
-func (c *Client) IsMultisig() (*IsMultisigResponse, error) {
+func (c *Client) IsMultisig(ctx context.Context) (*IsMultisigResponse, error) {
 	resp := &IsMultisigResponse{}
-	err := c.Do("is_multisig", nil, resp)
+	err := c.Do(ctx, "is_multisig", nil, resp)
 	if err != nil {
 		return nil, err
 	}

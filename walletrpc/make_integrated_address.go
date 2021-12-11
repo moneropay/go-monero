@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type MakeIntegratedAddressRequest struct {
 	// (Optional) Destination public address. (Defaults to primary address)
 	StandardAddress string `json:"standard_address,omitempty"`
@@ -14,9 +16,9 @@ type MakeIntegratedAddressResponse struct {
 }
 
 // Make an integrated address from the wallet address and a payment id.
-func (c *Client) MakeIntegratedAddress(req *MakeIntegratedAddressRequest) (*MakeIntegratedAddressResponse, error) {
+func (c *Client) MakeIntegratedAddress(ctx context.Context, req *MakeIntegratedAddressRequest) (*MakeIntegratedAddressResponse, error) {
 	resp := &MakeIntegratedAddressResponse{}
-	err := c.Do("make_integrated_address", &req, resp)
+	err := c.Do(ctx, "make_integrated_address", &req, resp)
 	if err != nil {
 		return nil, err
 	}

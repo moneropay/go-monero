@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SetAttributeRequest struct {
 	// Attribute name
 	Key string `json:"key"`
@@ -9,8 +11,8 @@ type SetAttributeRequest struct {
 }
 
 // Set arbitrary attribute.
-func (c *Client) SetAttribute(req *SetAttributeRequest) error {
-	err := c.Do("set_attribute", &req, nil)
+func (c *Client) SetAttribute(ctx context.Context, req *SetAttributeRequest) error {
+	err := c.Do(ctx, "set_attribute", &req, nil)
 	if err != nil {
 		return err
 	}

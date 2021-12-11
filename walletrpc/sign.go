@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SignRequest struct {
 	// Anything you need to sign.
 	Data string `json:"data"`
@@ -11,9 +13,9 @@ type SignResponse struct {
 }
 
 // Sign a string.
-func (c *Client) Sign(req *SignRequest) (*SignResponse, error) {
+func (c *Client) Sign(ctx context.Context, req *SignRequest) (*SignResponse, error) {
 	resp := &SignResponse{}
-	err := c.Do("sign", &req, resp)
+	err := c.Do(ctx, "sign", &req, resp)
 	if err != nil {
 		return nil, err
 	}

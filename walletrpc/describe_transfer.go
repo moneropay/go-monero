@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type DescribeTransferRequest struct {
 	// (Optional) A hexadecimal string representing a set of unsigned transactions (empty for multisig transactions; non-multisig signed transactions are not supported).
 	UnsignedTxset string `json:"unsigned_txset,omitempty"`
@@ -55,9 +57,9 @@ type Description struct {
 }
 
 // Returns details for each transaction in an unsigned or multisig transaction set.
-func (c *Client) DescribeTransfer(req *DescribeTransferRequest) (*DescribeTransferResponse, error) {
+func (c *Client) DescribeTransfer(ctx context.Context, req *DescribeTransferRequest) (*DescribeTransferResponse, error) {
 	resp := &DescribeTransferResponse{}
-	err := c.Do("describe_transfer", &req, resp)
+	err := c.Do(ctx, "describe_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

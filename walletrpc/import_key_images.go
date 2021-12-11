@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ImportKeyImagesRequest struct {
 	// Array of signed key images.
 	SignedKeyImages []SignedKeyImage `json:"signed_key_images"`
@@ -16,9 +18,9 @@ type ImportKeyImagesResponse struct {
 }
 
 // Import signed key images list and verify their spent status.
-func (c *Client) ImportKeyImages(req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error) {
+func (c *Client) ImportKeyImages(ctx context.Context, req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error) {
 	resp := &ImportKeyImagesResponse{}
-	err := c.Do("import_key_images", &req, resp)
+	err := c.Do(ctx, "import_key_images", &req, resp)
 	if err != nil {
 		return nil, err
 	}

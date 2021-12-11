@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SweepAllRequest struct {
 	// Destination public address.
 	Address string `json:"address"`
@@ -65,9 +67,9 @@ type SweepAllResponse struct {
 }
 
 // Send all unlocked balance to an address.
-func (c *Client) SweepAll(req *SweepAllRequest) (*SweepAllResponse, error) {
+func (c *Client) SweepAll(ctx context.Context, req *SweepAllRequest) (*SweepAllResponse, error) {
 	resp := &SweepAllResponse{}
-	err := c.Do("sweep_all", &req, resp)
+	err := c.Do(ctx, "sweep_all", &req, resp)
 	if err != nil {
 		return nil, err
 	}

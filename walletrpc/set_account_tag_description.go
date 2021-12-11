@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SetAccountTagDescriptionRequest struct {
 	// Set a description for this tag.
 	Tag string `json:"tag"`
@@ -9,8 +11,8 @@ type SetAccountTagDescriptionRequest struct {
 }
 
 // Set description for an account tag.
-func (c *Client) SetAccountTagDescription(req *SetAccountTagDescriptionRequest) error {
-	err := c.Do("set_account_tag_description", &req, nil)
+func (c *Client) SetAccountTagDescription(ctx context.Context, req *SetAccountTagDescriptionRequest) error {
+	err := c.Do(ctx, "set_account_tag_description", &req, nil)
 	if err != nil {
 		return err
 	}

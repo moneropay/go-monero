@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ParseUriRequest struct {
 	// This contains all the payment input information as a properly formatted payment URI.
 	Uri string `json:"uri"`
@@ -28,9 +30,9 @@ type UriPaymentInfo struct {
 }
 
 // Parse a payment URI to get payment information.
-func (c *Client) ParseUri(req *ParseUriRequest) (*ParseUriResponse, error) {
+func (c *Client) ParseUri(ctx context.Context, req *ParseUriRequest) (*ParseUriResponse, error) {
 	resp := &ParseUriResponse{}
-	err := c.Do("parse_uri", &req, resp)
+	err := c.Do(ctx, "parse_uri", &req, resp)
 	if err != nil {
 		return nil, err
 	}

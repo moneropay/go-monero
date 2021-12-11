@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type TransferSplitRequest struct {
 	// Array of destinations to receive XMR.
 	Destinations []Destination `json:"destinations"`
@@ -71,9 +73,9 @@ type TransferSplitResponse struct {
 }
 
 // Same as transfer, but can split into more than one tx if necessary.
-func (c *Client) TransferSplit(req *TransferSplitRequest) (*TransferSplitResponse, error) {
+func (c *Client) TransferSplit(ctx context.Context, req *TransferSplitRequest) (*TransferSplitResponse, error) {
 	resp := &TransferSplitResponse{}
-	err := c.Do("transfer_split", &req, resp)
+	err := c.Do(ctx, "transfer_split", &req, resp)
 	if err != nil {
 		return nil, err
 	}
