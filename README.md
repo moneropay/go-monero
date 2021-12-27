@@ -27,6 +27,7 @@ monero-wallet-rpc --detach \
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"net/http"
@@ -44,7 +45,7 @@ func main() {
 			Transport: httpdigest.New("kernal", "s3cure"), // Remove if no auth.
 		},
 	})
-	resp, err := client.GetBalance(&walletrpc.GetBalanceRequest{})
+	resp, err := client.GetBalance(context.Background(), &walletrpc.GetBalanceRequest{})
 	if err != nil {
 		log.Fatal(err)
 	}
