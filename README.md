@@ -29,6 +29,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/gabstv/httpdigest"
 
@@ -39,7 +40,9 @@ func main() {
 	// username: kernal, password: s3cure
 	client := walletrpc.New(walletrpc.Config{
 		Address: "http://127.0.0.1:18083/json_rpc",
-		Transport: httpdigest.New("kernal", "s3cure"), // Remove if no auth.
+		Client: &http.Client{
+			Transport: httpdigest.New("kernal", "s3cure"), // Remove if no auth.
+		},
 	})
 	resp, err := client.GetBalance(&walletrpc.GetBalanceRequest{})
 	if err != nil {
@@ -49,6 +52,11 @@ func main() {
 	fmt.Println("Unlocked balance:", walletrpc.XMRToDecimal(resp.UnlockedBalance))
 }
 ```
+
+### Contributing
+Submit issues and merge requests only on [GitLab](https://gitlab.com/moneropay/go-monero/).\
+Alternatively, you can send us patch files via email at [moneropay@kernal.eu](mailto:moneropay@kernal.eu).\
+For development related discussions and questions join [#moneropay:kernal.eu](https://matrix.to/#/#moneropay:kernal.eu).
 
 ### Special Thanks
 This version of `go-monero` is based on the works of:
