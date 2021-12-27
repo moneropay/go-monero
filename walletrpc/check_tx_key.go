@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type CheckTxKeyRequest struct {
 	// Transaction id.
 	Txid string `json:"txid"`
@@ -23,9 +25,9 @@ type CheckTxKeyResponse struct {
 }
 
 // Check a transaction in the blockchain with its secret key.
-func (c *Client) CheckTxKey(req *CheckTxKeyRequest) (*CheckTxKeyResponse, error) {
+func (c *Client) CheckTxKey(ctx context.Context, req *CheckTxKeyRequest) (*CheckTxKeyResponse, error) {
 	resp := &CheckTxKeyResponse{}
-	err := c.Do("check_tx_key", &req, resp)
+	err := c.Do(ctx, "check_tx_key", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type RefreshRequest struct {
 	// (Optional) The block height from which to start refreshing.
 	StartHeight uint64 `json:"start_height,omitempty"`
@@ -14,9 +16,9 @@ type RefreshResponse struct {
 }
 
 // Refresh a wallet after opening.
-func (c *Client) Refresh(req *RefreshRequest) (*RefreshResponse, error) {
+func (c *Client) Refresh(ctx context.Context, req *RefreshRequest) (*RefreshResponse, error) {
 	resp := &RefreshResponse{}
-	err := c.Do("refresh", &req, resp)
+	err := c.Do(ctx, "refresh", &req, resp)
 	if err != nil {
 		return nil, err
 	}

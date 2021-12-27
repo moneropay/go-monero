@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type EditAddressBookRequest struct {
 	// Index of the address book entry to edit.
 	Index uint64 `json:"index"`
@@ -24,8 +26,8 @@ type EditAddressBookRequest struct {
 }
 
 // Edit an existing address book entry.
-func (c *Client) EditAddressBook(req *EditAddressBookRequest) error {
-	err := c.Do("edit_address_book", &req, nil)
+func (c *Client) EditAddressBook(ctx context.Context, req *EditAddressBookRequest) error {
+	err := c.Do(ctx, "edit_address_book", &req, nil)
 	if err != nil {
 		return err
 	}

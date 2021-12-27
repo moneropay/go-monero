@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SweepDustRequest struct {
 	// (Optional) Return the transaction keys after sending.
 	GetTxKeys bool `json:"get_tx_keys,omitempty"`
@@ -41,9 +43,9 @@ type SweepDustResponse struct {
 }
 
 // Send all dust outputs back to the wallet's, to make them easier to spend (and mix).
-func (c *Client) SweepDust(req *SweepDustRequest) (*SweepDustResponse, error) {
+func (c *Client) SweepDust(ctx context.Context, req *SweepDustRequest) (*SweepDustResponse, error) {
 	resp := &SweepDustResponse{}
-	err := c.Do("sweep_dust", &req, resp)
+	err := c.Do(ctx, "sweep_dust", &req, resp)
 	if err != nil {
 		return nil, err
 	}

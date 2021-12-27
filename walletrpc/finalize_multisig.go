@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type FinalizeMultisigRequest struct {
 	// List of multisig string from peers.
 	MultisigInfo []string `json:"multisig_info"`
@@ -14,9 +16,9 @@ type FinalizeMultisigResponse struct {
 }
 
 // Turn this wallet into a multisig wallet, extra step for N-1/N wallets.
-func (c *Client) FinalizeMultisig(req *FinalizeMultisigRequest) (*FinalizeMultisigResponse, error) {
+func (c *Client) FinalizeMultisig(ctx context.Context, req *FinalizeMultisigRequest) (*FinalizeMultisigResponse, error) {
 	resp := &FinalizeMultisigResponse{}
-	err := c.Do("finalize_multisig", &req, resp)
+	err := c.Do(ctx, "finalize_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

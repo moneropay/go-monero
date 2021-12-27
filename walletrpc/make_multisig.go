@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type MakeMultisigRequest struct {
 	// List of multisig string from peers.
 	MultisigInfo []string `json:"multisig_info"`
@@ -20,9 +22,9 @@ type MakeMultisigResponse struct {
 }
 
 // Make a wallet multisig by importing peers multisig string.
-func (c *Client) MakeMultisig(req *MakeMultisigRequest) (*MakeMultisigResponse, error) {
+func (c *Client) MakeMultisig(ctx context.Context, req *MakeMultisigRequest) (*MakeMultisigResponse, error) {
 	resp := &MakeMultisigResponse{}
-	err := c.Do("make_multisig", &req, resp)
+	err := c.Do(ctx, "make_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

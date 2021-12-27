@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GenerateFromKeysRequest struct {
 	// (Optional) The block height to restore the wallet from. (Defaults to 0)
 	RestoreHeight uint64 `json:"restore_height,omitempty"`
@@ -32,9 +34,9 @@ type GenerateFromKeysResponse struct {
 }
 
 // Restores a wallet from a given wallet address, view key, and optional spend key.
-func (c *Client) GenerateFromKeys(req *GenerateFromKeysRequest) (*GenerateFromKeysResponse, error) {
+func (c *Client) GenerateFromKeys(ctx context.Context, req *GenerateFromKeysRequest) (*GenerateFromKeysResponse, error) {
 	resp := &GenerateFromKeysResponse{}
-	err := c.Do("generate_from_keys", &req, resp)
+	err := c.Do(ctx, "generate_from_keys", &req, resp)
 	if err != nil {
 		return nil, err
 	}

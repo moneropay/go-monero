@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ExportOutputsRequest struct {
 	// (Optional) If true, export all outputs. Otherwise, export outputs since the last export. (Defaults to false)
 	All bool `json:"all,omitemtpy"`
@@ -11,9 +13,9 @@ type ExportOutputsResponse struct {
 }
 
 // Export all outputs in hex format.
-func (c *Client) ExportOutputs(req *ExportOutputsRequest) (*ExportOutputsResponse, error) {
+func (c *Client) ExportOutputs(ctx context.Context, req *ExportOutputsRequest) (*ExportOutputsResponse, error) {
 	resp := &ExportOutputsResponse{}
-	err := c.Do("export_outputs", &req, resp)
+	err := c.Do(ctx, "export_outputs", &req, resp)
 	if err != nil {
 		return nil, err
 	}

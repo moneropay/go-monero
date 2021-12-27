@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetAddressBookRequest struct {
 	// Indices of the requested address book entries.
 	Entries []uint64 `json:"entries"`
@@ -11,9 +13,9 @@ type GetAddressBookResponse struct {
 }
 
 // Retrieves entries from the address book.
-func (c *Client) GetAddressBook(req *GetAddressBookRequest) (*GetAddressBookResponse, error) {
+func (c *Client) GetAddressBook(ctx context.Context, req *GetAddressBookRequest) (*GetAddressBookResponse, error) {
 	resp := &GetAddressBookResponse{}
-	err := c.Do("get_address_book", &req, resp)
+	err := c.Do(ctx, "get_address_book", &req, resp)
 	if err != nil {
 		return nil, err
 	}

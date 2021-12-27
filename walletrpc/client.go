@@ -2,6 +2,7 @@ package walletrpc
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"net/http"
 
@@ -14,12 +15,10 @@ func New(cfg Config) *Client {
 		addr:    cfg.Address,
 		headers: cfg.CustomHeaders,
 	}
-	if cfg.Transport == nil {
+	if cfg.Client == nil {
 		cl.httpcl = http.DefaultClient
 	} else {
-		cl.httpcl = &http.Client{
-			Transport: cfg.Transport,
-		}
+		cl.httpcl = cfg.Client
 	}
 	return cl
 }
@@ -30,12 +29,12 @@ type Client struct {
 	headers map[string]string
 }
 
-func (c *Client) Do(method string, in, out interface{}) error {
+func (c *Client) Do(ctx context.Context, method string, in, out interface{}) error {
 	payload, err := json2.EncodeClientRequest(method, in)
 	if err != nil {
 		return err
 	}
-	req, err := http.NewRequest(http.MethodPost, c.addr, bytes.NewBuffer(payload))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, c.addr, bytes.NewBuffer(payload))
 	if err != nil {
 		return err
 	}

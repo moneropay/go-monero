@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type TransferRequest struct {
 	// Array of destinations to receive XMR.
 	Destinations []Destination `json:"destinations"`
@@ -62,9 +64,9 @@ type TransferResponse struct {
 }
 
 // Send monero to a number of recipients.
-func (c *Client) Transfer(req *TransferRequest) (*TransferResponse, error) {
+func (c *Client) Transfer(ctx context.Context, req *TransferRequest) (*TransferResponse, error) {
 	resp := &TransferResponse{}
-	err := c.Do("transfer", &req, resp)
+	err := c.Do(ctx, "transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

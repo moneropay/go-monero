@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetAccountTagsResponse struct {
 	// Array of account tag information:
 	AccountTags []AccountTag `json:"account_tags"`
@@ -17,9 +19,9 @@ type AccountTag struct {
 }
 
 // Get a list of user-defined account tags.
-func (c *Client) GetAccountTags() (*GetAccountTagsResponse, error) {
+func (c *Client) GetAccountTags(ctx context.Context) (*GetAccountTagsResponse, error) {
 	resp := &GetAccountTagsResponse{}
-	err := c.Do("get_account_tags", nil, resp)
+	err := c.Do(ctx, "get_account_tags", nil, resp)
 	if err != nil {
 		return nil, err
 	}

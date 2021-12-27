@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetBalanceRequest struct {
 	// Return balance for this account.
 	AccountIndex uint64 `json:"account_index"`
@@ -23,9 +25,9 @@ type GetBalanceResponse struct {
 }
 
 // Return the wallet's balance.
-func (c *Client) GetBalance(req *GetBalanceRequest) (*GetBalanceResponse, error) {
+func (c *Client) GetBalance(ctx context.Context, req *GetBalanceRequest) (*GetBalanceResponse, error) {
 	resp := &GetBalanceResponse{}
-	err := c.Do("get_balance", &req, resp)
+	err := c.Do(ctx, "get_balance", &req, resp)
 	if err != nil {
 		return nil, err
 	}

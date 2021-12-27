@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetTxProofRequest struct {
 	// Transaction id.
 	Txid string `json:"txid"`
@@ -17,9 +19,9 @@ type GetTxProofResponse struct {
 }
 
 // Get transaction signature to prove it.
-func (c *Client) GetTxProof(req *GetTxProofRequest) (*GetTxProofResponse, error) {
+func (c *Client) GetTxProof(ctx context.Context, req *GetTxProofRequest) (*GetTxProofResponse, error) {
 	resp := &GetTxProofResponse{}
-	err := c.Do("get_tx_proof", &req, resp)
+	err := c.Do(ctx, "get_tx_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

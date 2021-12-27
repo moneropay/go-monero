@@ -8,5 +8,5 @@ import (
 type Config struct {
 	Address       string
 	CustomHeaders map[string]string
-	Transport     http.RoundTripper
+	Client        *http.Client
 }

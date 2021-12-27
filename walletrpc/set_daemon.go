@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SetDaemonRequest struct {
 	// (Optional) The URL of the daemon to connect to. (Default: "") 
 	Address string `json:"address,omitempty"`
@@ -24,8 +26,8 @@ type SetDaemonRequest struct {
 }
 
 // Connect the RPC server to a Monero daemon.
-func (c *Client) SetDaemon(req *SetDaemonRequest) error {
-	err := c.Do("set_daemon", &req, nil)
+func (c *Client) SetDaemon(ctx context.Context, req *SetDaemonRequest) error {
+	err := c.Do(ctx, "set_daemon", &req, nil)
 	if err != nil {
 		return err
 	}

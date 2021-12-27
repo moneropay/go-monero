@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SubmitMultisigRequest struct {
 	// Multisig transaction in hex format, as returned by sign_multisig under tx_data_hex.
 	TxDataHex string `json:"tx_data_hex"`
@@ -11,9 +13,9 @@ type SubmitMultisigResponse struct {
 }
 
 // Submit a signed multisig transaction.
-func (c *Client) SubmitMultisig(req *SubmitMultisigRequest) (*SubmitMultisigResponse, error) {
+func (c *Client) SubmitMultisig(ctx context.Context, req *SubmitMultisigRequest) (*SubmitMultisigResponse, error) {
 	resp := &SubmitMultisigResponse{}
-	err := c.Do("submit_multisig", &req, resp)
+	err := c.Do(ctx, "submit_multisig", &req, resp)
 	if err != nil {
 		return nil, err
 	}

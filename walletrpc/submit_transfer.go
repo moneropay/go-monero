@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SubmitTransferRequest struct {
 	// Set of signed tx returned by "sign_transfer"
 	TxDataHex string `json:"tx_data_hex"`
@@ -11,9 +13,9 @@ type SubmitTransferResponse struct {
 }
 
 // Submit a previously signed transaction on a read-only wallet (in cold-signing process).
-func (c *Client) SubmitTransfer(req *SubmitTransferRequest) (*SubmitTransferResponse, error) {
+func (c *Client) SubmitTransfer(ctx context.Context, req *SubmitTransferRequest) (*SubmitTransferResponse, error) {
 	resp := &SubmitTransferResponse{}
-	err := c.Do("submit_transfer", &req, resp)
+	err := c.Do(ctx, "submit_transfer", &req, resp)
 	if err != nil {
 		return nil, err
 	}

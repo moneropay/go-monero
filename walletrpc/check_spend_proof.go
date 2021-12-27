@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type CheckSpendProofRequest struct {
 	// Transaction id.
 	Txid string `json:"txid"`
@@ -17,9 +19,9 @@ type CheckSpendProofResponse struct {
 }
 
 // Prove a spend using a signature. Unlike proving a transaction, it does not requires the destination public address.
-func (c *Client) CheckSpendProof(req *CheckSpendProofRequest) (*CheckSpendProofResponse, error) {
+func (c *Client) CheckSpendProof(ctx context.Context, req *CheckSpendProofRequest) (*CheckSpendProofResponse, error) {
 	resp := &CheckSpendProofResponse{}
-	err := c.Do("check_spend_proof", &req, resp)
+	err := c.Do(ctx, "check_spend_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

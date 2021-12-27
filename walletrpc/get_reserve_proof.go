@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetReserveProofRequest struct {
 	// Proves all wallet balance to be disposable.
 	All bool `json:"all"`
@@ -20,9 +22,9 @@ type GetReserveProofResponse struct {
 }
 
 // Generate a signature to prove of an available amount in a wallet.
-func (c *Client) GetReserveProof(req *GetReserveProofRequest) (*GetReserveProofResponse, error) {
+func (c *Client) GetReserveProof(ctx context.Context, req *GetReserveProofRequest) (*GetReserveProofResponse, error) {
 	resp := &GetReserveProofResponse{}
-	err := c.Do("get_reserve_proof", &req, resp)
+	err := c.Do(ctx, "get_reserve_proof", &req, resp)
 	if err != nil {
 		return nil, err
 	}

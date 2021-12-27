@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type AutoRefreshRequest struct {
 	// (Optional) Enable or disable automatic refreshing (Defaults to true).
 	Enable bool `json:"enable"`
@@ -9,8 +11,8 @@ type AutoRefreshRequest struct {
 }
 
 // Set whether and how often to automatically refresh the current wallet.
-func (c *Client) AutoRefresh(req *AutoRefreshRequest) error {
-	err := c.Do("auto_refresh", &req, nil)
+func (c *Client) AutoRefresh(ctx context.Context, req *AutoRefreshRequest) error {
+	err := c.Do(ctx, "auto_refresh", &req, nil)
 	if err != nil {
 		return err
 	}

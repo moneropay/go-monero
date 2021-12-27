@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type LabelAddressRequest struct {
 	// Struct containing the major & minor address index.
 	Index SubaddressIndex `json:"index"`
@@ -9,8 +11,8 @@ type LabelAddressRequest struct {
 }
 
 // Label an address.
-func (c *Client) LabelAddress(req *LabelAddressRequest) error {
-	err := c.Do("label_address", &req, nil)
+func (c *Client) LabelAddress(ctx context.Context, req *LabelAddressRequest) error {
+	err := c.Do(ctx, "label_address", &req, nil)
 	if err != nil {
 		return err
 	}

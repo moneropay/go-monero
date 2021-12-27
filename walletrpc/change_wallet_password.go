@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type ChangeWalletPasswordRequest struct {
 	// (Optional) Current wallet password, if defined.
 	OldPassword string `json:"old_password,omitempty"`
@@ -9,8 +11,8 @@ type ChangeWalletPasswordRequest struct {
 }
 
 // Change a wallet password.
-func (c *Client) ChangeWalletPassword(req *ChangeWalletPasswordRequest) error {
-	err := c.Do("change_wallet_password", &req, nil)
+func (c *Client) ChangeWalletPassword(ctx context.Context, req *ChangeWalletPasswordRequest) error {
+	err := c.Do(ctx, "change_wallet_password", &req, nil)
 	if err != nil {
 		return err
 	}

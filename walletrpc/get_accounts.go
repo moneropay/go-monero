@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetAccountsRequest struct {
 	// (Optional) Tag for filtering accounts.
 	Tag string `json:"tag,omitempty"`
@@ -17,9 +19,9 @@ type GetAccountsResponse struct {
 }
 
 // Get all accounts for a wallet. Optionally filter accounts by tag.
-func (c *Client) GetAccounts(req *GetAccountsRequest) (*GetAccountsResponse, error) {
+func (c *Client) GetAccounts(ctx context.Context, req *GetAccountsRequest) (*GetAccountsResponse, error) {
 	resp := &GetAccountsResponse{}
-	err := c.Do("get_accounts", &req, resp)
+	err := c.Do(ctx, "get_accounts", &req, resp)
 	if err != nil {
 		return nil, err
 	}

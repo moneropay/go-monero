@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type SweepSingleRequest struct {
 	// Destination public address.
 	Address string `json:"address"`
@@ -68,9 +70,9 @@ type SweepSingleResponse struct {
 }
 
 // Send all of a specific unlocked output to an address.
-func (c *Client) SweepSingle(req *SweepSingleRequest) (*SweepSingleResponse, error) {
+func (c *Client) SweepSingle(ctx context.Context, req *SweepSingleRequest) (*SweepSingleResponse, error) {
 	resp := &SweepSingleResponse{}
-	err := c.Do("sweep_single", &req, resp)
+	err := c.Do(ctx, "sweep_single", &req, resp)
 	if err != nil {
 		return nil, err
 	}

@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type GetTransferByTxidRequest struct {
 	// Transaction ID used to find the transfer.
 	Txid string `json:"txid"`
@@ -61,9 +63,9 @@ type GetTransferByTxidResponse struct {
 }
 
 // Show information about a transfer to/from this address.
-func (c *Client) GetTransferByTxid(req *GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
+func (c *Client) GetTransferByTxid(ctx context.Context, req *GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
 	resp := &GetTransferByTxidResponse{}
-	err := c.Do("get_transfer_by_txid", &req, resp)
+	err := c.Do(ctx, "get_transfer_by_txid", &req, resp)
 	if err != nil {
 		return nil, err
 	}

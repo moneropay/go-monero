@@ -1,5 +1,7 @@
 package walletrpc
 
+import "context"
+
 type AddAddressBookRequest struct {
 	Address     string `json:"address"`
 	PaymentId   string `json:"payment_id,omitempty"`
@@ -12,9 +14,9 @@ type AddAddressBookResponse struct {
 }
 
 // Add an entry to the address book.
-func (c *Client) AddAddressBook(req *AddAddressBookRequest) (*AddAddressBookResponse, error) {
+func (c *Client) AddAddressBook(ctx context.Context, req *AddAddressBookRequest) (*AddAddressBookResponse, error) {
 	resp := &AddAddressBookResponse{}
-	err := c.Do("add_address_book", &req, resp)
+	err := c.Do(ctx, "add_address_book", &req, resp)
 	if err != nil {
 		return nil, err
 	}
