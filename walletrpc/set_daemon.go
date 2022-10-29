@@ -3,13 +3,13 @@ package walletrpc
 import "context"
 
 type SetDaemonRequest struct {
-	// (Optional) The URL of the daemon to connect to. (Default: "") 
+	// (Optional) The URL of the daemon to connect to. (Default: "")
 	Address string `json:"address,omitempty"`
 
 	// (Optional) If false, some RPC wallet methods will be disabled. (Default: false)
 	Trusted bool `json:"trusted,omitempty"`
 
-	// (Optional) Specifies whether the Daemon uses SSL encryption. (Default: autodetect; Accepts: disabled, enabled, autodetect) 
+	// (Optional) Specifies whether the Daemon uses SSL encryption. (Default: autodetect; Accepts: disabled, enabled, autodetect)
 	SslSupport string `json:"ssl_support,omitempty"`
 
 	// (Optional) The file path location of the SSL key.
@@ -27,9 +27,5 @@ type SetDaemonRequest struct {
 
 // Connect the RPC server to a Monero daemon.
 func (c *Client) SetDaemon(ctx context.Context, req *SetDaemonRequest) error {
-	err := c.Do(ctx, "set_daemon", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "set_daemon", &req, nil)
 }

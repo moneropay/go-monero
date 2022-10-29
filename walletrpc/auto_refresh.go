@@ -12,9 +12,5 @@ type AutoRefreshRequest struct {
 
 // Set whether and how often to automatically refresh the current wallet.
 func (c *Client) AutoRefresh(ctx context.Context, req *AutoRefreshRequest) error {
-	err := c.Do(ctx, "auto_refresh", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "auto_refresh", &req, nil)
 }

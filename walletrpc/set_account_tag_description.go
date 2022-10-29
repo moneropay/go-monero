@@ -12,9 +12,5 @@ type SetAccountTagDescriptionRequest struct {
 
 // Set description for an account tag.
 func (c *Client) SetAccountTagDescription(ctx context.Context, req *SetAccountTagDescriptionRequest) error {
-	err := c.Do(ctx, "set_account_tag_description", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "set_account_tag_description", &req, nil)
 }
