@@ -22,8 +22,5 @@ type CreateAddressResponse struct {
 func (c *Client) CreateAddress(ctx context.Context, req *CreateAddressRequest) (*CreateAddressResponse, error) {
 	resp := &CreateAddressResponse{}
 	err := c.Do(ctx, "create_address", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

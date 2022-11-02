@@ -21,8 +21,5 @@ type ImportKeyImagesResponse struct {
 func (c *Client) ImportKeyImages(ctx context.Context, req *ImportKeyImagesRequest) (*ImportKeyImagesResponse, error) {
 	resp := &ImportKeyImagesResponse{}
 	err := c.Do(ctx, "import_key_images", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

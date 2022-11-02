@@ -25,8 +25,5 @@ type SignTransferResponse struct {
 func (c *Client) SignTransfer(ctx context.Context, req *SignTransferRequest) (*SignTransferResponse, error) {
 	resp := &SignTransferResponse{}
 	err := c.Do(ctx, "sign_transfer", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

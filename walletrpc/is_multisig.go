@@ -17,8 +17,5 @@ type IsMultisigResponse struct {
 func (c *Client) IsMultisig(ctx context.Context) (*IsMultisigResponse, error) {
 	resp := &IsMultisigResponse{}
 	err := c.Do(ctx, "is_multisig", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

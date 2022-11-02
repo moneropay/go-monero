@@ -73,8 +73,5 @@ type SweepSingleResponse struct {
 func (c *Client) SweepSingle(ctx context.Context, req *SweepSingleRequest) (*SweepSingleResponse, error) {
 	resp := &SweepSingleResponse{}
 	err := c.Do(ctx, "sweep_single", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

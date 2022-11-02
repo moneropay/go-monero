@@ -11,8 +11,5 @@ type PrepareMultisigResponse struct {
 func (c *Client) PrepareMultisig(ctx context.Context) (*PrepareMultisigResponse, error) {
 	resp := &PrepareMultisigResponse{}
 	err := c.Do(ctx, "prepare_multisig", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

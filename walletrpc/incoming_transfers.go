@@ -44,8 +44,5 @@ type IncomingTransfersResponse struct {
 func (c *Client) IncomingTransfers(ctx context.Context, req *IncomingTransfersRequest) (*IncomingTransfersResponse, error) {
 	resp := &IncomingTransfersResponse{}
 	err := c.Do(ctx, "incoming_transfers", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

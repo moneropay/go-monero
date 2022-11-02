@@ -16,8 +16,5 @@ type GetPaymentsResponse struct {
 func (c *Client) GetPayments(ctx context.Context, req *GetPaymentsRequest) (*GetPaymentsResponse, error) {
 	resp := &GetPaymentsResponse{}
 	err := c.Do(ctx, "get_payments", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

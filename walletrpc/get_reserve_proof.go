@@ -25,8 +25,5 @@ type GetReserveProofResponse struct {
 func (c *Client) GetReserveProof(ctx context.Context, req *GetReserveProofRequest) (*GetReserveProofResponse, error) {
 	resp := &GetReserveProofResponse{}
 	err := c.Do(ctx, "get_reserve_proof", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

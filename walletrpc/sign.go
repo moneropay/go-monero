@@ -16,8 +16,5 @@ type SignResponse struct {
 func (c *Client) Sign(ctx context.Context, req *SignRequest) (*SignResponse, error) {
 	resp := &SignResponse{}
 	err := c.Do(ctx, "sign", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

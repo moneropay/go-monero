@@ -28,8 +28,5 @@ type MakeUriResponse struct {
 func (c *Client) MakeUri(ctx context.Context, req *MakeUriRequest) (*MakeUriResponse, error) {
 	resp := &MakeUriResponse{}
 	err := c.Do(ctx, "make_uri", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

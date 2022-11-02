@@ -16,8 +16,5 @@ type GetAttributeResponse struct {
 func (c *Client) GetAttribute(ctx context.Context, req *GetAttributeRequest) (*GetAttributeResponse, error) {
 	resp := &GetAttributeResponse{}
 	err := c.Do(ctx, "get_attribute", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

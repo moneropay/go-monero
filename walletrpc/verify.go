@@ -21,8 +21,5 @@ type VerifyResponse struct {
 func (c *Client) Verify(ctx context.Context, req *VerifyRequest) (*VerifyResponse, error) {
 	resp := &VerifyResponse{}
 	err := c.Do(ctx, "verify", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

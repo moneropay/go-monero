@@ -19,8 +19,5 @@ type FinalizeMultisigResponse struct {
 func (c *Client) FinalizeMultisig(ctx context.Context, req *FinalizeMultisigRequest) (*FinalizeMultisigResponse, error) {
 	resp := &FinalizeMultisigResponse{}
 	err := c.Do(ctx, "finalize_multisig", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

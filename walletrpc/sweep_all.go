@@ -70,8 +70,5 @@ type SweepAllResponse struct {
 func (c *Client) SweepAll(ctx context.Context, req *SweepAllRequest) (*SweepAllResponse, error) {
 	resp := &SweepAllResponse{}
 	err := c.Do(ctx, "sweep_all", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

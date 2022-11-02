@@ -15,9 +15,5 @@ type StartMiningRequest struct {
 
 // Start mining in the Monero daemon.
 func (c *Client) StartMining(ctx context.Context, req *StartMiningRequest) error {
-	err := c.Do(ctx, "start_mining", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "start_mining", &req, nil)
 }

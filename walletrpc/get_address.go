@@ -22,8 +22,5 @@ type GetAddressResponse struct {
 func (c *Client) GetAddress(ctx context.Context, req *GetAddressRequest) (*GetAddressResponse, error) {
 	resp := &GetAddressResponse{}
 	err := c.Do(ctx, "get_address", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

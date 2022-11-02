@@ -34,8 +34,5 @@ type ValidateAddressResponse struct {
 func (c *Client) ValidateAddress(ctx context.Context, req *ValidateAddressRequest) (*ValidateAddressResponse, error) {
 	resp := &ValidateAddressResponse{}
 	err := c.Do(ctx, "validate_address", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

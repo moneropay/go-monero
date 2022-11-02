@@ -28,8 +28,5 @@ type CheckTxKeyResponse struct {
 func (c *Client) CheckTxKey(ctx context.Context, req *CheckTxKeyRequest) (*CheckTxKeyResponse, error) {
 	resp := &CheckTxKeyResponse{}
 	err := c.Do(ctx, "check_tx_key", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

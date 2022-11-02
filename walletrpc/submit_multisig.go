@@ -16,8 +16,5 @@ type SubmitMultisigResponse struct {
 func (c *Client) SubmitMultisig(ctx context.Context, req *SubmitMultisigRequest) (*SubmitMultisigResponse, error) {
 	resp := &SubmitMultisigResponse{}
 	err := c.Do(ctx, "submit_multisig", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

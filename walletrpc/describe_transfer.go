@@ -60,8 +60,5 @@ type Description struct {
 func (c *Client) DescribeTransfer(ctx context.Context, req *DescribeTransferRequest) (*DescribeTransferResponse, error) {
 	resp := &DescribeTransferResponse{}
 	err := c.Do(ctx, "describe_transfer", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

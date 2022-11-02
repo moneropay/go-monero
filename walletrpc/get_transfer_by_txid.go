@@ -66,8 +66,5 @@ type GetTransferByTxidResponse struct {
 func (c *Client) GetTransferByTxid(ctx context.Context, req *GetTransferByTxidRequest) (*GetTransferByTxidResponse, error) {
 	resp := &GetTransferByTxidResponse{}
 	err := c.Do(ctx, "get_transfer_by_txid", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

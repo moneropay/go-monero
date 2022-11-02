@@ -43,8 +43,5 @@ type RestoreDeterministicWalletResponse struct {
 func (c *Client) RestoreDeterministicWallet(ctx context.Context, req *RestoreDeterministicWalletRequest) (*RestoreDeterministicWalletResponse, error) {
 	resp := &RestoreDeterministicWalletResponse{}
 	err := c.Do(ctx, "restore_deterministic_wallet", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

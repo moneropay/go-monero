@@ -25,8 +25,5 @@ type MakeMultisigResponse struct {
 func (c *Client) MakeMultisig(ctx context.Context, req *MakeMultisigRequest) (*MakeMultisigResponse, error) {
 	resp := &MakeMultisigResponse{}
 	err := c.Do(ctx, "make_multisig", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

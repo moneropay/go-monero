@@ -15,8 +15,5 @@ type ExportKeyImagesResponse struct {
 func (c *Client) ExportKeyImages(ctx context.Context, req *ExportKeyImagesRequest) (*ExportKeyImagesResponse, error) {
 	resp := &ExportKeyImagesResponse{}
 	err := c.Do(ctx, "export_key_images", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

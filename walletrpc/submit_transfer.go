@@ -16,8 +16,5 @@ type SubmitTransferResponse struct {
 func (c *Client) SubmitTransfer(ctx context.Context, req *SubmitTransferRequest) (*SubmitTransferResponse, error) {
 	resp := &SubmitTransferResponse{}
 	err := c.Do(ctx, "submit_transfer", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

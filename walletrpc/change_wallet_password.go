@@ -12,9 +12,5 @@ type ChangeWalletPasswordRequest struct {
 
 // Change a wallet password.
 func (c *Client) ChangeWalletPassword(ctx context.Context, req *ChangeWalletPasswordRequest) error {
-	err := c.Do(ctx, "change_wallet_password", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "change_wallet_password", &req, nil)
 }

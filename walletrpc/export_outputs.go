@@ -16,8 +16,5 @@ type ExportOutputsResponse struct {
 func (c *Client) ExportOutputs(ctx context.Context, req *ExportOutputsRequest) (*ExportOutputsResponse, error) {
 	resp := &ExportOutputsResponse{}
 	err := c.Do(ctx, "export_outputs", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

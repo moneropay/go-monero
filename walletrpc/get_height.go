@@ -11,8 +11,5 @@ type GetHeightResponse struct {
 func (c *Client) GetHeight(ctx context.Context) (*GetHeightResponse, error) {
 	resp := &GetHeightResponse{}
 	err := c.Do(ctx, "get_height", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

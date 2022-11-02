@@ -16,8 +16,5 @@ type ImportMultisigInfoResponse struct {
 func (c *Client) ImportMultisigInfo(ctx context.Context, req *ImportMultisigInfoRequest) (*ImportMultisigInfoResponse, error) {
 	resp := &ImportMultisigInfoResponse{}
 	err := c.Do(ctx, "import_multisig_info", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

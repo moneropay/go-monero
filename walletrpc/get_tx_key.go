@@ -16,8 +16,5 @@ type GetTxKeyResponse struct {
 func (c *Client) GetTxKey(ctx context.Context, req *GetTxKeyRequest) (*GetTxKeyResponse, error) {
 	resp := &GetTxKeyResponse{}
 	err := c.Do(ctx, "get_tx_key", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

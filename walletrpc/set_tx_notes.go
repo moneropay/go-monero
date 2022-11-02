@@ -12,9 +12,5 @@ type SetTxNotesRequest struct {
 
 // Set arbitrary string notes for transactions.
 func (c *Client) SetTxNotes(ctx context.Context, req *SetTxNotesRequest) error {
-	err := c.Do(ctx, "set_tx_notes", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "set_tx_notes", &req, nil)
 }

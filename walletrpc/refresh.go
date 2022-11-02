@@ -19,8 +19,5 @@ type RefreshResponse struct {
 func (c *Client) Refresh(ctx context.Context, req *RefreshRequest) (*RefreshResponse, error) {
 	resp := &RefreshResponse{}
 	err := c.Do(ctx, "refresh", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }
