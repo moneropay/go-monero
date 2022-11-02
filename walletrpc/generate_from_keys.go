@@ -37,8 +37,5 @@ type GenerateFromKeysResponse struct {
 func (c *Client) GenerateFromKeys(ctx context.Context, req *GenerateFromKeysRequest) (*GenerateFromKeysResponse, error) {
 	resp := &GenerateFromKeysResponse{}
 	err := c.Do(ctx, "generate_from_keys", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

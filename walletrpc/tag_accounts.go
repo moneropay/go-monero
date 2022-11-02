@@ -12,9 +12,5 @@ type TagAccountsRequest struct {
 
 // Apply a filtering tag to a list of accounts.
 func (c *Client) TagAccounts(ctx context.Context, req *TagAccountsRequest) error {
-	err := c.Do(ctx, "tag_accounts", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "tag_accounts", &req, nil)
 }

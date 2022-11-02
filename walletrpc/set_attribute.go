@@ -12,9 +12,5 @@ type SetAttributeRequest struct {
 
 // Set arbitrary attribute.
 func (c *Client) SetAttribute(ctx context.Context, req *SetAttributeRequest) error {
-	err := c.Do(ctx, "set_attribute", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "set_attribute", &req, nil)
 }

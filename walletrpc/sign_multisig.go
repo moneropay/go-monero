@@ -19,8 +19,5 @@ type SignMultisigResponse struct {
 func (c *Client) SignMultisig(ctx context.Context, req *SignMultisigRequest) (*SignMultisigResponse, error) {
 	resp := &SignMultisigResponse{}
 	err := c.Do(ctx, "sign_multisig", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

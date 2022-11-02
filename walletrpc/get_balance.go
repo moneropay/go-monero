@@ -28,8 +28,5 @@ type GetBalanceResponse struct {
 func (c *Client) GetBalance(ctx context.Context, req *GetBalanceRequest) (*GetBalanceResponse, error) {
 	resp := &GetBalanceResponse{}
 	err := c.Do(ctx, "get_balance", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

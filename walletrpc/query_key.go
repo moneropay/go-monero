@@ -16,8 +16,5 @@ type QueryKeyResponse struct {
 func (c *Client) QueryKey(ctx context.Context, req *QueryKeyRequest) (*QueryKeyResponse, error) {
 	resp := &QueryKeyResponse{}
 	err := c.Do(ctx, "query_key", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

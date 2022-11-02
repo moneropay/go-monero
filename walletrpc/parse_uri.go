@@ -33,8 +33,5 @@ type UriPaymentInfo struct {
 func (c *Client) ParseUri(ctx context.Context, req *ParseUriRequest) (*ParseUriResponse, error) {
 	resp := &ParseUriResponse{}
 	err := c.Do(ctx, "parse_uri", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

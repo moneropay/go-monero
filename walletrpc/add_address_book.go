@@ -17,8 +17,5 @@ type AddAddressBookResponse struct {
 func (c *Client) AddAddressBook(ctx context.Context, req *AddAddressBookRequest) (*AddAddressBookResponse, error) {
 	resp := &AddAddressBookResponse{}
 	err := c.Do(ctx, "add_address_book", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

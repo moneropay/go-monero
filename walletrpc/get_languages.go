@@ -11,8 +11,5 @@ type GetLanguagesResponse struct {
 func (c *Client) GetLanguages(ctx context.Context) (*GetLanguagesResponse, error) {
 	resp := &GetLanguagesResponse{}
 	err := c.Do(ctx, "get_languages", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

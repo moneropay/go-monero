@@ -16,8 +16,5 @@ type GetTxNotesResponse struct {
 func (c *Client) GetTxNotes(ctx context.Context, req *GetTxNotesRequest) (*GetTxNotesResponse, error) {
 	resp := &GetTxNotesResponse{}
 	err := c.Do(ctx, "get_tx_notes", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

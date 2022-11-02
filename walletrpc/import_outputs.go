@@ -16,8 +16,5 @@ type ImportOutputsResponse struct {
 func (c *Client) ImportOutputs(ctx context.Context, req *ImportOutputsRequest) (*ImportOutputsResponse, error) {
 	resp := &ImportOutputsResponse{}
 	err := c.Do(ctx, "import_outputs", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

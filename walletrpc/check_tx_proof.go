@@ -34,8 +34,5 @@ type CheckTxProofResponse struct {
 func (c *Client) CheckTxProof(ctx context.Context, req *CheckTxProofRequest) (*CheckTxProofResponse, error) {
 	resp := &CheckTxProofResponse{}
 	err := c.Do(ctx, "check_tx_proof", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

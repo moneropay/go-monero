@@ -11,8 +11,5 @@ type GetVersionResponse struct {
 func (c *Client) GetVersion(ctx context.Context) (*GetVersionResponse, error) {
 	resp := &GetVersionResponse{}
 	err := c.Do(ctx, "get_version", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

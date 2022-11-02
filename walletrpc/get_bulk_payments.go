@@ -19,8 +19,5 @@ type GetBulkPaymentsResponse struct {
 func (c *Client) GetBulkPayments(ctx context.Context, req *GetBulkPaymentsRequest) (*GetBulkPaymentsResponse, error) {
 	resp := &GetBulkPaymentsResponse{}
 	err := c.Do(ctx, "get_bulk_payments", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

@@ -12,9 +12,5 @@ type OpenWalletRequest struct {
 
 // Open a wallet. You need to have set the argument "–wallet-dir" when launching monero-wallet-rpc to make this work.
 func (c *Client) OpenWallet(ctx context.Context, req *OpenWalletRequest) error {
-	err := c.Do(ctx, "open_wallet", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "open_wallet", &req, nil)
 }

@@ -19,8 +19,5 @@ type MakeIntegratedAddressResponse struct {
 func (c *Client) MakeIntegratedAddress(ctx context.Context, req *MakeIntegratedAddressRequest) (*MakeIntegratedAddressResponse, error) {
 	resp := &MakeIntegratedAddressResponse{}
 	err := c.Do(ctx, "make_integrated_address", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

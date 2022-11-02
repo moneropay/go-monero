@@ -76,8 +76,5 @@ type TransferSplitResponse struct {
 func (c *Client) TransferSplit(ctx context.Context, req *TransferSplitRequest) (*TransferSplitResponse, error) {
 	resp := &TransferSplitResponse{}
 	err := c.Do(ctx, "transfer_split", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

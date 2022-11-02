@@ -20,8 +20,5 @@ type SplitIntegratedAddressResponse struct {
 func (c *Client) SplitIntegratedAddress(ctx context.Context, req *SplitIntegratedAddressRequest) (*SplitIntegratedAddressResponse, error) {
 	resp := &SplitIntegratedAddressResponse{}
 	err := c.Do(ctx, "split_integrated_address", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

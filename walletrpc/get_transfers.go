@@ -90,8 +90,5 @@ type GetTransfersResponse struct {
 func (c *Client) GetTransfers(ctx context.Context, req *GetTransfersRequest) (*GetTransfersResponse, error) {
 	resp := &GetTransfersResponse{}
 	err := c.Do(ctx, "get_transfers", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

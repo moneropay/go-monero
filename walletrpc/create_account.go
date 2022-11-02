@@ -19,8 +19,5 @@ type CreateAccountResponse struct {
 func (c *Client) CreateAccount(ctx context.Context, req *CreateAccountRequest) (*CreateAccountResponse, error) {
 	resp := &CreateAccountResponse{}
 	err := c.Do(ctx, "create_account", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

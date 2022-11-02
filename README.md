@@ -4,10 +4,10 @@
 This package provides Golang bindings for monero-wallet-rpc calls.
 It also contains functions for XMR/atomic unit conversion.
 
-Unlike other wallet-rpc bindings, this package is actively maintained and it is complete
-with all the rpc methods. While using this package for our other project [MoneroPay](https://gitlab.com/moneropay/moneropay),
+Unlike other wallet RPC bindings, this package is actively maintained and it is complete
+with all the RPC methods. While using this package for our other project [MoneroPay](https://gitlab.com/moneropay/moneropay),
 we have realized that all the other forks don't handle optional parameters correctly and send them anyway,
-therefore causing undefined behavior.
+therefore causing bugs.
 
 ### Installation
 ```sh
@@ -33,7 +33,6 @@ import (
 	"net/http"
 
 	"github.com/gabstv/httpdigest"
-
 	"gitlab.com/moneropay/go-monero/walletrpc"
 )
 
@@ -58,13 +57,3 @@ func main() {
 Submit issues and merge requests only on [GitLab](https://gitlab.com/moneropay/go-monero/).\
 Alternatively, you can send us patch files via email at [moneropay@kernal.eu](mailto:moneropay@kernal.eu).\
 For development related discussions and questions join [#moneropay:kernal.eu](https://matrix.to/#/#moneropay:kernal.eu).
-
-### Special Thanks
-This version of `go-monero` is based on the works of:
-- [LuaxY](https://github.com/LuaxY/go-monero)
-- [gabstv](https://github.com/gabstv/go-monero)
-- [carryon](https://github.com/carryon/go-monero)
-- [TemaKozyrev](https://github.com/TemaKozyrev/go-monero)
-- [ibclabs](https://github.com/ibclabs/go-monero)
-- [Fraudmarc](https://github.com/Fraudmarc/go-monero)
-- [leonklingele](https://github.com/leonklingele/go-moner)

@@ -19,8 +19,5 @@ type GetSpendProofResponse struct {
 func (c *Client) GetSpendProof(ctx context.Context, req *GetSpendProofRequest) (*GetSpendProofResponse, error) {
 	resp := &GetSpendProofResponse{}
 	err := c.Do(ctx, "get_spend_proof", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

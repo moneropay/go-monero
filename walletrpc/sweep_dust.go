@@ -46,8 +46,5 @@ type SweepDustResponse struct {
 func (c *Client) SweepDust(ctx context.Context, req *SweepDustRequest) (*SweepDustResponse, error) {
 	resp := &SweepDustResponse{}
 	err := c.Do(ctx, "sweep_dust", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

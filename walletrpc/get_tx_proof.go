@@ -22,8 +22,5 @@ type GetTxProofResponse struct {
 func (c *Client) GetTxProof(ctx context.Context, req *GetTxProofRequest) (*GetTxProofResponse, error) {
 	resp := &GetTxProofResponse{}
 	err := c.Do(ctx, "get_tx_proof", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

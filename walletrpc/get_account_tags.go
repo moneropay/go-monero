@@ -22,8 +22,5 @@ type AccountTag struct {
 func (c *Client) GetAccountTags(ctx context.Context) (*GetAccountTagsResponse, error) {
 	resp := &GetAccountTagsResponse{}
 	err := c.Do(ctx, "get_account_tags", nil, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

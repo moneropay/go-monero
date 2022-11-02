@@ -12,9 +12,5 @@ type LabelAccountRequest struct {
 
 // Label an account.
 func (c *Client) LabelAccount(ctx context.Context, req *LabelAccountRequest) error {
-	err := c.Do(ctx, "label_account", &req, nil)
-	if err != nil {
-		return err
-	}
-	return nil
+	return c.Do(ctx, "label_account", &req, nil)
 }

@@ -16,8 +16,5 @@ type GetAddressIndexResponse struct {
 func (c *Client) GetAddressIndex(ctx context.Context, req *GetAddressIndexRequest) (*GetAddressIndexResponse, error) {
 	resp := &GetAddressIndexResponse{}
 	err := c.Do(ctx, "get_address_index", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

@@ -22,8 +22,5 @@ type GetAccountsResponse struct {
 func (c *Client) GetAccounts(ctx context.Context, req *GetAccountsRequest) (*GetAccountsResponse, error) {
 	resp := &GetAccountsResponse{}
 	err := c.Do(ctx, "get_accounts", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

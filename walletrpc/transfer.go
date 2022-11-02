@@ -67,8 +67,5 @@ type TransferResponse struct {
 func (c *Client) Transfer(ctx context.Context, req *TransferRequest) (*TransferResponse, error) {
 	resp := &TransferResponse{}
 	err := c.Do(ctx, "transfer", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }

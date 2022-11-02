@@ -16,8 +16,5 @@ type RelayTxResponse struct {
 func (c *Client) RelayTx(ctx context.Context, req *RelayTxRequest) (*RelayTxResponse, error) {
 	resp := &RelayTxResponse{}
 	err := c.Do(ctx, "relay_tx", &req, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return resp, err
 }
