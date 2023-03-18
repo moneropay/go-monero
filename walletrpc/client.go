@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/gorilla/rpc/v2/json2"
+	"gitlab.com/moneropay/go-monero/pkg/json2"
 )
 
 // New returns a new monero-wallet-rpc client.
