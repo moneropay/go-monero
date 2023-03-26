@@ -13,6 +13,9 @@ type MakeIntegratedAddressRequest struct {
 type MakeIntegratedAddressResponse struct {
 	// Hex encoded payment id.
 	PaymentId string `json:"payment_id"`
+
+	// Integrated address.
+	IntegratedAddress string `json:"integrated_address"`
 }
 
 // Make an integrated address from the wallet address and a payment id.
