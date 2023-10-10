@@ -15,9 +15,6 @@ type TransferRequest struct {
 	// Set a priority for the transaction. Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
 	Priority Priority `json:"priority"`
 
-	// Number of outputs from the blockchain to mix with (0 means no mixing).
-	Mixin uint64 `json:"mixin"`
-
 	// Number of outputs to mix in the transaction (this output + N decoys from the blockchain).
 	RingSize uint64 `json:"ring_size"`
 
