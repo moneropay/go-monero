@@ -1,25 +1,18 @@
 package walletrpc
 
-import "context"
+import (
+	"context"
+)
 
 type TransferSplitRequest struct {
 	// Array of destinations to receive XMR.
 	Destinations []Destination `json:"destinations"`
-
-	// Amount to send to each destination, in atomic units.
-	Amount uint64 `json:"amount"`
-
-	// Destination public address.
-	Address string `json:"address"`
 
 	// (Optional) Transfer from this account index. (Defaults to 0)
 	AccountIndex uint64 `json:"account_index,omitempty"`
 
 	// (Optional) Transfer from this set of subaddresses. (Defaults to empty - all indices)
 	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
-
-	// Number of outputs from the blockchain to mix with (0 means no mixing).
-	Mixin uint64 `json:"mixin"`
 
 	// Sets ringsize to n (mixin + 1).
 	RingSize uint64 `json:"ring_size"`
@@ -31,16 +24,13 @@ type TransferSplitRequest struct {
 	GetTxKeys bool `json:"get_tx_keys,omitempty"`
 
 	// Set a priority for the transactions. Accepted Values are: 0-3 for: default, unimportant, normal, elevated, priority.
-	Priority uint64 `json:"priority"`
+	Priority Priority `json:"priority"`
 
 	// (Optional) If true, the newly created transaction will not be relayed to the monero network. (Defaults to false)
 	DoNotRelay bool `json:"do_not_relay,omitempty"`
 
 	// Return the transactions as hex string after sending
 	GetTxHex bool `json:"get_tx_hex"`
-
-	// True to use the new transaction construction algorithm, defaults to false.
-	NewAlgorithm bool `json:"new_algorithm"`
 
 	// Return list of transaction metadata needed to relay the transfer later.
 	GetTxMetadata bool `json:"get_tx_metadata"`
