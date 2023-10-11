@@ -4,7 +4,7 @@ import "context"
 
 type ExportOutputsRequest struct {
 	// (Optional) If true, export all outputs. Otherwise, export outputs since the last export. (Defaults to false)
-	All bool `json:"all,omitemtpy"`
+	All bool `json:"all,omitempty"`
 }
 
 type ExportOutputsResponse struct {
