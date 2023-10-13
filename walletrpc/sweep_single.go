@@ -10,10 +10,10 @@ type SweepSingleRequest struct {
 	Priority Priority `json:"priority,omitempty"`
 
 	// Specify the number of separate outputs of smaller denomination that will be created by sweep operation.
-	Outputs uint64 `json:"outputs"`
+	Outputs uint64 `json:"outputs,omitempty"`
 
 	// Sets ringsize to n (mixin + 1).
-	RingSize uint64 `json:"ring_size"`
+	RingSize uint64 `json:"ring_size,omitempty"`
 
 	// Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
