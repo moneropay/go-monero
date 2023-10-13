@@ -85,3 +85,7 @@ type Entry struct {
 
 	Index uint64 `json:"index"`
 }
+
+type KeyImages struct {
+	KeyImages []string `json:"key_images"`
+}

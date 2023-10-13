@@ -6,17 +6,11 @@ type SweepSingleRequest struct {
 	// Destination public address.
 	Address string `json:"address"`
 
-	// Sweep transactions from this account.
-	AccountIndex uint64 `json:"account_index"`
-
-	// (Optional) Sweep from this set of subaddresses in the account.
-	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
-
 	// (Optional) Priority for sending the sweep transfer, partially determines fee.
-	Priority uint64 `json:"priority,omitempty"`
+	Priority Priority `json:"priority,omitempty"`
 
-	// Number of outputs from the blockchain to mix with (0 means no mixing).
-	Mixin uint64 `json:"mixin"`
+	// Specify the number of separate outputs of smaller denomination that will be created by sweep operation.
+	Outputs uint64 `json:"outputs"`
 
 	// Sets ringsize to n (mixin + 1).
 	RingSize uint64 `json:"ring_size"`
@@ -24,14 +18,14 @@ type SweepSingleRequest struct {
 	// Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 
+	// (Optional, defaults to a random ID) 16 characters hex encoded.
+	PaymentId string `json:"payment_id,omitempty"`
+
 	// (Optional) Return the transaction keys after sending.
-	GetTxKeys bool `json:"get_tx_keys,omitempty"`
+	GetTxKey bool `json:"get_tx_key,omitempty"`
 
 	// Key image of specific output to sweep.
 	KeyImage string `json:"key_image"`
-
-	// (Optional) Include outputs below this amount.
-	BelowAmount uint64 `json:"below_amount,omitempty"`
 
 	// (Optional) If true, Do not relay this sweep transfer. (Defaults to false)
 	DoNotRelay bool `json:"do_not_relay,omitempty"`
@@ -45,28 +39,34 @@ type SweepSingleRequest struct {
 
 type SweepSingleResponse struct {
 	// The tx hashes of every transaction.
-	TxHashList []string `json:"tx_hash_list"`
+	TxHash []string `json:"tx_hash"`
 
 	// The transaction keys for every transaction.
-	TxKeyList []string `json:"tx_key_list"`
+	TxKey []string `json:"tx_key"`
 
 	// The amount transferred for every transaction.
-	AmountList []int `json:"amount_list"`
+	Amount []int `json:"amount"`
 
 	// The amount of fees paid for every transaction.
-	FeeList []int `json:"fee_list"`
+	Fee []int `json:"fee"`
+
+	// Metric used to calculate transaction fee.
+	Weight uint64 `json:"weight"`
 
 	// The tx as hex string for every transaction.
-	TxBlobList []string `json:"tx_blob_list"`
+	TxBlob []string `json:"tx_blob"`
 
 	// List of transaction metadata needed to relay the transactions later.
-	TxMetadataList []string `json:"tx_metadata_list"`
+	TxMetadata []string `json:"tx_metadata"`
 
 	// The set of signing keys used in a multisig transaction (empty for non-multisig).
 	MultisigTxset string `json:"multisig_txset"`
 
 	// Set of unsigned tx for cold-signing purposes.
 	UnsignedTxset string `json:"unsigned_txset"`
+
+	// Key images of spent outputs.
+	SpentKeyImages []KeyImages `json:"spent_key_images"`
 }
 
 // Send all of a specific unlocked output to an address.

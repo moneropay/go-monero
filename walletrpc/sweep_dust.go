@@ -29,6 +29,9 @@ type SweepDustResponse struct {
 	// The amount of fees paid for every transaction.
 	FeeList []int `json:"fee_list"`
 
+	// Metric used to calculate transaction fee.
+	WeightList []int `json:"weight_list"`
+
 	// The tx as hex string for every transaction.
 	TxBlobList []string `json:"tx_blob_list"`
 
@@ -40,6 +43,9 @@ type SweepDustResponse struct {
 
 	// Set of unsigned tx for cold-signing purposes.
 	UnsignedTxset string `json:"unsigned_txset"`
+
+	// Key images of spent outputs.
+	SpentKeyImagesList []KeyImages `json:"spent_key_images_list"`
 }
 
 // Send all dust outputs back to the wallet's, to make them easier to spend (and mix).

@@ -12,17 +12,23 @@ type SweepAllRequest struct {
 	// (Optional) Sweep from this set of subaddresses in the account.
 	SubaddrIndices []uint64 `json:"subaddr_indices,omitempty"`
 
-	// (Optional) Priority for sending the sweep transfer, partially determines fee.
-	Priority uint64 `json:"priority,omitempty"`
+	// (Optional) Use outputs in all subaddresses within an account.
+	SubaddrIndicesAll bool `json:"subaddr_indices_all,omitempty"`
 
-	// Number of outputs from the blockchain to mix with (0 means no mixing).
-	Mixin uint64 `json:"mixin"`
+	// (Optional) Priority for sending the sweep transfer, partially determines fee.
+	Priority Priority `json:"priority,omitempty"`
+
+	// Specify the number of separate outputs of smaller denomination that will be created by sweep operation.
+	Outputs uint64 `json:"outputs"`
 
 	// Sets ringsize to n (mixin + 1).
 	RingSize uint64 `json:"ring_size"`
 
 	// Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
+
+	// (Optional, defaults to a random ID) 16 characters hex encoded.
+	PaymentId string `json:"payment_id,omitempty"`
 
 	// (Optional) Return the transaction keys after sending.
 	GetTxKeys bool `json:"get_tx_keys,omitempty"`
@@ -53,6 +59,9 @@ type SweepAllResponse struct {
 	// The amount of fees paid for every transaction.
 	FeeList []int `json:"fee_list"`
 
+	// Metric used for adjusting fee.
+	WeightList []int `json:"weight_list"`
+
 	// The tx as hex string for every transaction.
 	TxBlobList []string `json:"tx_blob_list"`
 
@@ -64,6 +73,8 @@ type SweepAllResponse struct {
 
 	// Set of unsigned tx for cold-signing purposes.
 	UnsignedTxset string `json:"unsigned_txset"`
+
+	SpentKeyImagesList []KeyImages `json:"spent_key_images_list"`
 }
 
 // Send all unlocked balance to an address.

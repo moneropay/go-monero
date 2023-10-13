@@ -20,6 +20,9 @@ type TransferSplitRequest struct {
 	// Number of blocks before the monero can be spent (0 to not add a lock).
 	UnlockTime uint64 `json:"unlock_time"`
 
+	// (Defaults to a random ID) 16 characters hex encoded.
+	PaymentId string `json:"payment_id,omitempty"`
+
 	// (Optional) Return the transaction keys after sending.
 	GetTxKeys bool `json:"get_tx_keys,omitempty"`
 
@@ -49,6 +52,9 @@ type TransferSplitResponse struct {
 	// The amount of fees paid for every transaction.
 	FeeList []int `json:"fee_list"`
 
+	// Metric used to calculate transaction fee.
+	WeightList []int `json:"weight_list"`
+
 	// The tx as hex string for every transaction.
 	TxBlobList []string `json:"tx_blob_list"`
 
@@ -60,6 +66,9 @@ type TransferSplitResponse struct {
 
 	// Set of unsigned tx for cold-signing purposes.
 	UnsignedTxset string `json:"unsigned_txset"`
+
+	// Key images of spent outputs.
+	SpentKeyImagesList []KeyImages `json:"spent_key_images_list"`
 }
 
 // Same as transfer, but can split into more than one tx if necessary.
