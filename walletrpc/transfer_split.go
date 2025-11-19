@@ -47,7 +47,7 @@ type TransferSplitResponse struct {
 	TxKeyList []string `json:"tx_key_list"`
 
 	// The amount transferred for every transaction.
-	AmountList []int `json:"amount_list"`
+	AmountList []uint64 `json:"amount_list"`
 
 	// The amount of fees paid for every transaction.
 	FeeList []int `json:"fee_list"`
